@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="dist/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pointerize</title>
+    <style>
+      :root {
+        font-size: 2px;
+        --color-gray-1: hsl(0, 0%, 10%);
+        --color-bg: hsl(0, 0%, 10%, 0.5);
+        --color-gray-2: hsl(0, 0%, 40%);
+        --color-gray-3: hsl(0, 0%, 90%);
+        --color-brand-1-2: hsl(30, 100%, 40%);
+        --color-brand-2-2: hsl(70, 100%, 40%);
+        --padding-text: 0.2em;
+        --padding-text-l: 0.6em;
+      }
+      body,
+      html,
+      p {
+        margin: 0;
+        padding: var(--padding-text);
+        background-color: var(--color-gray-1);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-bg);
+        color: var(--color-gray-3);
+        font: clamp(8rem, 3vw, 14rem)/1.4 Avenir, Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+      }
+      html {
+        background-color: var(--color-gray-1);
+        min-width: 100%;
+        min-height: 100%;
+      }
+      h1 {
+        font-size: clamp(8rem, 3vw, 14rem);
+        text-align: left;
+        padding: var(--padding-text);
+        margin: 0;
+        writing-mode: vertical-lr;
+        text-orientation: upright;
+        text-transform: uppercase;
+        position: absolute;
+        left: 0;
+        top: 2.5%;
+        font-style: italic;
+        color: var(--color-brand-1-2);
+        background-color: var(--color-gray-1);
+      }
+      .text__l {
+        padding: var(--padding-text-l);
+        font-size: clamp(10rem, 5vw, 16rem);
+      }
+      .text__m {
+        padding: var(--padding-text);
+        font-size: clamp(8rem, 3vw, 14rem)
+      }
+      .text__s {
+        padding: var(--padding-text);
+        font-size: clamp(7rem, 2vw, 9rem)
+      }
+      body {
+        font-size: clamp(8rem, 3vw, 14rem);
+      }
+      select {
+        background-color: transparent;
+        color: var(--color-gray-3);
+        border: none;
+        appearance: none;
+        text-align: center;
+        width: 100%;
+        
+      }
+      select.text__l {
+        /* padding specific to the icons in the left and right */
+        padding-right: calc(1.2em + 32px);
+        padding-left: calc(1.2em + 32px);
+      }
+      .select_con {
+        display: inline-block;
+        background-color: var(--color-gray-1);
+        margin: 0 auto;
+        position: relative;
+      }
+      option {
+        background-color: var(--color-gray-1);
+      }
+      section {
+        padding: 2.5%;
+      }
+      section:last-of-type {
+        background-color: var(--color-gray-1);
+      }
+      button {
+        width: 40%;
+        padding: var(--padding-text);
+        background-color: var(--color-brand-1-2);
+      }
+      details > p{
+        text-align: left;
+      }
+      details {
+        padding: var(--padding-text);
+      }
+      #introduction {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 20rem;
+        padding: 2.5%;
+      }
+      .introduction_nth {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20rem;
+      }
+      .introduction_nth__svg {
+        width: 320px;
+      }
+      #configuration {
+        background-color: var(--color-gray-1);
+        width: 95%;
+        /* height: 240rem; */
+        margin-left: 2.5%;
+        padding: 2.5%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: auto;
+      }
+      #options_out__shape, #options_out__shapes, #options_out__pattern {
+        background-color: var(--color-gray-1);
+        width: 95%;
+        margin-left: 2.5%;
+        padding: 2.5%;
+      }
+      #sliders {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+      }
+      #sliders > div {
+        padding: var(--padding-text);
+      }
+      #sides_out, #radius_ratio_out, #shapes_number_out {
+        display: inline;
+      }
+      #apply_options {
+        margin: var(--padding-text);
+      }
+      #code_out {
+        width: 100%;
+      }
+      #preset__svg {
+        background-color: var(--color-gray-1);
+        width: 95%;
+        height: 80vh;
+        margin-left: 2.5%;
+        padding: 2.5%;
+      }
+      #notes {
+        background-color: var(--color-gray-1);
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="app">
+      <header>
+        <h1>Pointerize</h1>
+      </header>
+      <main>
+        <section>
+          <p class="text__l">If only there was a way we could easily...</p>
+          <div id="introduction">
+            <div class="introduction_nth">
+              <div class="introduction_nth__text">
+                <p>Create shapes like this</p>
+              </div>
+              <div id="introduction_0th__svg" class="introduction_nth__svg"></div>
+            </div>
+            <div class="introduction_nth">
+              <div class="introduction_nth__text">
+                <p>Combine them into this</p>
+              </div>
+              <div id="introduction_1th__svg" class="introduction_nth__svg"></div>
+            </div>
+            <div class="introduction_nth">
+              <div class="introduction_nth__text">
+                <p>And turn them into a custom cursor, pattern and dropdown icons ...</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section>
+
+          <p class="text__l">If only ... </p>
+          <div id="configuration">
+            <div id="sliders">
+              <div>
+                <label for="sides">
+                  number of shape's sides
+                  <input type="range" id="sides">
+                </label>
+                <p id="sides_out"></p>
+              </div>
+              <div>
+                <label for="radius_ratio">
+                  shape's radius ratio
+                  <input type="range" id="radius_ratio">
+                </label>
+                <p id="radius_ratio_out"></p>
+              </div>
+              <div>
+                <label for="shapes_number">
+                  number of shapes
+                  <input type="range" min="0" max="40" id="shapes_number">
+                </label>
+                <p id="shapes_number_out"></p>
+              </div>
+              
+              <button id="apply_options" class="text__m">Show Me</button>
+            </div>
+            <div id="code_out">
+              <details >
+                <summary>first image options</summary>
+                <p id="options_out__shape"></p>
+              </details>
+              <details>
+                <summary>second image options</summary>
+                <p id="options_out__shapes"></p>
+              </details>
+              <details>
+                <summary>background pattern options</summary>
+                <p id="options_out__pattern"></p>
+              </details>
+            </div>
+          </div>
+          
+        </section>
+        <section id="preset">
+          <div class="select_con">
+            <select name="presets" id="presets" class="text__l">
+              <option value="basic_1">preset - basic 1</option>
+              <option value="basic_2">preset - basic 2</option>
+              <!-- <option value="basic_3">basic 3</option> -->
+              <option value="advanced_1">preset - advanced 1</option>
+              <option value="advanced_2">preset - advanced 2</option>
+              <option value="advanced_3">preset - advanced 3</option>
+              <option value="advanced_4">preset - advanced 4</option>
+              <option value="advanced_5" selected>preset - advanced 5</option>
+            </select>
+          </div>
+          
+          <div id="preset__svg"></div>
+        </section>
+        <section class="text__s" id="notes">
+          <p>To use the options above you should change css selectors and maybe css properties to make it suited to your own page.</p>
+          <p>There are more options you can tweak and this page is not complete yet, see the docs on Github. In there you can also find the above presets' code.</p>
+        </section>
+        <section>
+          <a href="https://github.com/ize-er/pointerize">Github</a>
+          
+        </section>
+      </main>
+    </div>
+    
+    <!-- <script type="module" src="lib/main.ts"></script> -->
+    <script type="module">
+      
+      /* 
+        For testing with a local server:
+        This file is used for the website and current imports are from built files so if you want to 
+        use this with the local testing server:
+         - uncomment the bellow imports and comment the ones further down (if you want to change styles,
+           comment the `link` to css file in the head too).
+         - In case you want to make commits after you're done testing here, remember to not add this file
+           or `main.ts` to them.
+        If you want to create something from scratch (and maybe have access to typescript) use `lib/main.ts`.
+      */
+
+      // import Pointerize from './lib/main.ts'
+      // import {
+      //   presetBasic1,
+      //   presetBasic2,
+      //   // presetBasic3, // it's a custom pointer and not really necessary, we already have one 
+      //   presetAdvanced1,
+      //   presetAdvanced2,
+      //   presetAdvanced3,
+      //   presetAdvanced4,
+      //   presetAdvanced5
+      // } from './lib/presets/full'
+      // import tokens from './lib/brand/tokens'
+
+      import Pointerize from './dist/pointerize.js'
+      import {
+        presetBasic1,
+        presetBasic2,
+        // presetBasic3, // it's a custom pointer and not really necessary, we already have one 
+        presetAdvanced1,
+        presetAdvanced2,
+        presetAdvanced3,
+        presetAdvanced4,
+        presetAdvanced5,
+      } from './dist__site/presets.js'
+      import tokens from './dist__site/tokens.js'
+
+
+      const { color_brand_1_2,
+              color_brand_2_2,
+              color_gray_2 } = { ...tokens.colors}
+      
+      // the default shape and shapes number used throughout the page. set the initial slider values too
+      const shape = {
+        type: 'polygon',
+        sides: 20,
+        svg_attributes: {
+          stroke: color_gray_2
+        },
+        ratios: [
+          {
+            type: 'radius',
+            options: {
+              value: 0.8
+            }
+          }
+        ]
+      }
+      document.querySelector('#sides').value = shape.sides
+      document.querySelector('#radius_ratio').value = shape.ratios[0].options.value
+      const shapesNumber = 4
+      document.querySelector('#shapes_number').value = shapesNumber
+
+      // pattern
+      let pointerize0th
+      function pattern(sides, radiusRatio, shapesNum) {
+
+        //0 pattern shapes
+        const patternShapes = [
+          {
+            type: 'polygon',
+            sides: shapesNum,
+            svg_attributes: {
+              'stroke-width': 0
+            },
+            ratios: [
+              {
+                type: 'size',
+                options: {
+                  value: 0.8
+                }
+              }
+            ],
+            guides: [
+              {
+                type: 'position'
+              }
+            ]
+          },
+        ]
+        // rest of the shapes
+        const shape0th = shape
+        shape0th.sides = sides
+        shape0th.ratios[0].options.value = radiusRatio
+        for (let i = 0; i < shapesNum; i++) {
+          patternShapes.push(shape0th)
+        }
+
+        //0 pattern target
+        const patternTarget = {
+          type: 'square',
+          svg_attributes: {
+            'stroke-width': '0',
+          },
+          guides: [
+            {
+              type: 'pattern',
+              options: {
+                area: 'fill',
+                ratios: {
+                  tile: 0.05,
+                  gap: {
+                    row: 0.01,
+                    column: 0.01
+                  }
+                },
+                shapes: patternShapes
+              },
+            },
+          ],
+        }
+
+        //0 options
+        let options0th = {
+          element__svg: {
+            svg_attributes: {
+              preserveAspectRatio: 'xMidYMid slice',
+            },
+          },
+          element__svg_container: {
+            css_properties: {
+              position: 'fixed',
+              top: '0px',
+              left: '0px',
+              width: '100%',
+              height: '100%',
+              'z-index': '-1'
+            },
+          },
+          shapes: [patternTarget],
+        }
+        
+        pointerize0th = new Pointerize(options0th)
+        pointerize0th.start()
+        return options0th
+      }
+      let optionsPattern = pattern(shape.sides, shape.ratios[0].options.value, shapesNumber)
+
+      // pointer
+      let pointerize1th
+      function pointer(sides, radiusRatio) {
+        //0 shapes
+        const shape1th = {
+          ...shape,
+          svg_attributes: {
+            'stroke-width': '0.6',
+            stroke: color_gray_2
+          }
+        }
+        shape1th.sides = sides
+        shape1th.ratios[0].options.value = radiusRatio
+        const shapesPointer = [
+          {
+            type: 'circle',
+            svg_attributes: {
+              'stroke-width': '0',
+              fill: color_brand_1_2
+            },
+            ratios: [
+              {
+                type: 'size', 
+                options: {
+                  value: 0.1
+                }
+              }
+            ]
+          },
+          {
+            type: 'circle',
+            svg_attributes: {
+              'stroke-width': '0.4',
+              stroke: color_brand_1_2
+            },
+            ratios: [
+              {
+                type: 'size', 
+                options: {
+                  value: 1
+                }
+              }
+            ]
+          },
+          shape1th,
+        ]
+
+        //0 options
+        let options1th = {
+          element__svg: {
+            svg_attributes: {
+              preserveAspectRatio: 'xMidYMid slice',
+            },
+          },
+          element__svg_container: {
+            css_properties: {
+              position: 'fixed',
+              top: '-100px',
+              left: '-100px',
+              width: '100px',
+              height: '100px',
+            },
+          },
+          interactions: [
+            {
+              type: 'pointer'
+            }
+          ],
+          shapes: shapesPointer,
+        }
+        
+        pointerize1th = new Pointerize(options1th)
+        pointerize1th.start()
+      }
+      pointer(shape.sides, shape.ratios[0].options.value)
+      
+      // introduction
+      let pointerize2th, pointerize3th
+      function introduction(sides, radiusRatio, shapesNum) {
+
+        //0 0th
+        //1 shapes
+        const shape2th = {
+          ...shape,
+          svg_attributes: {
+            stroke: color_brand_2_2
+          }
+        }
+        shape2th.sides = sides
+        shape2th.ratios[0].options.value = radiusRatio
+        const shapesIntro0th = [
+          shape2th
+        ]
+        //1 options
+        let options2th = {
+          element__svg_container: {
+            css_properties: {
+              width: '100%',
+              height: '100%'
+            }
+          },
+          css_selector__root: '#introduction_0th__svg',
+          shapes: shapesIntro0th
+        }
+        //1 initialize
+        pointerize2th = new Pointerize(options2th)
+        pointerize2th.start()
+
+        //0 1th
+        //1 shapes
+        const shapesIntro1th = [
+          {
+            type: 'polygon',
+            sides: shapesNum,
+            svg_attributes: {
+              'stroke-width': 0,
+            },
+            ratios: [
+              {
+                type: 'size',
+                options: {
+                  value: 0.8
+                }
+              }
+            ],
+            guides: [
+              {
+                type: 'position'
+              }
+            ]
+          },
+        ]
+        //1 rest of the shapes
+        const shape3th = {
+          ...shape,
+          svg_attributes: {
+            stroke: color_brand_2_2
+          }
+        }
+        shape3th.sides = sides
+        shape3th.ratios[0].options.value = radiusRatio
+        for (let i = 0; i < shapesNum; i++) {
+          shapesIntro1th.push(shape3th)
+        }
+        //1 options
+        let options3th = {
+          element__svg_container: {
+            css_properties: {
+              width: '100%',
+              height: '100%'
+            }
+          },
+          css_selector__root: '#introduction_1th__svg',
+          shapes: shapesIntro1th
+        }
+        //1 initialize
+        pointerize3th = new Pointerize(options3th)
+        pointerize3th.start()
+        return {
+          options2th,
+          options3th
+        }
+      }
+      let { options2th: optionsIntro0, options3th: optionsIntro1 } = introduction(shape.sides, shape.ratios[0].options.value, shapesNumber)
+      
+      // select element
+      let pointerize4th, pointerize5th
+      function select(sides, radiusRatio) {
+
+        // custom arrow
+        const shape4th = {
+          ...shape,
+          svg_attributes: {
+            'stroke-width': 0,
+            fill: color_brand_1_2
+          }
+        }
+        shape4th.sides = sides
+        shape4th.ratios[0].options.value = radiusRatio
+        const shapesSelect = [
+          shape4th
+        ]
+
+        // options for first one
+        let options4th = {
+          css_selector__root: '.select_con',
+          element__svg_container: {
+            css_properties: {
+              position: 'absolute',
+              right: '0.6em',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              'pointer-events': 'none',
+              height: '60%'
+            }
+          },
+          shapes: shapesSelect
+        }
+
+        // options for second one
+        let options5th = {
+          css_selector__root: '.select_con',
+          element__svg_container: {
+            css_properties: {
+              position: 'absolute',
+              left: '0.6em',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              'pointer-events': 'none',
+              height: '60%'
+            }
+          },
+          shapes: shapesSelect
+        }
+        
+        // first one
+        pointerize4th = new Pointerize(options4th)
+        pointerize4th.start()
+
+        // second one
+        pointerize5th = new Pointerize(options5th)
+        pointerize5th.start() 
+      }
+      select(shape.sides, shape.ratios[0].options.value)
+      
+      // event listeners for sliders
+      const elSides = document.querySelector('#sides')
+      const elSidesOut = document.querySelector('#sides_out')
+      elSidesOut.textContent = shape.sides
+      const elRadiusRatio = document.querySelector('#radius_ratio')
+      const elRadiusRatioOut = document.querySelector('#radius_ratio_out')
+      elRadiusRatioOut.textContent = shape.ratios[0].options.value
+      const elShapesNum = document.querySelector('#shapes_number')
+      const elShapesNumOut = document.querySelector('#shapes_number_out')
+      elShapesNumOut.textContent = shapesNumber
+      const elApply = document.querySelector('#apply_options')
+      const elOptionsOutShape = document.querySelector('#options_out__shape')
+      elOptionsOutShape.textContent = JSON.stringify(optionsIntro0)
+      const elOptionsOutShapes = document.querySelector('#options_out__shapes')
+      elOptionsOutShapes.textContent = JSON.stringify(optionsIntro1)
+      const elOptionsOutPattern = document.querySelector('#options_out__pattern')
+      elOptionsOutPattern.textContent = JSON.stringify(optionsPattern)
+
+      let sides = shape.sides
+      let radiusRatio = shape.ratios[0].options.value
+      let shapesNum = shapesNumber
+      elSides.addEventListener('change', (e) => {
+        sides = e.target.value
+        elSidesOut.textContent = sides
+      })
+      elRadiusRatio.addEventListener('change', (e) => {
+        radiusRatio = (+e.target.value / 10).toFixed(1)
+        elRadiusRatioOut.textContent = radiusRatio
+      })
+      elShapesNum.addEventListener('change', (e) => {
+        shapesNum = e.target.value
+        elShapesNumOut.textContent = shapesNum
+      })
+      elApply.addEventListener('click', (e) => {
+        // stop intances
+        pointerize0th.stop()
+        pointerize1th.stop()
+        pointerize2th.stop()
+        pointerize3th.stop()
+        pointerize4th.stop()
+        pointerize5th.stop()
+        // update shapes
+        optionsPattern = pattern(sides, radiusRatio, shapesNum)
+        pointer(sides, radiusRatio)
+        ;({ options2th: optionsIntro0, options3th: optionsIntro1 } = introduction(sides, radiusRatio, shapesNum))
+        select(sides, radiusRatio)
+        // update the options
+        elOptionsOutShape.textContent = JSON.stringify(optionsIntro0)
+        elOptionsOutShapes.textContent = JSON.stringify(optionsIntro1)
+        elOptionsOutPattern.textContent = JSON.stringify(optionsPattern)
+      })
+
+      // presets
+      const presetMap = {
+        basic_1: presetBasic1,
+        basic_2: presetBasic2,
+        // basic_3: presetBasic3,
+        advanced_1: presetAdvanced1,
+        advanced_2: presetAdvanced2,
+        advanced_3: presetAdvanced3,
+        advanced_4: presetAdvanced4,
+        advanced_5: presetAdvanced5
+      }
+      
+      let currentInstance = new Pointerize({
+        css_selector__root: '#preset__svg',
+        ...presetAdvanced5()
+      })
+      currentInstance.start()
+
+      document.querySelector('#presets').addEventListener('change', (e) => {
+        currentInstance.stop()
+        currentInstance = new Pointerize({
+          css_selector__root: '#preset__svg',
+          ...presetMap[e.target.value]()
+        })
+        currentInstance.start()
+      })
+
+    </script>
+  </body>
+</html>

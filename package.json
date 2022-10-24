@@ -1,0 +1,79 @@
+{
+  "name": "@ize-er/pointerize",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Pointerize is suited to almost any task that involves shapes (SVG)",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/pointerize.umd.cjs",
+  "module": "./dist/pointerize.js",
+  "exports": {
+    ".": {
+      "import": "./dist/pointerize.js",
+      "require": "./dist/pointerize.umd.cjs"
+    },
+    "./style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
+    }
+  },
+  "types": "./dist/pointerize.d.ts",
+  "keywords": [
+    "shape",
+    "svg",
+    "pattern",
+    "cursor",
+    "pointer",
+    "mouse",
+    "background",
+    "icon",
+    "javascript",
+    "typescript"
+  ],
+  "homepage": "https://github.com/ize-er/pointerize#readme",
+  "bugs": {
+    "url": "https://github.com/ize-er/pointerize/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ize-er/pointerize.git"
+  },
+  "author": {
+    "name": "Abolfazl Faturechi",
+    "email": "afaturechi@gmail.com"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run build:site && tsc && vite build && npm run build:types",
+    "build:types": "tsup ./lib/pointerize.ts --dts-only",
+    "build:site": "vite build -c site.config.ts",
+    "preview": "vite preview",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "lint": "eslint .",
+    "format": "prettier . --write",
+    "preversion": "npm run test && npm run lint && npm run format",
+    "version": "rm -rf dist && npm run build",
+    "postversion": "git push && git push --tags",
+    "release:patch": "npm version patch && npm publish --access public",
+    "release:minor": "npm version minor && npm publish --access public",
+    "release:major": "npm version major && npm publish --access public"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.4.0",
+    "@types/jest": "^28.1.8",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
+    "eslint": "^8.20.0",
+    "eslint-config-prettier": "^8.5.0",
+    "jest": "^28.1.3",
+    "jest-environment-jsdom": "^28.1.3",
+    "prettier": "2.7.1",
+    "ts-jest": "^28.0.7",
+    "tsup": "^6.2.3",
+    "typescript": "^4.5.4",
+    "vite": "^3.1.8"
+  }
+}
