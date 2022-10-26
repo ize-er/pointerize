@@ -269,7 +269,7 @@ export interface IPresetsEffects {
   glow: IElementPresetEffects
 }
 export interface IElGuide {
-  name: 'polygon' | undefined
+  type: 'polygon' | undefined
   points: Array<Array<number>> | undefined
 }
 // debounced addEventListener using requestAnimationFrame

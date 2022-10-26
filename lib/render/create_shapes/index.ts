@@ -18,14 +18,14 @@ const createShapes = (
   sizeInnerCustom?: { width: number; height: number }
 ) => {
   /*0 
-    adjust the each shape's size based on `stroke-width`: `stroke-width` is subtracted from the size so that the element's
-    final size doesn't exceed the one set on `.size` property (kind of like CSS `box-sizing: border-box`).
-    find out whether there is a position guide among shapes properties, if so, find it's points to use later with shapes
+    Adjust the each shape's size based on `stroke-width`: `stroke-width` is subtracted from the size so that 
+    the element's final size stays the same (kind of like CSS `box-sizing: border-box`).
+    If there is a position guide among shapes , find it's points. 
   */
 
   const { defaultsSvgElsAttrs, defaultsShape } = makeDefaults(sizeInner)
 
-  const elGuide: IElGuide = { name: undefined, points: undefined }
+  const elGuide: IElGuide = { type: undefined, points: undefined }
 
   //1 find position guide shape's points
   for (const shape of shapesMerged) {
@@ -64,7 +64,7 @@ const createShapes = (
           'array'
         )
         if (points !== null) {
-          elGuide.name = 'polygon'
+          elGuide.type = 'polygon'
           elGuide.points = points as [number, number][]
         }
       }
