@@ -127,6 +127,8 @@ console.log('The final merged and updated options used for creating this instanc
 // Also note that you can create as many instances as you'd like
 ```
 
+<p style="text-align:right;"><a href="#top">back to top</a></p>
+
 ## Let Your Imagination Loose
 
 Discover what you can do with Pointerize by visiting the [website](https://ize-er.github.io/pointerize/) and 
