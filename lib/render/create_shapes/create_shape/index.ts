@@ -55,7 +55,6 @@ const createShape = (
           let attrId
 
           if (guideOptions.preset !== undefined) {
-
             // presets
             attrId = `-_${elContainerNth[0]}__pattern_${guideOptions.preset}_${nth}th`
 
@@ -69,7 +68,6 @@ const createShape = (
 
             elPattern = createSvgElementsDeep(elInfoUpdated) as SVGPatternElement
           } else if (guideOptions.custom !== undefined) {
-
             // custom pattern
             attrId = `-_${elContainerNth[0]}__pattern_custom_${nth}th`
 
@@ -83,7 +81,6 @@ const createShape = (
 
             elPattern = createSvgElementsDeep(elInfoUpdated) as SVGPatternElement
           } else if (Array.isArray(guideOptions.shapes) && guideOptions.shapes.length) {
-
             const ratioTiles = guideOptions.ratios?.tile as number
             const ratioGapRow = guideOptions.ratios?.gap?.row as number
             const ratioGapColumn = guideOptions.ratios?.gap?.column as number

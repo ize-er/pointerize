@@ -6,7 +6,6 @@ import { InvalidRoot } from './errors'
 import createShapes from './render/create_shapes'
 
 export default class Pointerize implements IPointerize {
-  
   element__root: HTMLElement
   options__merged: IOptionsMerged // merge of default options and user's options
   element__svg: SVGSVGElement | null // svg element
@@ -67,10 +66,11 @@ export default class Pointerize implements IPointerize {
     //4 add the id specific to this instance
     let nth
     const elsPointerize = Array.from(document.querySelectorAll('[id*=-_pointerize__container]'))
-    if (elsPointerize.length === 0) {// if there are no other instances, this one becomes 0
+    if (elsPointerize.length === 0) {
+      // if there are no other instances, this one becomes 0
       nth = '0'
-    }
-    else { // find the last element's `nth` and this one becomes `n+1`
+    } else {
+      // find the last element's `nth` and this one becomes `n+1`
       let nthLargest = -1
       for (const el of elsPointerize) {
         const id = +(el.getAttribute('id')?.match(/(?<number>\d+)th$/)?.groups?.number as string)
@@ -83,7 +83,7 @@ export default class Pointerize implements IPointerize {
     const attrId = `-_pointerize__container_${nth}th`
     container.id = attrId
     this.id = attrId
-    
+
     //4 add the general glass
     container.classList.add('-_pointerize__container')
 
@@ -199,7 +199,6 @@ export default class Pointerize implements IPointerize {
         if (eventTarget.dataset.pointerize !== 'pointer__scale__child') {
           // if the element is not a child of 'pointer__scale' target
           if (container.classList.contains('-_pointerize__container__hover')) {
-            
             // `-_pointerize__container__hover__temp` is removed automatically by transitionend event
 
             container.classList.remove('-_pointerize__container__hover')

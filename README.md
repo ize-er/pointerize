@@ -73,6 +73,7 @@ a wide variety of shapes and patterns to be used as:
 Add Pointerize to your project either as an NPM package or from a CDN:
 
 - NPM:
+
   - install
 
   ```bash
@@ -87,10 +88,11 @@ Add Pointerize to your project either as an NPM package or from a CDN:
   ```
 
 - CDN
+
   - html
 
   ```html
-  <link rel="stylesheet" href="https://unpkg.com/@ize-er/pointerize@1/dist/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@ize-er/pointerize@1/dist/style.css" />
   ```
 
   - import
@@ -102,7 +104,7 @@ Add Pointerize to your project either as an NPM package or from a CDN:
 And then
 
 ```js
-const options = { ... } 
+const options = { ... }
 const pointerize = new Pointerize(options)
 
 pointerize.start() // starts
@@ -111,9 +113,9 @@ pointerize.start() // starts
 // more methods that you can use
 pointerize.hide() /* makes it invisible (if it's used as a custom pointer,
                      show the default pointer if it's not already visible) */
-pointerize.show() /* makes it visible (if it's used as a custom pointer, 
+pointerize.show() /* makes it visible (if it's used as a custom pointer,
                      removes the default pointer if necessary) */
-pointerize.stop() /* removes elements and event listeners (if there are any ) 
+pointerize.stop() /* removes elements and event listeners (if there are any )
                      (if it's used as a custom pointer, show the default pointer
                      if it's not already visible) */
 
@@ -131,9 +133,8 @@ console.log('The final merged and updated options used for creating this instanc
 
 ## Let Your Imagination Loose
 
-Discover what you can do with Pointerize by visiting the [website](https://ize-er.github.io/pointerize/) and 
-tinkering around with the presets in `presets/full.ts`. The possibilities are *limitless*
-
+Discover what you can do with Pointerize by visiting the [website](https://ize-er.github.io/pointerize/) and
+tinkering around with the presets in `presets/full.ts`. The possibilities are _limitless_
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
@@ -161,33 +162,39 @@ tinkering around with the presets in `presets/full.ts`. The possibilities are *l
       }
     }
     ```
+
 ### Potential Conflicts
-  - Pattern:
-    - If svg attributes `stroke`/`fill` are specified on a shape that is a pattern guide, the pattern
-      would overwrite those values based on whether it's assigned to the `fill` or `stroke` (by `.area`).
-  - Size:
-    - It is not a good idea to set both size related attributes in `svg_attributes` and size ratio. (this may change)
-  - Animations:
-    - If you choose to use a preset and make customizations using `css_properties`/`keyframes`, they will be
-      merged and your options take precedence over preset's. for example if the preset has two keyframes defined
-      and your options has three, the two from preset will be merged with the first two of yours.
-  - Only use pixel values (e.g. `"2"`) for `stroke-width` in `svg_attributes`. (this may change)
-  - CSS styles overwrite SVG attribute styling.
+
+- Pattern:
+  - If svg attributes `stroke`/`fill` are specified on a shape that is a pattern guide, the pattern
+    would overwrite those values based on whether it's assigned to the `fill` or `stroke` (by `.area`).
+- Size:
+  - It is not a good idea to set both size related attributes in `svg_attributes` and size ratio. (this may change)
+- Animations:
+  - If you choose to use a preset and make customizations using `css_properties`/`keyframes`, they will be
+    merged and your options take precedence over preset's. for example if the preset has two keyframes defined
+    and your options has three, the two from preset will be merged with the first two of yours.
+- Only use pixel values (e.g. `"2"`) for `stroke-width` in `svg_attributes`. (this may change)
+- CSS styles overwrite SVG attribute styling.
+
 ### Simplify Options Creation
+
 When there is a large number of shapes you want to specify or for any other option that would be
 cumbersome to type out you can simplify the process by using Javascript. See the advanced presets for examples.
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
-## Known Issues  
-  The issues we are aware of and will be working on to fix:
-  - The behavior for transform-related properties (e.g. rotate animation) is incorrect.
-    It can happen with elements used on a position/pattern guide or when you specify a rotate transfrom through `svg_attributes`. 
-    Probably the correct `transform-origin` will be applied to the elements to solve the problem.
-    You might like it the way it is! but please do not rely on it as it will change.
-  - Inconsistencies in options such as:
-    - If an element is chosen as position guide, the other elements are automatically placed on it. the right way is
-      specifying the desired elements in the `shapes` property just like pattern guide.
+## Known Issues
+
+The issues we are aware of and will be working on to fix:
+
+- The behavior for transform-related properties (e.g. rotate animation) is incorrect.
+  It can happen with elements used on a position/pattern guide or when you specify a rotate transfrom through `svg_attributes`.
+  Probably the correct `transform-origin` will be applied to the elements to solve the problem.
+  You might like it the way it is! but please do not rely on it as it will change.
+- Inconsistencies in options such as:
+  - If an element is chosen as position guide, the other elements are automatically placed on it. the right way is
+    specifying the desired elements in the `shapes` property just like pattern guide.
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
@@ -195,16 +202,18 @@ cumbersome to type out you can simplify the process by using Javascript. See the
 
 I am using the principles of a naming/coding methodology/convention that I am working on and that I may publish in the future.
 You may see it in:
+
 - The way things are named (CSS class names, id attributes, API options and Javascript code).
-- The way comments are written.  
+- The way comments are written.
 
 It is helpful to know:
-  - Zero-based numbering is used (numbers start from `0`).
-  - `<number>th` represents a variation of something: `0th` is the first variation.
-  - Using numbers at the beginning of comments is a way of sectioning and grouping the related comments and code together.
-    for example, `//0 comment here` is the first depth. same-number comments are in the same depth and they are the children of the
-    smaller number that came before (just like a tree structure). It helps us identify the relation between code snippets
-    that are in the same scope.
+
+- Zero-based numbering is used (numbers start from `0`).
+- `<number>th` represents a variation of something: `0th` is the first variation.
+- Using numbers at the beginning of comments is a way of sectioning and grouping the related comments and code together.
+  for example, `//0 comment here` is the first depth. same-number comments are in the same depth and they are the children of the
+  smaller number that came before (just like a tree structure). It helps us identify the relation between code snippets
+  that are in the same scope.
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
@@ -228,7 +237,9 @@ Clone the repository. You can find:
 ```bash
 npm run dev
 ```
+
 > Note: use `main.ts`.
+
 ### Run Unit Tests
 
 ```bash

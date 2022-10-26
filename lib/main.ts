@@ -12,7 +12,7 @@ export default Pointerize
 
 // import type { IOptions } from './types'
 // // you can use these presets if you want
-// import { 
+// import {
 //         presetBasic1,
 //          presetBasic2,
 //          presetBasic3,
@@ -20,9 +20,8 @@ export default Pointerize
 //          presetAdvanced2,
 //          presetAdvanced3,
 //          presetAdvanced4,
-//          presetAdvanced5 
+//          presetAdvanced5
 //         } from './presets/full'
-
 
 // document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 //   <h1>Pointerize</h1>

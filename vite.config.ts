@@ -7,20 +7,18 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'lib/main.ts'),
       name: 'Pointerize',
-      fileName: 'pointerize'
+      fileName: 'pointerize',
     },
     rollupOptions: {
-      output: 
-        {
-          banner: `/**
+      output: {
+        banner: `/**
                     * @license Pointerize
                     * Copyright (c) 2022-present Abolfazl Faturechi
                     * 
                     * This source code is licensed under the MIT license found in the
                     * LICENSE file at https://github.com/ize-er/pointerize.
                     */`,
-        
-        }
+      },
     },
-  }
+  },
 })

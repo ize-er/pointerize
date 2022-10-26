@@ -66,7 +66,7 @@ export const makeRadialPoints = (
     for (let i = 0; i <= sides; i++) {
       if (radiusRatio.type === 'alternate') {
         radius = size / 2
-        radius = (i%2 === 0) ? radius : radius * radiusRatio.value
+        radius = i % 2 === 0 ? radius : radius * radiusRatio.value
       } else {
         // `accumulate`
         i !== 0 && (radius = radius * radiusRatio.value)

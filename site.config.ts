@@ -8,18 +8,16 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'presets/full.ts'),
       formats: ['es'],
-      fileName: "[name]"
+      fileName: '[name]',
     },
     rollupOptions: {
-      input: 
-        {
-           tokens: resolve(__dirname, 'lib/brand/tokens.ts'),
-           presets: resolve(__dirname, 'lib/presets/full.ts'),
+      input: {
+        tokens: resolve(__dirname, 'lib/brand/tokens.ts'),
+        presets: resolve(__dirname, 'lib/presets/full.ts'),
       },
-      output: 
-        {
-          dir: 'dist__site'
-      }
+      output: {
+        dir: 'dist__site',
+      },
     },
-  }
+  },
 })

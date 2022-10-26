@@ -4,9 +4,9 @@ import type { IOptionsShape } from '../types'
  * Builds the shapes property to use in options
  * @param number the number of shapes
  * @param options it has the same structure as options passed to the `pointerize` constructor except
- * all the properties should be wrapped in an Array (except objects) if an Array has one member, 
+ * all the properties should be wrapped in an Array (except objects) if an Array has one member,
  * it will be applied to all the shapes and if more, they will be applied in order to all the shapes.
- * Experimental 
+ * Experimental
  * @returns {IOptionsShape[]} shapes
  */
 
