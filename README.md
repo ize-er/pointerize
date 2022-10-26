@@ -58,7 +58,7 @@ Pointerize is suited to almost any task that involves shapes (SVG), here are the
 
 ### Flexibility
 
-The mixture of the above-mentioned points and various API options means you can create  
+The mixture of the above-mentioned points and various API options means you can create
 a wide variety of shapes and patterns to be used as:
 
 - **Backgrounds/Foregrounds**
@@ -220,9 +220,8 @@ Some of them may change completely. You may also find `TODO`s in the source code
 
 Clone the repository. You can find:
 
-- The source code (_typescript_) in the `lib` folder
+- The source code in the `lib` folder
 - The tests (_Jest_) in the `test` folder
-- The web page for the library: `index.html`
 
 ### Start a Dev Server
 
