@@ -229,7 +229,7 @@ Clone the repository. You can find:
 ```bash
 npm run dev
 ```
-> Note: there are two ways to use the local dev server, see `main.ts` and `index.html` for instructions.
+> Note: use `main.ts`.
 ### Run Unit Tests
 
 ```bash
