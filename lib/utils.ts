@@ -22,8 +22,7 @@ export const addListenerDebounce = <T>(
   return eventHandler
 }
 
-/* create CSS pixel value (a string), since both number and string are accepted as values for pixels, if user supplies a number,
-turn it into pixles, otherwise keep the string as is. (this is only necessary when dealing with css properties. for svg attributes, numbers are already in pixels) */
+/* If it's a number, turn it into pixles (string), otherwise keep the string as is.*/
 export const makeCssPixelValue = (value: string | number): string => {
   if (typeof value === 'string') {
     return value
