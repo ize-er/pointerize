@@ -7,6 +7,7 @@ import { UnspecifiedProperty } from '../../../errors'
 import createShapes from '..'
 import processShapes from '../../../process_options/process_shapes'
 import makeDefaults from '../../../make_defaults'
+import { makeRadialPoints } from '../../utils'
 
 const createShape = (
   shape: IOptionsShapeMerged,
@@ -46,6 +47,7 @@ const createShape = (
       const guideOptions = guide.options
       if (guide.type === 'pattern') {
         if (guideOptions !== undefined) {
+
           // `defs` element. if there's already a descendant `defs` element, don't make another
           let elDefs = elementRoot.querySelector(':scope > defs')
           elDefs = elDefs ?? document.createElementNS('http://www.w3.org/2000/svg', 'defs')
@@ -137,9 +139,9 @@ const createShape = (
             }
 
             //1 create pattern shapes
-            createShapes(patternShapesUpdate, elPattern, sizeInner, elementSvg, sizeInnerWithGap)
+            createShapes(patternShapesUpdate, elPattern, sizeInner, elementSvg, { sizeInnerCustom: sizeInnerWithGap} )
           } else {
-            throw new UnspecifiedProperty('pattern guide options', ['preset', 'custom'])
+            throw new UnspecifiedProperty('pattern guide options', ['shapes'])
           }
 
           // set pattern on element
@@ -150,6 +152,47 @@ const createShape = (
           // append
           elDefs.appendChild(elPattern)
           elementRoot.insertAdjacentElement('afterbegin', elDefs)
+        }
+      }
+      if (guide.type === 'position') {
+        if (guideOptions !== undefined) {
+          if (Array.isArray(guideOptions.shapes) && guideOptions.shapes.length) {
+
+            let positionPoints
+            
+            if (shape.sides !== undefined) {
+
+              let ratioRadius
+              for (const r of shape.ratios) {
+                if (r.type === 'radius') {
+                  ratioRadius = {
+                    type: r.options.type,
+                    value: r.options.value
+                  }
+                  break
+                }
+              }
+
+              const points = makeRadialPoints(
+                shape.size,
+                ratioRadius as { type: string; value: number },
+                shape.sides,
+                [0, 0],
+                'array'
+              )
+              if (points !== null) {
+                positionPoints = points as [number, number][]
+              }
+            }
+
+            // processShapes
+            const shapes = processShapes(sizeInner, guideOptions.shapes)
+
+            // create shapes
+            createShapes(shapes, elementRoot, sizeInner, elementSvg, { positionPoints })
+          } else {
+            throw new UnspecifiedProperty('position guide options', ['shapes'])
+          }
         }
       }
     }

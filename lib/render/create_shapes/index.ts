@@ -1,4 +1,4 @@
-import type { IElGuide, IDefaultsSvgEls, IOptionsShapeMerged } from '../../types'
+import type { IDefaultsSvgEls, IOptionsShapeMerged } from '../../types'
 import { makeRadialPoints, makePosition } from '../utils'
 import makeDefaults from '../../make_defaults'
 import createShape from './create_shape'
@@ -8,99 +8,37 @@ import createShape from './create_shape'
  * @param shapesMerged
  * @param elementRoot
  * @param sizeInner
- * @param sizeInnerCustom used for makePostion in order to set a custom position (used with pattern gap)
+ * @param guidesInfo // informtion that is needed when these shapes are used for a guide shape
+ *   `.sizeInnerCustom` used for `makePostion` in order to set a custom position (used with pattern gap)
+ *   `.elGuide` used for `makePosition` in order to set a custom position (position guide)
  */
 const createShapes = (
   shapesMerged: IOptionsShapeMerged[],
   elementRoot: SVGSVGElement | SVGPatternElement,
   sizeInner: number,
   elementSvg: SVGSVGElement,
-  sizeInnerCustom?: { width: number; height: number }
+  guidesInfo?: {
+    sizeInnerCustom?: { width: number; height: number } | undefined,
+    positionPoints?: [number, number][] | undefined
+  }
 ) => {
-  /*0 
-    Adjust the each shape's size based on `stroke-width`: `stroke-width` is subtracted from the size so that 
-    the element's final size stays the same (kind of like CSS `box-sizing: border-box`).
-    If there is a position guide among shapes , find it's points. 
-  */
-
+  
   const { defaultsSvgElsAttrs, defaultsShape } = makeDefaults(sizeInner)
 
-  const elGuide: IElGuide = { type: undefined, points: undefined }
-
-  //1 find position guide shape's points
-  for (const shape of shapesMerged) {
-    // if it's a positoin guide shape, find the points
-    // TODO?: should the position argument of `makeRadialPoints` be calculated or is [0, 0] OK?
-    let isPositionGuide = false
-    if (Array.isArray(shape.guides)) {
-      for (const guide of shape.guides) {
-        if (guide.type === 'position') {
-          isPositionGuide = true
-          break
-        }
-      }
-    }
-    let ratioRadius:
-      | {
-          type?: string
-          value: number
-        }
-      | undefined
-    if (Array.isArray(shape.ratios)) {
-      for (const ratio of shape.ratios) {
-        if (ratio.type === 'radius') {
-          ratioRadius = ratio.options
-          break
-        }
-      }
-    }
-    if (isPositionGuide) {
-      if (shape.sides !== undefined) {
-        const points = makeRadialPoints(
-          shape.size,
-          ratioRadius as { type: string; value: number },
-          shape.sides,
-          [0, 0],
-          'array'
-        )
-        if (points !== null) {
-          elGuide.type = 'polygon'
-          elGuide.points = points as [number, number][]
-        }
-      }
-    }
-  }
-
-  //0 process shapes for the second time
-  //1 arguments for each shape to be used with createShape function. the results for each shape will be put in here.
+  // arguments for each shape to be used with createShape function. the results for each shape will be put in here.
   const createShapeArgs: [IOptionsShapeMerged, number][] = []
 
   let nth = -1
   for (const s of shapesMerged) {
-    // shared variables and positions
+
     nth++
     let newShape: IOptionsShapeMerged
     const size = s.size
 
     // find element's position
-    // if it's the a position guide shape, reduce the index by one
-    let isPositionGuide = false
-    if (Array.isArray(s.guides)) {
-      for (const guide of s.guides) {
-        if (guide.type === 'position') {
-          isPositionGuide = true
-          break
-        }
-      }
-    }
-    const nthPosition = isPositionGuide ? nth - 1 : nth
-
-    let positions
-    if (sizeInnerCustom) {
-      positions = makePosition(size, sizeInnerCustom, elGuide, isPositionGuide, nthPosition - 1)
-    } else {
-      positions = makePosition(size, { width: sizeInner, height: sizeInner }, elGuide, isPositionGuide, nthPosition - 1)
-    }
+    const sizeInnerUpdated = guidesInfo?.sizeInnerCustom || { width: sizeInner, height: sizeInner }
+    const posPointsUpdated = guidesInfo?.positionPoints
+    const positions = makePosition(size, sizeInnerUpdated, posPointsUpdated, nth)
     const positionPolygon = positions.positionPolygon
     const positionRect = positions.positionRect
 

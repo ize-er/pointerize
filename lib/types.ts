@@ -24,10 +24,12 @@ export interface IOptionsShapeGuide {
   // `position` determines whether this shape should be used as a guiding path for other shapes to be on, only for polygon, circle
   type: 'position' | 'pattern' | 'motion'
   options?: {
-    // pattern options
+    //0 shared options
+    //1 pattern and position
+    shapes?: IOptionsShape[]
+    //0 pattern options
     preset?: 'circle'
     custom?: IElement
-    shapes?: IOptionsShape[]
     area?: 'fill' | 'stroke'
     ratios?: {
       tile?: number // ratio of the tile's size to the size of the tiles' container
@@ -37,7 +39,6 @@ export interface IOptionsShapeGuide {
         column: number
       }
     }
-    // other options
   }
 }
 export interface IOptionsShape {

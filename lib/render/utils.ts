@@ -1,12 +1,11 @@
-import type { IElGuide, IAnimationsOptions } from '../types'
+import type { IAnimationsOptions } from '../types'
 import { presetsAnimation } from '../presets/misc'
 
 // finds shape's position
 export const makePosition = (
   sizeShape: number,
   sizeInner: { width: number; height: number },
-  elGuide: IElGuide,
-  isGuide: boolean | undefined,
+  positionPoints: [number, number][] | undefined,
   nth: number
 ) => {
   let positionRect: [number, number]
@@ -18,12 +17,11 @@ export const makePosition = (
   const posPolyMemberY = sizeInner.height / 2
   if (sizeShape < sizeInner.width && sizeShape < sizeInner.height) {
     // if there is a guide shape
-    if (elGuide.points && !isGuide) {
-      // if there's a position guide shape and current shape is not it (the guide shape itself should be positioned normally)
+    if (positionPoints !== undefined) {
       // polygon
-      positionPolygon = [posPolyMemberX + elGuide.points[nth][0], posPolyMemberY + elGuide.points[nth][1]]
+      positionPolygon = [posPolyMemberX + positionPoints[nth][0], posPolyMemberY + positionPoints[nth][1]]
       // rectangle
-      positionRect = [posRectMemberX + elGuide.points[nth][0], posRectMemberY + elGuide.points[nth][1]]
+      positionRect = [posRectMemberX + positionPoints[nth][0], posRectMemberY + positionPoints[nth][1]]
     } else {
       positionPolygon = [posPolyMemberX, posPolyMemberY]
       positionRect = [posRectMemberX, posRectMemberY]
@@ -31,10 +29,9 @@ export const makePosition = (
   } else {
     const posPolyMember = sizeShape / 2
     // if there is a guide shape
-    if (elGuide.points && !isGuide) {
-      // if there's a position guide shape and current shape is not it (the guide shape itself should be positioned normally)
-      positionPolygon = [posPolyMember + elGuide.points[nth][0], posPolyMember + elGuide.points[nth][1]]
-      positionRect = [posRectMemberX + elGuide.points[nth][0], posRectMemberY + elGuide.points[nth][1]]
+    if (positionPoints !== undefined) {
+      positionPolygon = [posPolyMember + positionPoints[nth][0], posPolyMember + positionPoints[nth][1]]
+      positionRect = [posRectMemberX + positionPoints[nth][0], posRectMemberY + positionPoints[nth][1]]
     } else {
       positionPolygon = [posPolyMember, posPolyMember]
       positionRect = [posRectMemberX, posRectMemberY]
