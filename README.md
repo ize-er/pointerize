@@ -192,9 +192,6 @@ The issues we are aware of and will be working on to fix:
   It can happen with elements used on a position/pattern guide or when you specify a rotate transfrom through `svg_attributes`.
   Probably the correct `transform-origin` will be applied to the elements to solve the problem.
   You might like it the way it is! but please do not rely on it as it will change.
-- Inconsistencies in options such as:
-  - If an element is chosen as position guide, the other elements are automatically placed on it. the right way is
-    specifying the desired elements in the `shapes` property just like pattern guide.
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
