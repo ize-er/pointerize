@@ -9,4 +9,5 @@
 - The last advanced preset is changed completely.
 
 ### Fixed
-- ID of guide shapes' shapes is unique
+- ID of guide shapes' shapes is unique.
+- Behavior for transform-related things is fixed. The correct `transform-origin` is set on shapes.
