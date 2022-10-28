@@ -8,9 +8,7 @@ import createShape from './create_shape'
  * @param shapesMerged
  * @param elementRoot
  * @param sizeInner
- * @param guidesInfo // informtion that is needed when these shapes are used for a guide shape
- *   `.sizeInnerCustom` used for `makePostion` in order to set a custom position (used with pattern gap)
- *   `.elGuide` used for `makePosition` in order to set a custom position (position guide)
+ * @param guidesInfo informtion that is needed when these shapes are used for a guide shape
  */
 const createShapes = (
   shapesMerged: IOptionsShapeMerged[],
@@ -19,7 +17,8 @@ const createShapes = (
   elementSvg: SVGSVGElement,
   guidesInfo?: {
     sizeInnerCustom?: { width: number; height: number } | undefined,
-    positionPoints?: [number, number][] | undefined
+    positionPoints?: [number, number][] | undefined,
+    parentId?: string
   }
 ) => {
   
@@ -309,7 +308,7 @@ const createShapes = (
 
   // create svg elements and append to root element
   for (const args of createShapeArgs) {
-    createShape(args[0], args[1], elementRoot, sizeInner, elementSvg)
+    createShape(args[0], args[1], elementRoot, sizeInner, elementSvg, guidesInfo?.parentId)
   }
 }
 
