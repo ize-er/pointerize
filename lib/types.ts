@@ -269,10 +269,6 @@ export interface IElementPresetEffects extends Omit<IElement, 'element_children'
 export interface IPresetsEffects {
   glow: IElementPresetEffects
 }
-export interface IElGuide {
-  type: 'polygon' | undefined
-  points: Array<Array<number>> | undefined
-}
 // debounced addEventListener using requestAnimationFrame
 export interface IEventHandler<T> {
   (event: T): void
