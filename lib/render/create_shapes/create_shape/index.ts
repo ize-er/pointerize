@@ -15,15 +15,18 @@ const createShape = (
   elementRoot: SVGSVGElement | SVGPatternElement,
   sizeInner: number,
   elementSvg: SVGSVGElement,
-  parentId?: string
+  guidesInfo?: { // informtion that is needed when this shape is used for a guide shape
+    parentId?: string,
+    position?: [number, number]
+  }
 ): void => {
   const attrs = shape.svg_attributes
   const effects = shape.effects
   const elContainerNth = elementSvg.parentElement?.id.match(/\dth/) as RegExpMatchArray
 
   let elId
-  if (parentId !== undefined) {
-    elId = `${parentId}__shape_${nth}th_${shape.type}`
+  if (guidesInfo?.parentId !== undefined) {
+    elId = `${guidesInfo.parentId}__shape_${nth}th_${shape.type}`
   }
   else {
     elId = `-_${elContainerNth[0]}__shape_${nth}th_${shape.type}`
@@ -40,7 +43,7 @@ const createShape = (
     }
   }
   // animations
-  applyAnimations(el, shape, sizeInner, elementSvg)
+  applyAnimations(el, shape, elementSvg, (guidesInfo?.position && {position: guidesInfo?.position}))
   // effects
   if (effects !== undefined) {
     const { filterEls, filterIds } = applyEffects(effects, nth, elContainerNth[0])

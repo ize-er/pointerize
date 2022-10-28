@@ -170,7 +170,7 @@ const makeDefaults = (size = 32) => {
       'animation-duration': duration,
       'animation-iteration-count': 'infinite',
       'animation-timing-function': 'linear',
-      'transform-origin': `0px 0px`,
+      'transform-origin': `${size/2}px ${size/2}px`,
     },
   }
 

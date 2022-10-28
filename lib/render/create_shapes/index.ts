@@ -25,7 +25,7 @@ const createShapes = (
   const { defaultsSvgElsAttrs, defaultsShape } = makeDefaults(sizeInner)
 
   // arguments for each shape to be used with createShape function. the results for each shape will be put in here.
-  const createShapeArgs: [IOptionsShapeMerged, number][] = []
+  const createShapeArgs: [IOptionsShapeMerged, number, [number, number]][] = []
 
   let nth = -1
   for (const s of shapesMerged) {
@@ -76,6 +76,7 @@ const createShapes = (
             ...newShape,
           },
           nth,
+          positionPolygon
         ])
 
         break
@@ -99,6 +100,7 @@ const createShapes = (
             ...newShape,
           },
           nth,
+          positionPolygon
         ])
 
         break
@@ -123,6 +125,7 @@ const createShapes = (
             ...newShape,
           },
           nth,
+          positionPolygon
         ])
 
         break
@@ -153,6 +156,7 @@ const createShapes = (
             ...newShape,
           },
           nth,
+          positionPolygon
         ])
 
         break
@@ -178,6 +182,7 @@ const createShapes = (
               ...newShape,
             },
             nth,
+            positionPolygon
           ])
         }
         break
@@ -213,6 +218,7 @@ const createShapes = (
                 ...newShape,
               },
               nth,
+              positionPolygon
             ])
           }
         }
@@ -240,6 +246,7 @@ const createShapes = (
               ...newShape,
             },
             nth,
+            positionPolygon
           ])
         }
         break
@@ -282,6 +289,7 @@ const createShapes = (
             ...newShape,
           },
           nth,
+          positionPolygon
         ])
 
         break
@@ -301,14 +309,17 @@ const createShapes = (
             ...newShape,
           },
           nth,
+          positionPolygon
         ])
       }
     }
   }
 
   // create svg elements and append to root element
+  let index = -1
   for (const args of createShapeArgs) {
-    createShape(args[0], args[1], elementRoot, sizeInner, elementSvg, guidesInfo?.parentId)
+    index++
+    createShape(args[0], args[1], elementRoot, sizeInner, elementSvg, {parentId: guidesInfo?.parentId, position: args[2]})
   }
 }
 

@@ -104,13 +104,16 @@ export const makeRadialPoints = (
    animations
    change the necessary attributes and return the updated attributes 
 */
-export const updateAnimation = (animation: IAnimationsOptions, sizeInner: number): IAnimationsOptions | null => {
-  // add the animation attrs we calculated and then the user's over them
-  const originCoord = sizeInner / 2
-  const transformOrigin = `${originCoord}px ${originCoord}px`
+export const updateAnimation = (animation: IAnimationsOptions, guidesInfo?: {position?: [number, number]}): IAnimationsOptions | null => {
+  //0 add the animation attrs we calculated and then the user's over them
+  //1 transform origin
+  let transformOrigin
+  if (guidesInfo?.position !== undefined) {
+    transformOrigin = `${guidesInfo.position[0]}px ${guidesInfo.position[1]}px`
+  }
   const preset = animation.preset
 
-  // keyframes
+  //1 keyframes
   const keyframes = []
   let index = -1
   if (animation.keyframes !== undefined) {
@@ -144,13 +147,13 @@ export const updateAnimation = (animation: IAnimationsOptions, sizeInner: number
     }
   }
 
-  // merge them. order of merging is: preset stuff, updated stuff, user's stuff
+  //0 merge them. order of merging is: preset stuff, updated stuff, user's stuff
   const animationUpdated: IAnimationsOptions = {
     ...(preset && presetsAnimation[preset]),
     ...animation,
     css_properties: {
       ...(preset && presetsAnimation[preset].css_properties),
-      'transform-origin': transformOrigin,
+      ...(transformOrigin && {'transform-origin': transformOrigin}),
       ...animation.css_properties,
     },
     keyframes: keyframes,
