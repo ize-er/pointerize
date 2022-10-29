@@ -8,6 +8,7 @@ import createShape from './create_shape'
  * @param shapesMerged
  * @param elementRoot
  * @param sizeInner
+ * @param elementSvg
  * @param guidesInfo informtion that is needed when these shapes are used for a guide shape
  */
 const createShapes = (
