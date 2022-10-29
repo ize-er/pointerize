@@ -1,8 +1,8 @@
 import d from "./tokens.js";
-const c = (n, e) => {
-  const i = [];
-  for (let o = 0; o < n; o++) {
-    const a = {}, r = (p, s) => {
+const c = (a, e) => {
+  const o = [];
+  for (let n = 0; n < a; n++) {
+    const i = {}, r = (p, s) => {
       for (const t in p)
         if (Array.isArray(p[t]))
           if (p[t].length === 1)
@@ -13,13 +13,13 @@ const c = (n, e) => {
             } else
               s[t] = p[t][0];
           else
-            s[t] = p[t][o];
+            s[t] = p[t][n];
         else
           s[t] = {}, typeof p[t] == "string" ? s[t] = p[t] : r(p[t], s[t]);
     };
-    r(e, a), i.push(a);
+    r(e, i), o.push(i);
   }
-  return i;
+  return o;
 }, { color_gray_2: u } = { ...d.colors }, l = [
   {
     type: "circle",
@@ -96,37 +96,15 @@ const c = (n, e) => {
     }
   ]
 }), m = () => {
-  const e = [
-    {
-      type: "polygon",
-      sides: 60,
-      svg_attributes: {
-        "stroke-width": "0"
-      },
-      ratios: [
-        {
-          type: "radius",
-          options: {
-            type: "accumulate",
-            value: 0.99
-          }
-        }
-      ],
-      guides: [
-        {
-          type: "position"
-        }
-      ]
-    }
-  ], i = [], o = [];
+  const e = [], o = [];
   for (let s = 0; s < 60; s++)
-    i.push(`hsl(${360 / 60 * s}, 100%, 40%)`), o.push(0.2 / 60 * (s + 1));
-  const r = c(60, {
+    e.push(`hsl(${360 / 60 * s}, 100%, 40%)`), o.push(0.2 / 60 * (s + 1));
+  const i = c(60, {
     type: ["polygon"],
     sides: [4],
     svg_attributes: {
       "stroke-width": ["0"],
-      fill: i
+      fill: e
     },
     ratios: [
       [
@@ -146,8 +124,6 @@ const c = (n, e) => {
       ]
     ]
   });
-  for (const s of r)
-    e.push(s);
   return {
     element__svg_container: {
       css_properties: {
@@ -155,46 +131,43 @@ const c = (n, e) => {
         height: "100%"
       }
     },
-    shapes: e
+    shapes: [
+      {
+        type: "polygon",
+        sides: 60,
+        svg_attributes: {
+          "stroke-width": "0"
+        },
+        ratios: [
+          {
+            type: "radius",
+            options: {
+              type: "accumulate",
+              value: 0.99
+            }
+          }
+        ],
+        guides: [
+          {
+            type: "position",
+            options: {
+              shapes: i
+            }
+          }
+        ]
+      }
+    ]
   };
 }, P = () => {
-  const e = [
-    {
-      type: "polygon",
-      sides: 20,
-      svg_attributes: {
-        "stroke-width": "0"
-      },
-      ratios: [
-        {
-          type: "radius",
-          options: {
-            type: "alternate",
-            value: 0.8
-          }
-        },
-        {
-          type: "size",
-          options: {
-            value: 0.8
-          }
-        }
-      ],
-      guides: [
-        {
-          type: "position"
-        }
-      ]
-    }
-  ], i = [], o = [];
+  const e = [], o = [];
   for (let s = 0; s < 20; s++)
-    i.push(`hsl(${360 / 20 * s}, 100%, 40%)`), o.push(s % 2 === 0 ? 0.2 : 0.3);
-  const r = c(20, {
+    e.push(`hsl(${360 / 20 * s}, 100%, 40%)`), o.push(s % 2 === 0 ? 0.2 : 0.3);
+  const i = c(20, {
     type: ["polygon"],
     sides: [8],
     svg_attributes: {
       "stroke-width": ["0"],
-      fill: i
+      fill: e
     },
     ratios: [
       [
@@ -214,8 +187,6 @@ const c = (n, e) => {
       ]
     ]
   });
-  for (const s of r)
-    e.push(s);
   return {
     element__svg_container: {
       css_properties: {
@@ -223,38 +194,42 @@ const c = (n, e) => {
         height: "100%"
       }
     },
-    shapes: e
+    shapes: [
+      {
+        type: "polygon",
+        sides: 20,
+        svg_attributes: {
+          "stroke-width": "0"
+        },
+        ratios: [
+          {
+            type: "radius",
+            options: {
+              type: "alternate",
+              value: 0.8
+            }
+          },
+          {
+            type: "size",
+            options: {
+              value: 0.8
+            }
+          }
+        ],
+        guides: [
+          {
+            type: "position",
+            options: {
+              shapes: i
+            }
+          }
+        ]
+      }
+    ]
   };
 }, f = () => {
-  const e = [
-    {
-      type: "polygon",
-      sides: 10,
-      svg_attributes: {
-        "stroke-width": "0"
-      },
-      ratios: [
-        {
-          type: "radius",
-          options: {
-            value: 1
-          }
-        },
-        {
-          type: "size",
-          options: {
-            value: 0.5
-          }
-        }
-      ],
-      guides: [
-        {
-          type: "position"
-        }
-      ]
-    }
-  ];
-  for (let o = 0; o < 10; o++)
+  const e = [];
+  for (let i = 0; i < 10; i++)
     e.push({
       type: "polygon",
       sides: 4,
@@ -278,31 +253,48 @@ const c = (n, e) => {
         height: "100%"
       }
     },
-    shapes: e
+    shapes: [
+      {
+        type: "polygon",
+        sides: 10,
+        svg_attributes: {
+          "stroke-width": "0"
+        },
+        ratios: [
+          {
+            type: "radius",
+            options: {
+              value: 1
+            }
+          },
+          {
+            type: "size",
+            options: {
+              value: 0.5
+            }
+          }
+        ],
+        guides: [
+          {
+            type: "position",
+            options: {
+              shapes: e
+            }
+          }
+        ]
+      }
+    ]
   };
-}, N = () => {
-  const e = [
-    {
-      type: "polygon",
-      sides: 4,
-      svg_attributes: {
-        "stroke-width": "0"
-      },
-      guides: [
-        {
-          type: "position"
-        }
-      ]
-    }
-  ], i = [];
+}, w = () => {
+  const e = [];
   for (let s = 0; s < 4; s++)
-    i.push(`hsl(${60 / 4 * s}, 100%, 40%)`);
-  const a = c(4, {
+    e.push(`hsl(${60 / 4 * s}, 100%, 40%)`);
+  const n = c(4, {
     type: ["polygon"],
     sides: [14],
     svg_attributes: {
       "stroke-width": ["0"],
-      fill: i
+      fill: e
     },
     ratios: [
       [
@@ -322,8 +314,6 @@ const c = (n, e) => {
       ]
     ]
   });
-  for (const s of a)
-    e.push(s);
   return {
     element__svg_container: {
       css_properties: {
@@ -342,7 +332,23 @@ const c = (n, e) => {
             type: "pattern",
             options: {
               area: "fill",
-              shapes: e,
+              shapes: [
+                {
+                  type: "polygon",
+                  sides: 4,
+                  svg_attributes: {
+                    "stroke-width": "0"
+                  },
+                  guides: [
+                    {
+                      type: "position",
+                      options: {
+                        shapes: n
+                      }
+                    }
+                  ]
+                }
+              ],
               ratios: {
                 gap: {
                   column: 0,
@@ -355,31 +361,22 @@ const c = (n, e) => {
       }
     ]
   };
-}, w = () => {
-  const e = [], i = [], o = [], a = [];
-  for (let t = 0; t < 4; t++)
-    e.push(`hsl(${360 / 4 * t}, 100%, 40%)`), i.push(0.7 / 4 * t + 0.3), o.push(t + 3), a.push(t % 2 === 0 ? "alternate" : "alternate-reverse");
-  const p = c(4, {
-    type: ["polygon"],
-    sides: o,
+}, N = () => {
+  const o = c(3, {
+    type: ["square"],
+    sides: [5],
     svg_attributes: {
-      "stroke-width": ["0.5"],
-      stroke: e
+      "stroke-width": ["0", "0.2", "1"],
+      stroke: ["hsl(160, 50%, 40%)"],
+      fill: ["hsl(0, 100%, 40%)", "transparent", "transparent"]
     },
     ratios: [
       [
         {
           type: ["size"],
           options: {
-            value: i
+            value: ["0.2", "0.7", "0.6"]
           }
-        }
-      ]
-    ],
-    effects: [
-      [
-        {
-          preset: ["glow"]
         }
       ]
     ],
@@ -388,29 +385,29 @@ const c = (n, e) => {
         {
           preset: ["rotate"],
           css_properties: {
-            "animation-direction": a,
+            "animation-direction": ["alternate", "alternate-reverse"],
             "animation-duration": ["40s"]
           }
         }
       ]
     ]
   });
-  return {
+  return o[0].type = "circle", o[0].effects = [{ preset: "glow" }], o[0].animations = void 0, {
     element__svg_container: {
       css_properties: {
         width: "100%",
         height: "100%"
       }
     },
-    shapes: p
+    shapes: o
   };
 };
 export {
   m as presetAdvanced1,
   P as presetAdvanced2,
   f as presetAdvanced3,
-  N as presetAdvanced4,
-  w as presetAdvanced5,
+  w as presetAdvanced4,
+  N as presetAdvanced5,
   y as presetBasic1,
   _ as presetBasic2,
   v as presetBasic3
