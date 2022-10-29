@@ -615,7 +615,7 @@ const ht = (s, e, i, p, r) => {
   i.appendChild(c);
 }, it = (s, e, i, p, r) => {
   var _, h;
-  const { defaultsSvgElsAttrs: l, defaultsShape: o } = O(i), t = { name: void 0, points: void 0 };
+  const { defaultsSvgElsAttrs: l, defaultsShape: o } = O(i), t = { type: void 0, points: void 0 };
   for (const n of s) {
     let m = !1;
     if (Array.isArray(n.guides)) {
@@ -641,7 +641,7 @@ const ht = (s, e, i, p, r) => {
         [0, 0],
         "array"
       );
-      v !== null && (t.name = "polygon", t.points = v);
+      v !== null && (t.type = "polygon", t.points = v);
     }
   }
   const a = [];
