@@ -316,9 +316,7 @@ const createShapes = (
   }
 
   // create svg elements and append to root element
-  let index = -1
   for (const args of createShapeArgs) {
-    index++
     createShape(args[0], args[1], elementRoot, sizeInner, elementSvg, {parentId: guidesInfo?.parentId, position: args[2]})
   }
 }
