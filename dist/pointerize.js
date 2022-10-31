@@ -1,15 +1,15 @@
 var rt = Object.defineProperty;
-var ot = (s, e, i) => e in s ? rt(s, e, { enumerable: !0, configurable: !0, writable: !0, value: i }) : s[e] = i;
-var j = (s, e, i) => (ot(s, typeof e != "symbol" ? e + "" : e, i), i), tt = (s, e, i) => {
-  if (!e.has(s))
-    throw TypeError("Cannot " + i);
+var ot = (i, e, s) => e in i ? rt(i, e, { enumerable: !0, configurable: !0, writable: !0, value: s }) : i[e] = s;
+var j = (i, e, s) => (ot(i, typeof e != "symbol" ? e + "" : e, s), s), tt = (i, e, s) => {
+  if (!e.has(i))
+    throw TypeError("Cannot " + s);
 };
-var k = (s, e, i) => (tt(s, e, "read from private field"), i ? i.call(s) : e.get(s)), U = (s, e, i) => {
-  if (e.has(s))
+var k = (i, e, s) => (tt(i, e, "read from private field"), s ? s.call(i) : e.get(i)), U = (i, e, s) => {
+  if (e.has(i))
     throw TypeError("Cannot add the same private member more than once");
-  e instanceof WeakSet ? e.add(s) : e.set(s, i);
+  e instanceof WeakSet ? e.add(i) : e.set(i, s);
 };
-var L = (s, e, i) => (tt(s, e, "access private method"), i);
+var L = (i, e, s) => (tt(i, e, "access private method"), s);
 /**
                     * @license Pointerize
                     * Copyright (c) 2022-present Abolfazl Faturechi
@@ -17,11 +17,11 @@ var L = (s, e, i) => (tt(s, e, "access private method"), i);
                     * This source code is licensed under the MIT license found in the
                     * LICENSE file at https://github.com/ize-er/pointerize.
                     */
-const O = (s = 32) => {
+const O = (i = 32) => {
   const e = "4s", l = {
     size: {
-      inner: s,
-      outer: s
+      inner: i,
+      outer: i
     },
     interactions: {
       pointer: {
@@ -39,7 +39,7 @@ const O = (s = 32) => {
   }, r = {
     attrsStroke: {
       stroke: "#757575",
-      "stroke-width": String(s / 20),
+      "stroke-width": String(i / 20),
       "stroke-opacity": "1",
       "stroke-linecap": "round",
       "stroke-linejoin": "round"
@@ -150,13 +150,13 @@ const O = (s = 32) => {
     pattern: {
       patternUnits: "userSpaceOnUse",
       patternContentUnits: "userSpaceOnUse",
-      width: String(s),
-      height: String(s)
+      width: String(i),
+      height: String(i)
     },
     svg: {
       xmlns: "http://www.w3.org/2000/svg",
       preserveAspectRatio: "xMidYMid meet",
-      viewBox: `0 0 ${s} ${s}`,
+      viewBox: `0 0 ${i} ${i}`,
       width: "100%",
       height: "100%"
     }
@@ -165,7 +165,7 @@ const O = (s = 32) => {
       "animation-duration": e,
       "animation-iteration-count": "infinite",
       "animation-timing-function": "linear",
-      "transform-origin": `${s / 2}px ${s / 2}px`
+      "transform-origin": `${i / 2}px ${i / 2}px`
     }
   };
   return {
@@ -175,7 +175,7 @@ const O = (s = 32) => {
     defaultsSvgElsAttrs: a,
     defaultsCss: p
   };
-}, Y = (s, e, i = 1, l = !1) => {
+}, Y = (i, e, s = 1, l = !1) => {
   var o, n, t, a, p, d, c;
   const r = [];
   for (const _ of e) {
@@ -185,7 +185,7 @@ const O = (s = 32) => {
     if (Array.isArray(_.ratios))
       for (const y of _.ratios)
         y.type === "size" && (h = y.options.value);
-    let f = s * h;
+    let f = i * h;
     m = O(f), u = m.defaultsShape;
     const $ = m.defaultsSvgAttrs;
     f -= +((n = (o = _.svg_attributes) == null ? void 0 : o["stroke-width"]) != null ? n : $.attrsStroke["stroke-width"]);
@@ -218,7 +218,7 @@ const O = (s = 32) => {
           }
         }, E.splice(S, 1, v));
     }
-    i && (f *= i), r.push({
+    s && (f *= s), r.push({
       ..._,
       size: f,
       ratios: z,
@@ -227,19 +227,19 @@ const O = (s = 32) => {
     });
   }
   return r;
-}, nt = (s) => {
+}, nt = (i) => {
   var S, v, m, u, h, f, $, b, z, E, y, M, N;
-  const { defaultsOpts: e, defaultsSvgElsAttrs: i } = O();
+  const { defaultsOpts: e, defaultsSvgElsAttrs: s } = O();
   let l = !1;
-  (S = s.system_preferences) != null && S.respect_reduced_motion && matchMedia("(prefers-reduced-motion: reduce)").matches && (l = !0);
+  (S = i.system_preferences) != null && S.respect_reduced_motion && matchMedia("(prefers-reduced-motion: reduce)").matches && (l = !0);
   const r = [];
   let o, n, t, a = -1, p = -1;
-  if (Array.isArray(s.interactions)) {
+  if (Array.isArray(i.interactions)) {
     let P = -1;
-    for (const C of s.interactions)
+    for (const C of i.interactions)
       P++, C.type === "pointer" ? (a = P, o = (v = C.options) == null ? void 0 : v.css_selector__root, n = (m = C.options) == null ? void 0 : m.default_pointer, t = (u = C.options) == null ? void 0 : u.start_criteria) : C.type === "pointer__scale" && (p = P);
   }
-  o = (f = (h = s.css_selector__root) != null ? h : o) != null ? f : "body", n = n != null ? n : !1, t !== void 0 ? typeof t == "string" ? t === "none" ? t = "none" : t = {
+  o = (f = (h = i.css_selector__root) != null ? h : o) != null ? f : "body", n = n != null ? n : !1, t !== void 0 ? typeof t == "string" ? t === "none" ? t = "none" : t = {
     criteria: e.interactions.pointer.start_criteria.criteria,
     frequency: e.interactions.pointer.start_criteria.frequency
   } : typeof t == "object" ? t = {
@@ -254,18 +254,18 @@ const O = (s = 32) => {
       start_criteria: t
     }
   };
-  a !== -1 && r.splice(a, 0, d), p !== -1 && s.interactions !== void 0 && r.splice(p, 0, s.interactions[p]);
+  a !== -1 && r.splice(a, 0, d), p !== -1 && i.interactions !== void 0 && r.splice(p, 0, i.interactions[p]);
   let c;
-  if ((($ = s.size) == null ? void 0 : $.inner) !== void 0) {
-    const P = s.size.inner, C = (b = s.size) == null ? void 0 : b.outer;
+  if ((($ = i.size) == null ? void 0 : $.inner) !== void 0) {
+    const P = i.size.inner, C = (b = i.size) == null ? void 0 : b.outer;
     P !== null ? C !== void 0 ? c = { ...e.size, inner: P, outer: C } : c = { ...e.size, inner: P } : C !== void 0 ? c = { ...e.size, outer: C } : c = e.size;
   } else
-    ((z = s.size) == null ? void 0 : z.outer) !== void 0 ? c = { ...e.size, outer: (E = s.size) == null ? void 0 : E.outer } : c = e.size;
-  const _ = (y = s.element__svg_container) == null ? void 0 : y.css_properties, g = { ...i.svg, ...(M = s.element__svg) == null ? void 0 : M.svg_attributes }, w = { ...(N = s.element__svg) == null ? void 0 : N.css_properties };
+    ((z = i.size) == null ? void 0 : z.outer) !== void 0 ? c = { ...e.size, outer: (E = i.size) == null ? void 0 : E.outer } : c = e.size;
+  const _ = (y = i.element__svg_container) == null ? void 0 : y.css_properties, g = { ...s.svg, ...(M = i.element__svg) == null ? void 0 : M.svg_attributes }, w = { ...(N = i.element__svg) == null ? void 0 : N.css_properties };
   let A;
-  return Array.isArray(s.shapes) && s.shapes.length && (A = Y(c.inner, s.shapes, 1, l)), {
+  return Array.isArray(i.shapes) && i.shapes.length && (A = Y(c.inner, i.shapes, 1, l)), {
     ...e,
-    ...s,
+    ...i,
     css_selector__root: o,
     size: c,
     element__svg: {
@@ -279,23 +279,23 @@ const O = (s = 32) => {
     interactions: r,
     ...l && { animations: void 0 }
   };
-}, at = (s, e, i) => {
+}, at = (i, e, s) => {
   let l = !1;
   function r(n, t) {
     l || window.requestAnimationFrame(function() {
       t(n), l = !0;
     }), l = !1;
   }
-  const o = (n) => r(n, i);
-  return s.addEventListener(e, o), o;
-}, et = (s) => typeof s == "string" ? s : `${s}px`, q = function(s) {
-  const e = document.createElementNS("http://www.w3.org/2000/svg", s.element);
-  if (s.svg_attributes !== void 0)
-    for (const i of Object.entries(s.svg_attributes))
-      e.setAttribute(i[0], i[1]);
-  if (s.element_children !== void 0)
-    for (const i of s.element_children) {
-      const l = q(i);
+  const o = (n) => r(n, s);
+  return i.addEventListener(e, o), o;
+}, et = (i) => typeof i == "string" ? i : `${i}px`, q = function(i) {
+  const e = document.createElementNS("http://www.w3.org/2000/svg", i.element);
+  if (i.svg_attributes !== void 0)
+    for (const s of Object.entries(i.svg_attributes))
+      e.setAttribute(s[0], s[1]);
+  if (i.element_children !== void 0)
+    for (const s of i.element_children) {
+      const l = q(s);
       e.appendChild(l);
     }
   return e;
@@ -306,9 +306,9 @@ class lt extends Error {
   }
 }
 class X extends Error {
-  constructor(e, i) {
+  constructor(e, s) {
     super();
-    const l = i.map((r) => `"${r}"`).join(", ");
+    const l = s.map((r) => `"${r}"`).join(", ");
     this.message = `for "${e}", you must specify one of: ${l}`, this.name = this.constructor.name;
   }
 }
@@ -439,41 +439,41 @@ const { defaultsCss: ct, defaultsSvgElsAttrs: Q } = O(), T = {
       }
     ]
   }
-}, dt = (s, e, i, l) => {
+}, dt = (i, e, s, l) => {
   let r, o;
-  const n = (e.width - s) / 2, t = (e.height - s) / 2, a = e.width / 2, p = e.height / 2;
-  if (s < e.width && s < e.height)
-    i !== void 0 ? (o = [i[l][0], i[l][1]], r = [i[l][0] - s / 2, i[l][1] - s / 2]) : (o = [a, p], r = [n, t]);
+  const n = (e.width - i) / 2, t = (e.height - i) / 2, a = e.width / 2, p = e.height / 2;
+  if (i < e.width && i < e.height)
+    s !== void 0 ? (o = [s[l][0], s[l][1]], r = [s[l][0] - i / 2, s[l][1] - i / 2]) : (o = [a, p], r = [n, t]);
   else {
-    const d = s / 2;
-    i !== void 0 ? (o = [d + i[l][0], d + i[l][1]], r = [n + i[l][0], t + i[l][1]]) : (o = [d, d], r = [n, t]);
+    const d = i / 2;
+    s !== void 0 ? (o = [d + s[l][0], d + s[l][1]], r = [n + s[l][0], t + s[l][1]]) : (o = [d, d], r = [n, t]);
   }
   return {
     positionPolygon: o,
     positionRect: r
   };
-}, B = (s, e, i, l, r = "string") => {
+}, B = (i, e, s, l, r = "string") => {
   const o = (n) => n.map((t) => t.join(",")).join(" ");
   if (e !== void 0) {
     const n = [];
-    let t = s / 2;
-    const a = 2 * Math.PI / i;
+    let t = i / 2;
+    const a = 2 * Math.PI / s;
     let p;
-    for (let d = 0; d <= i; d++) {
-      e.type === "alternate" ? (t = s / 2, t = d % 2 === 0 ? t : t * e.value) : d !== 0 && (t = t * e.value), i % 2 !== 0 && (i % 3 === 1 || i % 3 === 0) ? p = Number((a * d + a / 4).toFixed(12)) : i % 2 !== 0 && (i % 3 === 1 || i % 3 === 2) ? p = Number((a * d - a / 4).toFixed(12)) : i % 2 === 0 && i % 4 !== 0 ? p = Number((a * d + a / 2).toFixed(12)) : p = Number((a * d).toFixed(12));
+    for (let d = 0; d <= s; d++) {
+      e.type === "alternate" ? (t = i / 2, t = d % 2 === 0 ? t : t * e.value) : d !== 0 && (t = t * e.value), s % 2 !== 0 && (s % 3 === 1 || s % 3 === 0) ? p = Number((a * d + a / 4).toFixed(12)) : s % 2 !== 0 && (s % 3 === 1 || s % 3 === 2) ? p = Number((a * d - a / 4).toFixed(12)) : s % 2 === 0 && s % 4 !== 0 ? p = Number((a * d + a / 2).toFixed(12)) : p = Number((a * d).toFixed(12));
       const c = t * Math.cos(p) + l[0], _ = t * Math.sin(p) + l[1];
       n.push([c, _]);
     }
     return n.pop(), r === "string" ? o(n) : n;
   } else
     return null;
-}, ft = (s, e) => {
-  let i;
-  (e == null ? void 0 : e.position) !== void 0 && (i = `${e.position[0]}px ${e.position[1]}px`);
-  const l = s.preset, r = [];
+}, ft = (i, e) => {
+  let s;
+  (e == null ? void 0 : e.position) !== void 0 && (s = `${e.position[0]}px ${e.position[1]}px`);
+  const l = i.preset, r = [];
   let o = -1;
-  if (s.keyframes !== void 0)
-    for (const t of s.keyframes) {
+  if (i.keyframes !== void 0)
+    for (const t of i.keyframes) {
       o++;
       let a;
       l !== void 0 && (a = T[l].keyframes[o]), r.push({
@@ -495,24 +495,24 @@ const { defaultsCss: ct, defaultsSvgElsAttrs: Q } = O(), T = {
       });
   return {
     ...l && T[l],
-    ...s,
+    ...i,
     css_properties: {
       ...l && T[l].css_properties,
-      ...i && { "transform-origin": i },
-      ...s.css_properties
+      ...s && { "transform-origin": s },
+      ...i.css_properties
     },
     keyframes: r
   };
 };
-function ut(s, e, i) {
+function ut(i, e, s) {
   const l = [], r = [];
-  if (s !== void 0) {
+  if (i !== void 0) {
     let o = -1;
-    for (const n of s) {
+    for (const n of i) {
       o++;
       let t, a;
       if (n.preset !== void 0) {
-        a = `-_${i}__filter_${n.preset}_${e}th_${o}th`, l.push(a);
+        a = `-_${s}__filter_${n.preset}_${e}th_${o}th`, l.push(a);
         const p = pt[n.preset];
         p.svg_attributes !== void 0 ? p.svg_attributes.id = a : p.svg_attributes = { id: a }, t = q(p);
       } else if (n.custom !== void 0) {
@@ -526,7 +526,7 @@ function ut(s, e, i) {
   }
   return { filterEls: r, filterIds: l };
 }
-function ht(s, e, i, l) {
+function ht(i, e, s, l) {
   var r;
   if (e.animations !== void 0) {
     const o = [];
@@ -538,7 +538,7 @@ function ht(s, e, i, l) {
         for (const _ of Object.entries(c.css_properties))
           /^animation/.test(_[0]) && _[0] in t ? t[_[0]] += `,${_[1]}` : t[_[0]] = _[1];
     }
-    n += `#${(r = i.parentElement) == null ? void 0 : r.id} #${s.id}{`;
+    n += `#${(r = s.parentElement) == null ? void 0 : r.id} #${i.id}{`;
     for (const d of Object.entries(t))
       n += `${d[0]}:${t[d[0]]};`;
     n += "}";
@@ -555,31 +555,31 @@ function ht(s, e, i, l) {
         }
         n += "}";
       }
-    let p = i.querySelector(":scope > style");
-    p === null && (p = document.createElement("style"), i.insertAdjacentElement("afterbegin", p)), p.textContent += n;
+    let p = s.querySelector(":scope > style");
+    p === null && (p = document.createElement("style"), s.insertAdjacentElement("afterbegin", p)), p.textContent += n;
   }
 }
-const gt = (s, e, i, l, r, o) => {
+const gt = (i, e, s, l, r, o) => {
   var c, _, g, w, A, S, v;
-  const n = s.svg_attributes, t = s.effects, a = (c = r.parentElement) == null ? void 0 : c.id.match(/\dth/);
+  const n = i.svg_attributes, t = i.effects, a = (c = r.parentElement) == null ? void 0 : c.id.match(/\dth/);
   let p;
-  (o == null ? void 0 : o.parentId) !== void 0 ? p = `${o.parentId}__shape_${e}th_${s.type}` : p = `-_${a[0]}__shape_${e}th_${s.type}`;
-  const d = document.createElementNS("http://www.w3.org/2000/svg", s.type);
+  (o == null ? void 0 : o.parentId) !== void 0 ? p = `${o.parentId}__shape_${e}th_${i.type}` : p = `-_${a[0]}__shape_${e}th_${i.type}`;
+  const d = document.createElementNS("http://www.w3.org/2000/svg", i.type);
   if (d.id = p, n !== void 0)
     for (const m of Object.entries(n))
       m[1] !== void 0 && d.setAttribute(m[0], m[1]);
-  if (ht(d, s, r, (o == null ? void 0 : o.position) && { position: o == null ? void 0 : o.position }), t !== void 0) {
+  if (ht(d, i, r, (o == null ? void 0 : o.position) && { position: o == null ? void 0 : o.position }), t !== void 0) {
     const { filterEls: m, filterIds: u } = ut(t, e, a[0]);
     for (const f of m)
-      i.insertAdjacentElement("afterbegin", f);
+      s.insertAdjacentElement("afterbegin", f);
     const h = u.map((f) => `url(#${f})`).join(" ");
     d.setAttribute("filter", h);
   }
-  if (s.guides !== void 0)
-    for (const m of s.guides) {
+  if (i.guides !== void 0)
+    for (const m of i.guides) {
       const u = m.options;
       if (m.type === "pattern" && u !== void 0) {
-        let h = i.querySelector(":scope > defs");
+        let h = s.querySelector(":scope > defs");
         h = h != null ? h : document.createElementNS("http://www.w3.org/2000/svg", "defs");
         let f, $;
         if (u.preset !== void 0) {
@@ -591,37 +591,37 @@ const gt = (s, e, i, l, r, o) => {
           const b = u.custom;
           b.svg_attributes !== void 0 ? b.svg_attributes.id = $ : b.svg_attributes = { id: $ }, f = q(b);
         } else if (Array.isArray(u.shapes) && u.shapes.length) {
-          const b = (_ = u.ratios) == null ? void 0 : _.tile, z = (w = (g = u.ratios) == null ? void 0 : g.gap) == null ? void 0 : w.row, E = (S = (A = u.ratios) == null ? void 0 : A.gap) == null ? void 0 : S.column, y = (v = s.svg_attributes) == null ? void 0 : v["stroke-width"];
-          y !== void 0 && y !== "0" && (z > 0 || E > 0), l = (s.size - +(y || 0)) * b;
+          const b = (_ = u.ratios) == null ? void 0 : _.tile, z = (w = (g = u.ratios) == null ? void 0 : g.gap) == null ? void 0 : w.row, E = (S = (A = u.ratios) == null ? void 0 : A.gap) == null ? void 0 : S.column, y = (v = i.svg_attributes) == null ? void 0 : v["stroke-width"];
+          y !== void 0 && y !== "0" && (z > 0 || E > 0), l = (i.size - +(y || 0)) * b;
           const { defaultsSvgElsAttrs: M } = O(l);
           f = document.createElementNS("http://www.w3.org/2000/svg", "pattern"), $ = `-_${a[0]}__pattern_custom_${e}th`;
           const N = M.pattern;
           N.id = $;
           for (const R of Object.entries(N))
             f.setAttribute(R[0], R[1]);
-          const P = E === 0 ? l : l + (s.size - +(y || 0)) * E, C = z === 0 ? l : l + (s.size - +(y || 0)) * z, W = {
+          const P = E === 0 ? l : l + (i.size - +(y || 0)) * E, C = z === 0 ? l : l + (i.size - +(y || 0)) * z, W = {
             width: P,
             height: C
           };
           f.setAttribute("width", String(W.width)), f.setAttribute("height", String(W.height));
-          const { defaultsOpts: st } = O(), I = Y(st.size.inner, u.shapes, b);
+          const { defaultsOpts: it } = O(), I = Y(it.size.inner, u.shapes, b);
           if (u.area === "fill" && y !== void 0 && y !== "0") {
             f.setAttribute("x", y), f.setAttribute("y", y);
             for (const R of I)
               R.size -= +y * (2 * b);
           }
-          const it = `-_${a[0]}__shape_${e}th__pat`;
-          V(I, f, l, r, { sizeInnerCustom: W, parentId: it });
+          const st = `-_${a[0]}__shape_${e}th__pat`;
+          V(I, f, l, r, { sizeInnerCustom: W, parentId: st });
         } else
           throw new X("pattern guide options", ["shapes"]);
-        u.area !== void 0 && d.setAttribute(u.area, `url(#${$})`), h.appendChild(f), i.insertAdjacentElement("afterbegin", h);
+        u.area !== void 0 && d.setAttribute(u.area, `url(#${$})`), h.appendChild(f), s.insertAdjacentElement("afterbegin", h);
       }
       if (m.type === "position" && u !== void 0)
         if (Array.isArray(u.shapes) && u.shapes.length) {
           let h;
-          if (s.sides !== void 0) {
+          if (i.sides !== void 0) {
             let b;
-            for (const E of s.ratios)
+            for (const E of i.ratios)
               if (E.type === "radius") {
                 b = {
                   type: E.options.type,
@@ -630,28 +630,28 @@ const gt = (s, e, i, l, r, o) => {
                 break;
               }
             const z = B(
-              s.size,
+              i.size,
               b,
-              s.sides,
+              i.sides,
               o == null ? void 0 : o.position,
               "array"
             );
             z !== null && (h = z);
           }
           const f = Y(l, u.shapes), $ = `-_${a[0]}__shape_${e}th__pos`;
-          V(f, i, l, r, { positionPoints: h, parentId: $ });
+          V(f, s, l, r, { positionPoints: h, parentId: $ });
         } else
           throw new X("position guide options", ["shapes"]);
     }
-  i.appendChild(d);
-}, V = (s, e, i, l, r) => {
+  s.appendChild(d);
+}, V = (i, e, s, l, r) => {
   var p, d;
-  const { defaultsSvgElsAttrs: o, defaultsShape: n } = O(i), t = [];
+  const { defaultsSvgElsAttrs: o, defaultsShape: n } = O(s), t = [];
   let a = -1;
-  for (const c of s) {
+  for (const c of i) {
     a++;
     let _;
-    const g = c.size, w = (r == null ? void 0 : r.sizeInnerCustom) || { width: i, height: i }, A = r == null ? void 0 : r.positionPoints, S = dt(g, w, A, a), v = S.positionPolygon, m = S.positionRect;
+    const g = c.size, w = (r == null ? void 0 : r.sizeInnerCustom) || { width: s, height: s }, A = r == null ? void 0 : r.positionPoints, S = dt(g, w, A, a), v = S.positionPolygon, m = S.positionRect;
     let u = n.ratios.radius.options;
     if (Array.isArray(c.ratios)) {
       for (const h of c.ratios)
@@ -809,7 +809,7 @@ const gt = (s, e, i, l, r, o) => {
       }
       case "image": {
         let h, f;
-        g < i ? (h = m[0] + g / 2 / 2, f = m[1]) : ((p = c.svg_attributes) != null && p.width ? h = (g - +c.svg_attributes.width) / 2 : h = g / 2 / 2, (d = c.svg_attributes) != null && d.height ? f = (g - +c.svg_attributes.height) / 2 : f = 0), _ = {
+        g < s ? (h = m[0] + g / 2 / 2, f = m[1]) : ((p = c.svg_attributes) != null && p.width ? h = (g - +c.svg_attributes.width) / 2 : h = g / 2 / 2, (d = c.svg_attributes) != null && d.height ? f = (g - +c.svg_attributes.height) / 2 : f = 0), _ = {
           ...c,
           type: "image",
           svg_attributes: {
@@ -846,7 +846,7 @@ const gt = (s, e, i, l, r, o) => {
     }
   }
   for (const c of t)
-    gt(c[0], c[1], e, i, l, { parentId: r == null ? void 0 : r.parentId, position: c[2] });
+    gt(c[0], c[1], e, s, l, { parentId: r == null ? void 0 : r.parentId, position: c[2] });
 };
 var x, F, G, Z, H, J, D, K;
 class vt {
@@ -873,20 +873,20 @@ class vt {
         o.type === "pointer" && (k(this, x).pointer = o), o.type === "pointer__scale" && (k(this, x).pointer__pointer__scale = o);
     else
       k(this, x).pointer = void 0;
-    const i = document.querySelector(this.options__merged.css_selector__root);
-    if (!(i instanceof HTMLElement))
+    const s = document.querySelector(this.options__merged.css_selector__root);
+    if (!(s instanceof HTMLElement))
       throw new lt();
-    this.element__root = i, ((r = (l = k(this, x).pointer) == null ? void 0 : l.options) == null ? void 0 : r.default_pointer) === !1 && this.element__root.classList.add("-_pointerize__pointer_default__non");
+    this.element__root = s, ((r = (l = k(this, x).pointer) == null ? void 0 : l.options) == null ? void 0 : r.default_pointer) === !1 && this.element__root.classList.add("-_pointerize__pointer_default__non");
   }
   start() {
-    var e, i, l, r, o, n, t;
+    var e, s, l, r, o, n, t;
     if (k(this, x).pointer !== void 0) {
       let a;
       const p = (d) => {
         a = d.matches, a ? (L(this, G, Z).call(this), L(this, H, J).call(this)) : this.element__svg_container !== null && this.stop();
       };
       if (typeof ((e = k(this, x).pointer.options) == null ? void 0 : e.start_criteria) == "string")
-        ((i = k(this, x).pointer.options) == null ? void 0 : i.start_criteria) === "none" && (a = !0);
+        ((s = k(this, x).pointer.options) == null ? void 0 : s.start_criteria) === "none" && (a = !0);
       else if (typeof ((l = k(this, x).pointer.options) == null ? void 0 : l.start_criteria) == "object" && typeof ((r = k(this, x).pointer.options) == null ? void 0 : r.start_criteria.criteria) == "string") {
         const d = matchMedia((o = k(this, x).pointer.options) == null ? void 0 : o.start_criteria.criteria);
         ((n = k(this, x).pointer.options) == null ? void 0 : n.start_criteria.frequency) === "once" ? p(d) : ((t = k(this, x).pointer.options) == null ? void 0 : t.start_criteria.frequency) === "always" && (this.element__svg_container === null && p(d), d.addEventListener("change", p));
@@ -895,37 +895,37 @@ class vt {
       L(this, G, Z).call(this), L(this, H, J).call(this);
   }
   stop() {
-    var e, i, l;
-    for (const r of k(this, F))
-      r.element.removeEventListener(r.event, r.handler);
-    (e = this.element__svg_container) == null || e.remove(), (l = (i = k(this, x).pointer) == null ? void 0 : i.options) != null && l.default_pointer || this.element__root.classList.remove("-_pointerize__pointer_default__non");
+    var e, s;
+    for (const l of k(this, F))
+      l.element.removeEventListener(l.event, l.handler);
+    (e = this.element__svg_container) == null || e.remove(), k(this, x).pointer !== void 0 && ((s = k(this, x).pointer.options) != null && s.default_pointer || this.element__root.classList.remove("-_pointerize__pointer_default__non"));
   }
   hide() {
-    var e, i, l;
-    (e = this.element__svg_container) == null || e.classList.add("-_pointerize-_u__display__non"), (l = (i = k(this, x).pointer) == null ? void 0 : i.options) != null && l.default_pointer || this.element__root.classList.remove("-_pointerize__pointer_default__non");
+    var e, s, l;
+    (e = this.element__svg_container) == null || e.classList.add("-_pointerize-_u__display__non"), (l = (s = k(this, x).pointer) == null ? void 0 : s.options) != null && l.default_pointer || this.element__root.classList.remove("-_pointerize__pointer_default__non");
   }
   show() {
-    var e, i;
-    this.element__svg_container !== null && (this.element__svg_container.classList.remove("-_pointerize-_u__display__non"), (i = (e = k(this, x).pointer) == null ? void 0 : e.options) != null && i.default_pointer || this.element__root.classList.add("-_pointerize__pointer_default__non"));
+    var e, s;
+    this.element__svg_container !== null && (this.element__svg_container.classList.remove("-_pointerize-_u__display__non"), (s = (e = k(this, x).pointer) == null ? void 0 : e.options) != null && s.default_pointer || this.element__root.classList.add("-_pointerize__pointer_default__non"));
   }
 }
 x = new WeakMap(), F = new WeakMap(), G = new WeakSet(), Z = function() {
   var d, c, _, g, w, A;
   const e = document.createElement("div");
   this.element__svg_container = e;
-  let i;
+  let s;
   const l = Array.from(document.querySelectorAll("[id*=-_pointerize__container]"));
   if (l.length === 0)
-    i = "0";
+    s = "0";
   else {
     let S = -1;
     for (const v of l) {
       const m = +((_ = (c = (d = v.getAttribute("id")) == null ? void 0 : d.match(/(?<number>\d+)th$/)) == null ? void 0 : c.groups) == null ? void 0 : _.number);
       m > S && (S = m);
     }
-    i = S + 1;
+    s = S + 1;
   }
-  const r = `-_pointerize__container_${i}th`;
+  const r = `-_pointerize__container_${s}th`;
   e.id = r, this.id = r, e.classList.add("-_pointerize__container");
   const o = et(this.options__merged.size.outer);
   e.style.width = o, e.style.height = o;
@@ -945,10 +945,10 @@ x = new WeakMap(), F = new WeakMap(), G = new WeakSet(), Z = function() {
       t.style.setProperty(S[0], S[1]);
   t.setAttribute("viewBox", `0 0 ${this.options__merged.size.inner} ${this.options__merged.size.inner}`), e.appendChild(t), Array.isArray(this.options__merged.shapes) && V(this.options__merged.shapes, t, this.options__merged.size.inner, t), this.element__root.appendChild(e);
 }, H = new WeakSet(), J = function() {
-  var i, l;
+  var s, l;
   if (this.options__merged.interactions !== void 0) {
     for (const r of this.options__merged.interactions)
-      if (r.type === "pointer__scale" && ((i = r.options) == null ? void 0 : i.elements) !== void 0) {
+      if (r.type === "pointer__scale" && ((s = r.options) == null ? void 0 : s.elements) !== void 0) {
         if ((l = r.options) != null && l.elements.length) {
           const n = [];
           for (const a of r.options.elements) {
@@ -1002,8 +1002,8 @@ x = new WeakMap(), F = new WeakMap(), G = new WeakSet(), Z = function() {
       handler: r
     });
   }
-}, D = new WeakSet(), K = function(e, i) {
-  e.style.left = `${i.clientX}px`, e.style.top = `${i.clientY}px`;
+}, D = new WeakSet(), K = function(e, s) {
+  e.style.left = `${s.clientX}px`, e.style.top = `${s.clientY}px`;
 };
 export {
   vt as default

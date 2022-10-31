@@ -5,24 +5,28 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="stylesheet" href="dist/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Pointerize is suited to almost any task that involves shapes (SVG)">
+    <meta name="author" content="Abolfazl Faturechi">
+    <meta name="keywords" content="shape, svg, pattern, cursor, mouse, background, icon, javascript">
     <title>Pointerize</title>
     <style>
       :root {
         font-size: 2px;
         --color-gray-1: hsl(0, 0%, 10%);
-        --color-bg: hsl(0, 0%, 10%, 0.5);
-        --color-gray-2: hsl(0, 0%, 40%);
-        --color-gray-3: hsl(0, 0%, 90%);
+        --color-bg: hsl(0, 0%, 10%, 0.8);
+        --color-gray-2: hsl(0, 0%, 50%);
+        --color-gray-3: hsl(0, 0%, 80%);
         --color-brand-1-2: hsl(30, 100%, 40%);
         --color-brand-2-2: hsl(70, 100%, 40%);
         --padding-text: 0.2em;
         --padding-text-l: 0.6em;
+        --transition: 0.4s;
       }
       body,
       html,
       p {
         margin: 0;
-        padding: var(--padding-text);
+        padding: 0;
         background-color: var(--color-gray-1);
       }
       * {
@@ -43,11 +47,36 @@
         min-width: 100%;
         min-height: 100%;
       }
+      button {
+        transition: all var(--transition);
+        width: 40%;
+        padding: var(--padding-text);
+        background-color: var(--color-gray-1);
+        border: 1px solid var(--color-gray-2);
+        color: var(--color-brand-2-2);
+      }
+      #config__options button:disabled {
+        color: var(--color-gray-2);
+        border-color: var(--color-gray-2);
+      }
+      button:hover, button:focus-visible {
+        border-left: 0.2em solid var(--color-brand-2-2);
+        border-right: 0.2em solid var(--color-brand-2-2);
+        border-top-color: var(--color-gray-1);
+        border-bottom-color: var(--color-gray-1);
+      }
+      #config__options button:disabled:hover, #config__options button:disabled:focus-visible {
+        border-left: 0.2em solid var(--color-gray-2);
+        border-right: 0.2em solid var(--color-gray-2);
+      }
+      h1, h2, h3, h4, h5, h6 {
+        margin: 0;
+        padding: 0;
+        background-color: var(--color-gray-1);
+      }
       h1 {
         font-size: clamp(8rem, 3vw, 14rem);
         text-align: left;
-        padding: var(--padding-text);
-        margin: 0;
         writing-mode: vertical-lr;
         text-orientation: upright;
         text-transform: uppercase;
@@ -57,6 +86,10 @@
         font-style: italic;
         color: var(--color-brand-1-2);
         background-color: var(--color-gray-1);
+        padding: var(--padding-text);
+      }
+      h2 {
+        font-weight: normal;
       }
       .text__l {
         padding: var(--padding-text-l);
@@ -73,19 +106,15 @@
       body {
         font-size: clamp(8rem, 3vw, 14rem);
       }
+      p.text__l {
+        font-weight: bold;
+      }
       select {
         background-color: transparent;
         color: var(--color-gray-3);
         border: none;
-        appearance: none;
         text-align: center;
         width: 100%;
-        
-      }
-      select.text__l {
-        /* padding specific to the icons in the left and right */
-        padding-right: calc(1.2em + 32px);
-        padding-left: calc(1.2em + 32px);
       }
       .select_con {
         display: inline-block;
@@ -101,17 +130,6 @@
       }
       section:last-of-type {
         background-color: var(--color-gray-1);
-      }
-      button {
-        width: 40%;
-        padding: var(--padding-text);
-        background-color: var(--color-brand-1-2);
-      }
-      details > p {
-        text-align: left;
-      }
-      details {
-        padding: var(--padding-text);
       }
       #introduction {
         display: flex;
@@ -131,40 +149,72 @@
       .introduction_nth__svg {
         width: 320px;
       }
-      #configuration {
+      #config {
         background-color: var(--color-gray-1);
-        width: 95%;
-        /* height: 240rem; */
-        margin-left: 2.5%;
         padding: 2.5%;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: center;
+        align-items: center;
+      }
+      #config_container {
+        width: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+        transition: width var(--transition);
+        z-index: 1;
+        max-height: 100vh;
         overflow: auto;
       }
-      #options_out__shape, #options_out__shapes, #options_out__pattern {
-        background-color: var(--color-gray-1);
-        width: 95%;
-        margin-left: 2.5%;
-        padding: 2.5%;
-      }
-      #sliders {
+      #config__options {
         display: flex;
         flex-flow: column nowrap;
         justify-content: center;
         align-items: center;
+        padding: 2.5%;
+        width: 100%;
       }
-      #sliders > div {
-        padding: var(--padding-text);
+      #config__options button {
+        color: var(--color-brand-1-2);
+        border-color: var(--color-brand-1-2)
       }
-      #sides_out, #radius_ratio_out, #shapes_number_out {
-        display: inline;
+      #config__options > button:nth-child(1) {
+        color: var(--color-brand-1-2);
+        border-color: var(--color-gray-2)
+      }
+      #config__options button:hover, #config__options button:focus-visible {
+        border-left: 0.2em solid var(--color-brand-1-2);
+        border-right: 0.2em solid var(--color-brand-1-2);
+        border-top-color: var(--color-gray-1);
+        border-bottom-color: var(--color-gray-1);
+      }
+      #options_out__pointer, #options_out__shapes, #options_out__pattern {
+        background-color: var(--color-gray-1);
+        width: 95%;
+        margin-left: 2.5%;
+        padding: 2.5%;
+      }
+      .config__options__shape__pos {
+        padding: 2.5%;
+      }
+      .config__options__shape {
+        border: 1px solid var(--color-gray-2);
+        padding: 2.5%;
       }
       #apply_options {
         margin: var(--padding-text);
       }
+      #show_config {
+        margin: var(--padding-text-l);
+      }
+      #hide_config {
+        margin: var(--padding-text-l);
+        align-self: start;
+      }
       #code_out {
         width: 100%;
+        word-break: break-all;
       }
       #preset__svg {
         background-color: var(--color-gray-1);
@@ -176,6 +226,56 @@
       #notes {
         background-color: var(--color-gray-1);
       }
+      input[type=checkbox] {
+        margin: var(--padding-text-l);
+        width: 1.5em;
+        height: 1.5em;
+      }
+      hr {
+        margin: var(--padding-text-l);
+        width: 90%;
+        border-color: var(--color-gray-2);
+      }
+      input[type=range] {
+        margin: 0;
+      }
+      .input_container {
+        display: grid;
+        grid-auto-flow: column;
+        gap: var(--padding-text);
+        place-items: center;
+      }
+      a {
+        color: var(--color-brand-2-2);
+      }
+      summary {
+        transition: border-left var(--transition), border-right var(--transition);
+      }
+      summary::marker {
+        transition: color var(--transition);
+      }
+      details {
+        padding: var(--padding-text);
+      }
+      details > p {
+        text-align: left;
+      }
+      details > summary::marker {
+        color: var(--color-brand-2-2);
+      }
+      details:hover > summary, details:focus-visible > summary {
+        border-left: 0.2em solid var(--color-brand-2-2);
+        border-right: 0.2em solid var(--color-brand-2-2);
+      }
+      details:hover > summary::marker, details:focus-visible > summary::marker {
+        color: var(--color-gray-1);
+      }
+      details[open]:hover > summary::marker, details[open]:focus-visible > summary::marker {
+        color: var(--color-gray-1);
+      }
+      details[open] > summary::marker {
+        color: var(--color-brand-2-2);
+      }
     </style>
   </head>
   <body>
@@ -186,69 +286,52 @@
       </header>
       <main>
         <section>
-          <p class="text__l">If only there was a way we could easily...</p>
+          <p class="text__l">If only there was a way we could easily ...</p>
           <div id="introduction">
             <div class="introduction_nth">
               <div class="introduction_nth__text">
-                <p>Create shapes like this</p>
+                <h2 class="text__m">Create shapes like this</h2>
               </div>
               <div id="introduction_0th__svg" class="introduction_nth__svg"></div>
             </div>
             <div class="introduction_nth">
               <div class="introduction_nth__text">
-                <p>Combine them into this</p>
-              </div>
-              <div id="introduction_1th__svg" class="introduction_nth__svg"></div>
-            </div>
-            <div class="introduction_nth">
-              <div class="introduction_nth__text">
-                <p>And turn them into a custom cursor, pattern and dropdown icons ...</p>
+                <h2 class="text__m">And turn them into icons, patterns and custom cursors</h2>
               </div>
             </div>
           </div>
         </section>
         <section>
 
-          <p class="text__l">If only ... </p>
-          <div id="configuration">
-            <div id="sliders">
-              <div>
-                <label for="sides">
-                  number of shape's sides
-                  <input type="range" id="sides" max="20">
-                </label>
-                <p id="sides_out"></p>
+          <button id="show_config" class="text__l">If only ...</button>
+          <div id="config_container">
+            <div id="config" aria-label="config">
+              <button id="hide_config" class="text__s">hide configuration</button>
+              <div id="config__options">
+                <button id="toggle_pointer" class="text__s">remove custom pointer</button>
+                <h3 class="text__m">Shapes</h3>
               </div>
-              <div>
-                <label for="radius_ratio">
-                  shape's radius ratio
-                  <input type="range" id="radius_ratio" max="20">
-                </label>
-                <p id="radius_ratio_out"></p>
+              <button id="apply_options" class="text__m">Apply</button>
+              <hr>
+              <h3 class="text__m">Generated options</h3>
+              <div id="code_out">
+                <details>
+                  <summary>shapes</summary>
+                  <code id="options_out__shapes" class="text__s"></code>
+                </details>
+                <details>
+                  <summary>image</summary>
+                  <code id="options_out__image" class="text__s"></code>
+                </details>
+                <details>
+                  <summary>background pattern</summary>
+                  <code id="options_out__pattern" class="text__s"></code>
+                </details>
+                <details>
+                  <summary>pointer (cursor)</summary>
+                  <code id="options_out__pointer" class="text__s"></code>
+                </details>
               </div>
-              <div>
-                <label for="shapes_number">
-                  number of shapes
-                  <input type="range" min="0" max="16" id="shapes_number">
-                </label>
-                <p id="shapes_number_out"></p>
-              </div>
-              
-              <button id="apply_options" class="text__m">Show Me</button>
-            </div>
-            <div id="code_out">
-              <details >
-                <summary>first image options</summary>
-                <p id="options_out__shape"></p>
-              </details>
-              <details>
-                <summary>second image options</summary>
-                <p id="options_out__shapes"></p>
-              </details>
-              <details>
-                <summary>background pattern options</summary>
-                <p id="options_out__pattern"></p>
-              </details>
             </div>
           </div>
           
@@ -270,12 +353,11 @@
           <div id="preset__svg"></div>
         </section>
         <section class="text__s" id="notes">
-          <p>To use the options above you should change css selectors and maybe css properties to make it suited to your own page.</p>
-          <p>There are more options you can tweak and this page is not complete yet, see the docs on Github. In there you can also find the above presets' code.</p>
+          <p>To use the options generated on this page you should change css selectors and maybe css properties to make it suited to your own page.</p>
+          <p>There are more options that you can tweak. See the docs and the above presets' code on Github.</p>
         </section>
         <section>
           <a href="https://github.com/ize-er/pointerize">Github</a>
-          
         </section>
       </main>
     </div>
@@ -300,10 +382,47 @@
               color_brand_2_2,
               color_gray_2 } = { ...tokens.colors}
       
-      // the default shape and shapes number used throughout the page. set the initial slider values too
-      const shape = {
+      // the default values
+
+      const defaults = {
+        shape: {
+          type: 'circle',
+          sides: 6,
+          ratios: {
+            size: 1,
+            radius: 0.6
+          }
+        },
+        shapesNum: 4,
+        slider: {
+          sides: {
+            min: '0',
+            max: '16'
+          },
+          ratio: {
+            radius: {
+              min: '0',
+              max: '20'
+            },
+            size: {
+              min: '0',
+              max: '20'
+            }
+          }
+        }
+      }
+      
+      // default shapes
+
+      const shapeCircle = {
+        type: 'circle',
+        svg_attributes: {
+          stroke: color_gray_2
+        }
+      }
+      const shapePolygon = {
         type: 'polygon',
-        sides: 20,
+        sides: defaults.shape.sides,
         svg_attributes: {
           stroke: color_gray_2
         },
@@ -311,57 +430,396 @@
           {
             type: 'radius',
             options: {
-              value: 0.8
+              value: defaults.shape.ratios.radius
             }
           }
         ]
       }
-      document.querySelector('#sides').value = shape.sides
-      document.querySelector('#radius_ratio').value = shape.ratios[0].options.value * 10
-      const shapesNumber = 4
-      document.querySelector('#shapes_number').value = shapesNumber
 
-      // pattern
-      let pointerize0th
-      function pattern(sides, radiusRatio, shapesNum) {
-
-        //0 make pattern shapes
-        //1 shapes on position guide
-        const patternShapesPos = []
-        const shape0th = shape
-        shape0th.sides = sides
-        shape0th.ratios[0].options.value = radiusRatio
-        for (let i = 0; i < shapesNum; i++) {
-          patternShapesPos.push(shape0th)
-        }
-        //1 pattern shapes
-        const patternShapes = [
-          {
-            type: 'polygon',
-            sides: shapesNum,
-            svg_attributes: {
-              'stroke-width': '0'
-            },
-            ratios: [
-              {
-                type: 'size',
-                options: {
-                  value: 0.8
-                }
+      // initial shapes
+      let shapes = [
+        {
+          type: 'polygon',
+          sides: 4,
+          svg_attributes: {
+            stroke: color_gray_2
+          },
+          guides: [
+            {
+              type: 'position',
+              options: {
+                shapes: [
+                  {
+                    type: 'circle',
+                    svg_attributes: {
+                      stroke: color_gray_2
+                    }
+                  },
+                  {
+                    type: 'circle',
+                    svg_attributes: {
+                      stroke: color_gray_2
+                    }
+                  },
+                  {
+                    type: 'circle',
+                    svg_attributes: {
+                      stroke: color_gray_2
+                    }
+                  },
+                  {
+                    type: 'circle',
+                    svg_attributes: {
+                      stroke: color_gray_2
+                    }
+                  }
+                ]
               }
-            ],
-            guides: [
+            }
+          ]
+        }
+      ]
+
+      //0 global data
+      //1 used for determining index of shapes arrays, id attributes, etc.
+      const shapesNth = {
+        depth0: -1
+      }
+
+      // makes a unique(kindof) id to be used for id attributes
+      const makeUuid = () => {
+        return Date.now().toString(32) + Math.random().toString(16).substring(2)
+      }
+
+      function makeInputShapeSides(depth, nth, shapeObj) {
+
+        const uuid = makeUuid()
+        const inputContainer = document.createElement('div')
+        inputContainer.classList.add('text__s')
+        inputContainer.classList.add('input_container')
+        const label = document.createElement('label')
+        label.for = `dpth${depth}__shape_sides_${nth}th__${uuid}`
+        const input = document.createElement('input')
+        input.type = 'range'
+        input.min = defaults.slider.sides.min
+        input.max = defaults.slider.sides.max
+        input.id = `dpth${depth}__shape_sides_${nth}th__${uuid}`
+        const out = document.createElement('span')
+        out.id = `dpth${depth}__shape_sides_${nth}th__out__${uuid}`
+        input.value = out.textContent = `${defaults.shape.sides}`
+
+        input.addEventListener('input', (e) => {
+          const shapeSides = e.target.value
+          shapeObj.sides = +shapeSides
+          out.textContent = shapeSides
+        })
+
+        label.textContent = 'sides'
+        inputContainer.appendChild(label)
+        inputContainer.appendChild(input)
+        inputContainer.appendChild(out)
+        return inputContainer
+      }
+      
+      function makeInputGuidePos(depth, nth, shapeObj, parentShapeContainer) {
+
+        const uuid = makeUuid()
+        const inputContainer = document.createElement('div')
+        inputContainer.classList.add('text__s')
+        inputContainer.classList.add('input_container')
+        const label = document.createElement('label')
+        label.for = `dpth${depth}__guide_pos_${nth}th__${uuid}`
+        const input = document.createElement('input')
+        input.type = 'checkbox'
+        input.id = `dpth${depth}__guide_pos_${nth}th__${uuid}`
+        input.checked = false
+        const elPosShapesContainer = document.createElement('div')
+
+        input.addEventListener('change', (e) => {
+          if (e.target.checked === true) {
+            
+            depth++
+            shapesNth[`depth${depth}`] = 0
+            shapeObj.guides = [
               {
                 type: 'position',
                 options: {
-                  shapes: patternShapesPos
+                  shapes: []
                 }
               }
             ]
-          },
-        ]
+            shapeObj.guides[0].options.shapes.push(JSON.parse(JSON.stringify(shapeCircle)))
+            elPosShapesContainer.classList.add('config__options__shape__pos')
+            const elShapeType = makeInputShapeType(depth, 0, shapeObj.guides[0].options.shapes, {el: elPosShapesContainer, shape: shapeObj })
+            elPosShapesContainer.insertAdjacentElement('afterbegin', elShapeType)
+            parentShapeContainer.appendChild(elPosShapesContainer)
+          }
+          else {
+            delete shapeObj.guides
+            elPosShapesContainer.replaceChildren()
+            elPosShapesContainer.remove()
+          }
+        })
+
+        label.textContent = 'position guide'
+        inputContainer.appendChild(label)
+        inputContainer.appendChild(input)
+        return inputContainer
+      }
+
+      const shapeTypes = ['polygon', 'circle']
+      function makeInputShapeType(depth, nth, shapesArray, posGuideData = undefined) {
+
+        const uuid = makeUuid()
+        const shapeContainer = document.createElement('div')
+        shapeContainer.classList.add('config__options__shape')
+        const selectContainer = document.createElement('div')
+        const select = document.createElement('select')
+        select.name = select.id = `dpth${depth}__shape_type_${nth}th__${uuid}`
+        select.classList.add('text__m')
+        for (const t of shapeTypes) {
+          const option = document.createElement('option')
+          option.value = option.textContent = t
+          if (t === shapesArray[nth].type) {
+            option.selected = true
+          }
+          select.appendChild(option)
+        }
+
+        //0 button to remove shape
+        const elRemove = document.createElement('button')
+        elRemove.textContent= '-'
+        elRemove.classList.add('remove_shape')
+        elRemove.classList.add('text__m')
+        //1 if it's the first and only shape, disable the remove button
+        if (nth === 0) {
+          elRemove.setAttribute('disabled', 'disabled')
+        }
+        //1
+        elRemove.addEventListener('click', (e) => {
+          shapesArray.splice(nth, 1)
+          shapesNth[`depth${depth}`]--
+
+          //0 keep a reference to parent element for future use
+          const elParent = shapeContainer.parentElement
         
-        //0 pattern target
+          //0 remove everything
+          shapeContainer.replaceChildren()
+          shapeContainer.remove()
+          
+          //0 enable and disable buttons
+          //1 if the add button was previously disabled (because the number of shapes equalled the positoin guide's sides), enable it now
+          const elAdd = elParent.querySelector('button.add_shape')
+          if (elAdd.hasAttribute('disabled')) {
+            elAdd.removeAttribute('disabled')
+          }
+          //1 if the number of shapes equals 1, disable the remove button
+          const shapesNumber = elParent.querySelectorAll('.config__options__shape').length
+          if (shapesNumber === 1) {
+            elParent.querySelector('div.config__options__shape > button.remove_shape').setAttribute('disabled', 'disabled')
+          }
+          
+        })
+        // button to add shape if there's position guide
+        if (posGuideData !== undefined) {
+          const elAdd = document.createElement('button')
+          elAdd.classList.add('add_shape')
+          elAdd.classList.add('text__m')
+          elAdd.textContent = '+'
+          elAdd.addEventListener('click', (e) => {
+            shapesNth[`depth${depth}`]++
+            shapesArray.push(JSON.parse(JSON.stringify(shapeCircle)))
+            const el = makeInputShapeType(depth, shapesNth[`depth${depth}`], shapesArray)
+            elAdd.insertAdjacentElement('beforebegin', el)
+            // if shapes number equals the position guide's sides, disable the add button
+            const shapesNumber = posGuideData.el.querySelectorAll('div.config__options__shape').length
+            if (posGuideData.shape.sides === shapesNumber) {
+              elAdd.setAttribute('disabled', 'disabled')
+            }
+            // if the only shape's remove button is disabled, enable it
+            const elRemovePos = posGuideData.el.querySelector('div.config__options__shape > button.remove_shape')
+            if (elRemovePos.hasAttribute('disabled')) {
+              elRemovePos.removeAttribute('disabled')
+            }
+          })
+          posGuideData.el.appendChild(elAdd)
+        }
+
+        select.addEventListener('change', (e) => {
+
+          const shapeType = e.target.value
+          shapesArray[nth].type = shapeType
+
+          if (shapeType === 'polygon') {
+
+            // initial values for polygon
+            shapesArray[nth] = JSON.parse(JSON.stringify(shapePolygon))
+
+            // remove circle-related inputs
+            const inputs = Array.from(shapeContainer.querySelectorAll('.input_container'))
+            for (const i of inputs) {
+              i.replaceChildren()
+              i.remove()
+            }
+
+            // add polygon-related inputs
+            const elSides = makeInputShapeSides(depth, nth, shapesArray[nth])
+            const elGuidePos = makeInputGuidePos(depth, nth, shapesArray[nth], shapeContainer)
+            const elRatioRadius = makeInputShapeRatioRadius(nth, shapesArray[nth])
+            const elRatioSize = makeInputShapeRatioSize(nth, shapesArray[nth])
+            const elHr = document.createElement('hr')
+            
+            elRemove.insertAdjacentElement('beforebegin', elSides)
+            elRemove.insertAdjacentElement('beforebegin', elRatioSize)
+            elRemove.insertAdjacentElement('beforebegin', elRatioRadius)
+            elRemove.insertAdjacentElement('afterend', elGuidePos)
+            elRemove.insertAdjacentElement('afterend', elHr)
+          }
+          else {
+
+            // initial values for circle
+            shapesArray[nth] = JSON.parse(JSON.stringify(shapeCircle))
+            
+            // remove polygon-related inputs
+            const inputs = Array.from(shapeContainer.querySelectorAll('.input_container'))
+            for (const i of inputs) {
+              i.replaceChildren()
+              i.remove()
+            }
+            const elHr = shapeContainer.querySelector('hr')
+            elHr.remove()
+
+            // add circle-related inputs
+            const elRatioSize = makeInputShapeRatioSize(nth, shapesArray[nth])
+            elRemove.insertAdjacentElement('beforebegin', elRatioSize)
+          }
+        })
+
+        selectContainer.appendChild(select)
+        shapeContainer.appendChild(selectContainer)
+        shapeContainer.appendChild(elRemove)
+        if (shapesArray[nth].type === 'polygon') {
+
+          // add polygon-related inputs
+          const elSides = makeInputShapeSides(depth, nth, shapesArray[nth])
+          const elGuidePos = makeInputGuidePos(depth, nth, shapesArray[nth], shapeContainer)
+          const elRatioRadius = makeInputShapeRatioRadius(nth, shapesArray[nth])
+          const elRatioSize = makeInputShapeRatioSize(nth, shapesArray[nth])
+          const elHr = document.createElement('hr')
+
+          elRemove.insertAdjacentElement('beforebegin', elSides)
+          elRemove.insertAdjacentElement('beforebegin', elRatioSize)
+          elRemove.insertAdjacentElement('beforebegin', elRatioRadius)
+          elRemove.insertAdjacentElement('afterend', elGuidePos)
+          elRemove.insertAdjacentElement('afterend', elHr)
+        }
+        else {
+
+          // add circle-related inputs
+          const elRatioSize = makeInputShapeRatioSize(nth, shapesArray[nth])
+          elRemove.insertAdjacentElement('beforebegin', elRatioSize)
+        }
+
+        return shapeContainer
+      }
+      
+      function makeInputShapeRatioSize(nth, shapeObj) {
+
+        const uuid = makeUuid()
+        const inputContainer = document.createElement('div')
+        inputContainer.classList.add('text__s')
+        inputContainer.classList.add('input_container')
+        const label = document.createElement('label')
+        label.for = `shape_${nth}th__ratio__size__${uuid}`
+        const input = document.createElement('input')
+        input.type = 'range'
+        input.min = defaults.slider.ratio.size.min
+        input.max = defaults.slider.ratio.size.max
+        input.id = `shape_${nth}th__ratio__size__${uuid}`
+        const out = document.createElement('span')
+        out.id = `shape_${nth}th__out__ratio__size__${uuid}`
+        input.value = `${defaults.shape.ratios.size * 10}`
+        out.textContent = `${defaults.shape.ratios.size}`
+
+        input.addEventListener('input', (e) => {
+
+          const ratioSize = e.target.value / 10
+          if (!shapeObj.ratios?.length) {
+            shapeObj.ratios = [{type: 'size', options: {value: ratioSize}}]
+          }
+          else {
+            let index = -1
+            for (const r of shapeObj.ratios) {
+              index++
+              if (r.type === 'size') {
+                r.options.value = ratioSize
+                break
+              }
+              else if (index === shapeObj.ratios.length - 1) {
+                shapeObj.ratios.push({type: 'size', options: {value: ratioSize}})
+              }
+            }
+          }
+          out.textContent = ratioSize
+        })
+
+        label.textContent = 'size ratio'
+        inputContainer.appendChild(label)
+        inputContainer.appendChild(input)
+        inputContainer.appendChild(out)
+        return inputContainer
+      }
+
+      function makeInputShapeRatioRadius(nth, shapeObj) {
+
+        const uuid = makeUuid()
+        const inputContainer = document.createElement('div')
+        inputContainer.classList.add('text__s')
+        inputContainer.classList.add('input_container')
+        const label = document.createElement('label')
+        label.for = `shape_${nth}th__ratio__radius__${uuid}`
+        const input = document.createElement('input')
+        input.type = 'range'
+        input.min = defaults.slider.ratio.radius.min
+        input.max = defaults.slider.ratio.radius.max
+        input.id = `shape_${nth}th__ratio__radius__${uuid}`
+        const out = document.createElement('span')
+        out.id = `shape_${nth}th__out__ratio__radius__${uuid}`
+        input.value = `${defaults.shape.ratios.radius * 10}`
+        out.textContent = `${defaults.shape.ratios.radius}`
+
+        input.addEventListener('input', (e) => {
+          const ratioRadius = e.target.value / 10
+          if (!shapeObj.ratios?.length) {
+            shapeObj.ratios = [{type: 'radius', options: {value: ratioRadius}}]
+          }
+          else {
+            let index = -1
+            for (const r of shapeObj.ratios) {
+              index++
+              if (r.type === 'radius') {
+                r.options.value = ratioRadius
+                break
+              }
+              else if (index === shapeObj.ratios.length - 1) {
+                shapeObj.ratios.push({type: 'radius', options: {value: ratioRadius}})
+              }
+            }
+          }
+          out.textContent = ratioRadius
+        })
+          
+        label.textContent = 'radius ratio'
+        inputContainer.appendChild(label)
+        inputContainer.appendChild(input)
+        inputContainer.appendChild(out)
+        return inputContainer
+      }
+      
+      // pattern
+      let pointerize0th
+      function pattern() {
+
         const patternTarget = {
           type: 'square',
           svg_attributes: {
@@ -379,13 +837,12 @@
                     column: 0.01
                   }
                 },
-                shapes: patternShapes
+                shapes: JSON.parse(JSON.stringify(shapes))
               },
             },
           ],
         }
 
-        //0 options
         let options0th = {
           element__svg: {
             svg_attributes: {
@@ -404,27 +861,19 @@
           },
           shapes: [patternTarget],
         }
-        
+
         pointerize0th = new Pointerize(options0th)
         pointerize0th.start()
         return options0th
       }
-      let optionsPattern = pattern(shape.sides, shape.ratios[0].options.value, shapesNumber)
+      let optionsPattern = pattern()
 
       // pointer
       let pointerize1th
-      function pointer(sides, radiusRatio) {
-        //0 shapes
-        const shape1th = {
-          ...shape,
-          svg_attributes: {
-            'stroke-width': '0.6',
-            stroke: color_gray_2
-          }
-        }
-        shape1th.sides = sides
-        shape1th.ratios[0].options.value = radiusRatio
+      function pointer() {
+         
         const shapesPointer = [
+          ...JSON.parse(JSON.stringify(shapes)),
           {
             type: 'circle',
             svg_attributes: {
@@ -433,32 +882,15 @@
             },
             ratios: [
               {
-                type: 'size', 
+                type: 'size',
                 options: {
                   value: 0.1
                 }
               }
             ]
-          },
-          {
-            type: 'circle',
-            svg_attributes: {
-              'stroke-width': '0.4',
-              stroke: color_brand_1_2
-            },
-            ratios: [
-              {
-                type: 'size', 
-                options: {
-                  value: 1
-                }
-              }
-            ]
-          },
-          shape1th,
+          }
         ]
 
-        //0 options
         let options1th = {
           element__svg: {
             svg_attributes: {
@@ -472,6 +904,7 @@
               left: '-100px',
               width: '100px',
               height: '100px',
+              'z-index': '10'
             },
           },
           interactions: [
@@ -479,33 +912,35 @@
               type: 'pointer'
             }
           ],
-          shapes: shapesPointer,
+          shapes: shapesPointer ,
         }
         
         pointerize1th = new Pointerize(options1th)
         pointerize1th.start()
+        return options1th
       }
-      pointer(shape.sides, shape.ratios[0].options.value)
+      let optionsPointer = pointer()
       
       // introduction
-      let pointerize2th, pointerize3th
-      function introduction(sides, radiusRatio, shapesNum) {
-
-        //0 0th
-        //1 shapes
-        const shape2th = {
-          ...shape,
-          svg_attributes: {
-            stroke: color_brand_2_2
+      let pointerize2th
+      function introduction() {
+        
+        const shapesIntro = JSON.parse(JSON.stringify(shapes))
+        function changeColor(shapes) {
+          for (const s of shapes) {
+            s.svg_attributes.stroke = color_brand_1_2
+            if (s.guides?.length) {
+              for (const g of s.guides) {
+                if (g.type === 'position') {
+                  changeColor(g.options.shapes)
+                }
+              }
+            }
           }
         }
-        shape2th.sides = sides
-        shape2th.ratios[0].options.value = radiusRatio
-        const shapesIntro0th = [
-          shape2th
-        ]
-        //1 options
-        let options2th = {
+        changeColor(shapesIntro)
+
+        let options = {
           element__svg_container: {
             css_properties: {
               width: '100%',
@@ -513,187 +948,103 @@
             }
           },
           css_selector__root: '#introduction_0th__svg',
-          shapes: shapesIntro0th
+          shapes: shapesIntro
         }
-        //1 initialize
-        pointerize2th = new Pointerize(options2th)
+
+        pointerize2th = new Pointerize(options)
         pointerize2th.start()
-
-        //0 1th
-        //1 position guide shapes
-        const shapesIntro1thPos = []
-        const shape3th = {
-          ...shape,
-          svg_attributes: {
-            stroke: color_brand_2_2
-          }
-        }
-        shape3th.sides = sides
-        shape3th.ratios[0].options.value = radiusRatio
-        for (let i = 0; i < shapesNum; i++) {
-          shapesIntro1thPos.push(shape3th)
-        }
-        //1 shapes
-        const shapesIntro1th = [
-          {
-            type: 'polygon',
-            sides: shapesNum,
-            svg_attributes: {
-              'stroke-width': '0',
-            },
-            ratios: [
-              {
-                type: 'size',
-                options: {
-                  value: 0.8
-                }
-              }
-            ],
-            guides: [
-              {
-                type: 'position',
-                options: {
-                  shapes: shapesIntro1thPos
-                }
-              }
-            ]
-          },
-        ]
-        
-        //1 options
-        let options3th = {
-          element__svg_container: {
-            css_properties: {
-              width: '100%',
-              height: '100%'
-            }
-          },
-          css_selector__root: '#introduction_1th__svg',
-          shapes: shapesIntro1th
-        }
-        //1 initialize
-        pointerize3th = new Pointerize(options3th)
-        pointerize3th.start()
-        return {
-          options2th,
-          options3th
-        }
+        return options
       }
-      let { options2th: optionsIntro0, options3th: optionsIntro1 } = introduction(shape.sides, shape.ratios[0].options.value, shapesNumber)
-      
-      // select element
-      let pointerize4th, pointerize5th
-      function select(sides, radiusRatio) {
+      let optionsIntro0 = introduction()
 
-        // custom arrow
-        const shape4th = {
-          ...shape,
-          svg_attributes: {
-            'stroke-width': 0,
-            fill: color_brand_1_2
-          }
-        }
-        shape4th.sides = sides
-        shape4th.ratios[0].options.value = radiusRatio
-        const shapesSelect = [
-          shape4th
-        ]
-
-        // options for first one
-        let options4th = {
-          css_selector__root: '.select_con',
-          element__svg_container: {
-            css_properties: {
-              position: 'absolute',
-              right: '0.6em',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              'pointer-events': 'none',
-              height: '60%'
-            }
-          },
-          shapes: shapesSelect
-        }
-
-        // options for second one
-        let options5th = {
-          css_selector__root: '.select_con',
-          element__svg_container: {
-            css_properties: {
-              position: 'absolute',
-              left: '0.6em',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              'pointer-events': 'none',
-              height: '60%'
-            }
-          },
-          shapes: shapesSelect
-        }
-        
-        // first one
-        pointerize4th = new Pointerize(options4th)
-        pointerize4th.start()
-
-        // second one
-        pointerize5th = new Pointerize(options5th)
-        pointerize5th.start() 
-      }
-      select(shape.sides, shape.ratios[0].options.value)
-      
-      // event listeners for sliders
-      const elSides = document.querySelector('#sides')
-      const elSidesOut = document.querySelector('#sides_out')
-      elSidesOut.textContent = shape.sides
-      const elRadiusRatio = document.querySelector('#radius_ratio')
-      const elRadiusRatioOut = document.querySelector('#radius_ratio_out')
-      elRadiusRatioOut.textContent = shape.ratios[0].options.value
-      const elShapesNum = document.querySelector('#shapes_number')
-      const elShapesNumOut = document.querySelector('#shapes_number_out')
-      elShapesNumOut.textContent = shapesNumber
+      //0 elements
+      const elConfigOpts = document.querySelector('#config__options')
       const elApply = document.querySelector('#apply_options')
-      const elOptionsOutShape = document.querySelector('#options_out__shape')
-      elOptionsOutShape.textContent = JSON.stringify(optionsIntro0)
       const elOptionsOutShapes = document.querySelector('#options_out__shapes')
-      elOptionsOutShapes.textContent = JSON.stringify(optionsIntro1)
+      const elOptionsOutImage = document.querySelector('#options_out__image')
       const elOptionsOutPattern = document.querySelector('#options_out__pattern')
+      const elOptionsOutPointer = document.querySelector('#options_out__pointer')
+      const elConfigContainer = document.querySelector('#config_container')
+      const elOpenConfig = document.querySelector('#show_config')
+      const elCloseConfig = document.querySelector('#hide_config')
+      const elTogglePointer = document.querySelector('#toggle_pointer')
+      
+      //0 initial
+      //1 show user the initial options
+      elOptionsOutShapes.textContent = JSON.stringify(shapes)
+      elOptionsOutImage.textContent = JSON.stringify(optionsIntro0)
       elOptionsOutPattern.textContent = JSON.stringify(optionsPattern)
+      elOptionsOutPointer.textContent = JSON.stringify(optionsPointer)
+      //1 assign a simple shape to shapes
+      shapes = [JSON.parse(JSON.stringify(shapeCircle))]
+      //1 make the initial shape-related config elements
+      shapesNth.depth0++
+      const el = makeInputShapeType(0, shapesNth.depth0, shapes)
+      elConfigOpts.appendChild(el)
+      const elAdd = document.createElement('button')
+      elAdd.classList.add('add_shape')
+      elAdd.classList.add('text__m')
+      elAdd.textContent = '+'
+      elAdd.addEventListener('click', (e) => {
+        shapesNth.depth0++
+        shapes.push(JSON.parse(JSON.stringify(shapeCircle)))
+        const el = makeInputShapeType(0, shapesNth.depth0, shapes)
+        elAdd.insertAdjacentElement('beforebegin', el)
+        // if it's not the fisrt and only shape, enable the remove button 
+        if (shapesNth.depth0 === 1) {
+          elConfigOpts.querySelector('.config__options__shape > button.remove_shape').removeAttribute('disabled')
+        }
+      })
+      elConfigOpts.appendChild(elAdd)
 
-      let sides = shape.sides
-      let radiusRatio = shape.ratios[0].options.value
-      let shapesNum = shapesNumber
-      elSides.addEventListener('change', (e) => {
-        sides = e.target.value
-        elSidesOut.textContent = sides
+      //0 event listeners for general config buttons
+      elOpenConfig.addEventListener('click', () => {
+        elConfigContainer.style.width = 'clamp(300px, 50%, 50%)'
       })
-      elRadiusRatio.addEventListener('change', (e) => {
-        radiusRatio = (+e.target.value / 10).toFixed(1)
-        elRadiusRatioOut.textContent = radiusRatio
+      elCloseConfig.addEventListener('click', () => {
+        elConfigContainer.style.width = '0'
       })
-      elShapesNum.addEventListener('change', (e) => {
-        shapesNum = e.target.value
-        elShapesNumOut.textContent = shapesNum
+      
+      let defaultPointer = false
+      elTogglePointer.addEventListener('click', () => {
+        
+        defaultPointer = !defaultPointer
+        if (defaultPointer) {
+          elTogglePointer.textContent = 'create custom pointer'
+        }
+        else {
+          elTogglePointer.textContent = 'remove custom pointer'
+        }
+        
       })
+
       elApply.addEventListener('click', (e) => {
+
+        if (!defaultPointer) {
+          // stop intance
+          pointerize1th.stop()
+          // start instance
+          optionsPointer = pointer()
+          // update the options
+          elOptionsOutPointer.textContent = JSON.stringify(optionsPointer)
+        }
+        else {
+          pointerize1th.stop()
+          elOptionsOutPointer.textContent = ''
+        }
         // stop intances
         pointerize0th.stop()
-        pointerize1th.stop()
         pointerize2th.stop()
-        pointerize3th.stop()
-        pointerize4th.stop()
-        pointerize5th.stop()
-        // update shapes
-        optionsPattern = pattern(sides, radiusRatio, shapesNum)
-        pointer(sides, radiusRatio)
-        ;({ options2th: optionsIntro0, options3th: optionsIntro1 } = introduction(sides, radiusRatio, shapesNum))
-        select(sides, radiusRatio)
+        // start instances
+        optionsPattern = pattern()
+        optionsIntro0 = introduction()
         // update the options
-        elOptionsOutShape.textContent = JSON.stringify(optionsIntro0)
-        elOptionsOutShapes.textContent = JSON.stringify(optionsIntro1)
+        elOptionsOutShapes.textContent = JSON.stringify(shapes)
+        elOptionsOutImage.textContent = JSON.stringify(optionsIntro0)
         elOptionsOutPattern.textContent = JSON.stringify(optionsPattern)
       })
 
-      // presets
+      //0 presets
       const presetMap = {
         basic_1: presetBasic1,
         basic_2: presetBasic2,
