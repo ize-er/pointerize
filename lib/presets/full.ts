@@ -111,10 +111,11 @@ export const presetBasic3 = () => {
   const options: IOptions = {
     element__svg_container: {
       /* 
-         we need `position: fixed` since event listeners change `left` and `top` properties
+         We need `position: fixed` since event listeners change `left` and `top` properties
          to move the pointer, we are also specifying the initial `top` and `left` for the
          pointer based on its `width` and `height` to move it out of sight until the user
-         moves the pointer and it becomes visible 
+         moves the pointer and it becomes visible. z-index` is set to place the pointer above 
+         other elements; change it if you need to.
       */
       css_properties: {
         position: 'fixed',
@@ -122,10 +123,12 @@ export const presetBasic3 = () => {
         left: '-48px',
         width: '48px',
         height: '48px',
+        'z-index': '10'
       },
     },
     shapes,
     interactions: [
+      // this interaction turns the shapes into a custom pointer
       {
         type: 'pointer',
       },
