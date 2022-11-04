@@ -285,10 +285,13 @@ export default class Pointerize implements IPointerize {
     // remove the elements
     this.element__svg_container?.remove()
     // related to `pointer` interaction, show the default pointer if it's not already there
-    if (!this.#options__interactions.pointer?.options?.default_pointer) {
-      this.element__root.classList.remove('-_pointerize__pointer_default__non')
+    if (this.#options__interactions.pointer !== undefined) {
+      if (!this.#options__interactions.pointer.options?.default_pointer) {
+        this.element__root.classList.remove('-_pointerize__pointer_default__non')
+      }
     }
   }
+
   hide() {
     // add non-visibility class to svg container and
     this.element__svg_container?.classList.add('-_pointerize-_u__display__non')
@@ -297,6 +300,7 @@ export default class Pointerize implements IPointerize {
       this.element__root.classList.remove('-_pointerize__pointer_default__non')
     }
   }
+
   show() {
     if (this.element__svg_container !== null) {
       // remove non-visibility class from svg container
