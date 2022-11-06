@@ -1,7 +1,7 @@
 {
   "name": "@ize-er/pointerize",
   "private": false,
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Pointerize is suited to almost any task that involves shapes (SVG)",
   "license": "MIT",
   "type": "module",
