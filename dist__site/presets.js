@@ -1,7 +1,7 @@
 import d from "./tokens.js";
-const c = (a, e) => {
+const c = (n, e) => {
   const o = [];
-  for (let n = 0; n < a; n++) {
+  for (let a = 0; a < n; a++) {
     const i = {}, r = (p, s) => {
       for (const t in p)
         if (Array.isArray(p[t]))
@@ -13,7 +13,7 @@ const c = (a, e) => {
             } else
               s[t] = p[t][0];
           else
-            s[t] = p[t][n];
+            s[t] = p[t][a];
         else
           s[t] = {}, typeof p[t] == "string" ? s[t] = p[t] : r(p[t], s[t]);
     };
@@ -86,7 +86,8 @@ const c = (a, e) => {
       top: "-48px",
       left: "-48px",
       width: "48px",
-      height: "48px"
+      height: "48px",
+      "z-index": "10"
     }
   },
   shapes: l,
@@ -289,7 +290,7 @@ const c = (a, e) => {
   const e = [];
   for (let s = 0; s < 4; s++)
     e.push(`hsl(${60 / 4 * s}, 100%, 40%)`);
-  const n = c(4, {
+  const a = c(4, {
     type: ["polygon"],
     sides: [14],
     svg_attributes: {
@@ -343,7 +344,7 @@ const c = (a, e) => {
                     {
                       type: "position",
                       options: {
-                        shapes: n
+                        shapes: a
                       }
                     }
                   ]
