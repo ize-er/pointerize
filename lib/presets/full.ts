@@ -123,7 +123,7 @@ export const presetBasic3 = () => {
         left: '-48px',
         width: '48px',
         height: '48px',
-        'z-index': '10'
+        'z-index': '10',
       },
     },
     shapes,
@@ -161,9 +161,9 @@ export const presetAdvanced1 = () => {
 
   // the number of shapes that are going to be positioned on the position guide
   const shapesPosNum = 60
-  
+
   //0 make the shapes that are positioned based on the positoin guide
-  //1 make some of the properties for the next object 
+  //1 make some of the properties for the next object
   const fill: string[] = []
   const ratiosSize: number[] = []
   for (let i = 0; i < shapesPosNum; i++) {
@@ -229,8 +229,8 @@ export const presetAdvanced1 = () => {
           type: 'position',
           options: {
             // these shapes are positioned on the current shape's vertexes
-            shapes: shapesPos
-          }
+            shapes: shapesPos,
+          },
         },
       ],
     },
@@ -319,13 +319,13 @@ export const presetAdvanced2 = () => {
         {
           type: 'position',
           options: {
-            shapes: shapesPos
-          }
+            shapes: shapesPos,
+          },
         },
       ],
     },
   ]
-  
+
   // options
   const options: IOptions = {
     element__svg_container: {
@@ -392,13 +392,13 @@ export const presetAdvanced3 = () => {
         {
           type: 'position',
           options: {
-            shapes: shapesPos
-          }
+            shapes: shapesPos,
+          },
         },
       ],
     },
   ]
-  
+
   // options
   const options: IOptions = {
     element__svg_container: {
@@ -469,8 +469,8 @@ export const presetAdvanced4 = () => {
         {
           type: 'position',
           options: {
-            shapes: shapesPatternPos
-          }
+            shapes: shapesPatternPos,
+          },
         },
       ],
     },
@@ -527,14 +527,14 @@ export const presetAdvanced5 = () => {
    */
 
   const shapesNum = 3
-  
+
   const shapesOpts = {
     type: ['square'],
     sides: [5],
     svg_attributes: {
       'stroke-width': ['0', '0.2', '1'],
       stroke: ['hsl(160, 50%, 40%)'],
-      fill: ['hsl(0, 100%, 40%)', 'transparent', 'transparent']
+      fill: ['hsl(0, 100%, 40%)', 'transparent', 'transparent'],
     },
     ratios: [
       [
@@ -562,7 +562,7 @@ export const presetAdvanced5 = () => {
 
   const shapes: IOptionsShape[] = builder_shapes(shapesNum, shapesOpts)
   shapes[0].type = 'circle'
-  shapes[0].effects = [{preset: 'glow'}]
+  shapes[0].effects = [{ preset: 'glow' }]
   shapes[0].animations = undefined
 
   // options
