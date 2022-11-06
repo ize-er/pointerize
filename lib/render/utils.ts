@@ -20,7 +20,7 @@ export const makePosition = (
     // polygon
     positionPolygon = [positionPoints[nth][0], positionPoints[nth][1]]
     // rectangle
-    positionRect = [positionPoints[nth][0] - sizeShape/2, positionPoints[nth][1] - sizeShape/2]
+    positionRect = [positionPoints[nth][0] - sizeShape / 2, positionPoints[nth][1] - sizeShape / 2]
   } else {
     positionPolygon = [posPolyMemberX, posPolyMemberY]
     positionRect = [posRectMemberX, posRectMemberY]
@@ -92,7 +92,10 @@ export const makeRadialPoints = (
    animations
    change the necessary attributes and return the updated attributes 
 */
-export const updateAnimation = (animation: IAnimationsOptions, guidesInfo?: {position?: [number, number]}): IAnimationsOptions | null => {
+export const updateAnimation = (
+  animation: IAnimationsOptions,
+  guidesInfo?: { position?: [number, number] }
+): IAnimationsOptions | null => {
   //0 add the animation attrs we calculated and then the user's over them
   //1 transform origin
   let transformOrigin
@@ -141,7 +144,7 @@ export const updateAnimation = (animation: IAnimationsOptions, guidesInfo?: {pos
     ...animation,
     css_properties: {
       ...(preset && presetsAnimation[preset].css_properties),
-      ...(transformOrigin && {'transform-origin': transformOrigin}),
+      ...(transformOrigin && { 'transform-origin': transformOrigin }),
       ...animation.css_properties,
     },
     keyframes: keyframes,

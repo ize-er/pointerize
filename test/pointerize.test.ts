@@ -89,10 +89,10 @@ describe('Pointerize options', () => {
             options: {
               shapes: [
                 {
-                  type: 'rectangle'
-                }
-              ]
-            }
+                  type: 'rectangle',
+                },
+              ],
+            },
           },
           {
             type: 'pattern',
@@ -113,9 +113,9 @@ describe('Pointerize options', () => {
           {
             type: 'size',
             options: {
-              value: 0.6
-            }
-          }
+              value: 0.6,
+            },
+          },
         ],
         svg_attributes: {
           'stroke-width': '2',
@@ -148,9 +148,9 @@ describe('Pointerize options', () => {
           {
             type: 'size',
             options: {
-              value: 0.8
-            }
-          }
+              value: 0.8,
+            },
+          },
         ],
         animations: [
           {
@@ -161,7 +161,7 @@ describe('Pointerize options', () => {
           {
             preset: 'glow',
           },
-        ]
+        ],
       },
       {
         type: 'rectangle',

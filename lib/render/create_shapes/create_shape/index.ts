@@ -15,8 +15,9 @@ const createShape = (
   elementRoot: SVGSVGElement | SVGPatternElement,
   sizeInner: number,
   elementSvg: SVGSVGElement,
-  guidesInfo?: { // informtion that is needed when this shape is used for a guide shape
-    parentId?: string,
+  guidesInfo?: {
+    // informtion that is needed when this shape is used for a guide shape
+    parentId?: string
     position?: [number, number]
   }
 ): void => {
@@ -27,11 +28,10 @@ const createShape = (
   let elId
   if (guidesInfo?.parentId !== undefined) {
     elId = `${guidesInfo.parentId}__shape_${nth}th_${shape.type}`
-  }
-  else {
+  } else {
     elId = `-_${elContainerNth[0]}__shape_${nth}th_${shape.type}`
   }
-  
+
   const el = document.createElementNS('http://www.w3.org/2000/svg', shape.type)
   el.id = elId
   // attributes
@@ -43,7 +43,7 @@ const createShape = (
     }
   }
   // animations
-  applyAnimations(el, shape, elementSvg, (guidesInfo?.position && {position: guidesInfo?.position}))
+  applyAnimations(el, shape, elementSvg, guidesInfo?.position && { position: guidesInfo?.position })
   // effects
   if (effects !== undefined) {
     const { filterEls, filterIds } = applyEffects(effects, nth, elContainerNth[0])
@@ -59,7 +59,6 @@ const createShape = (
       const guideOptions = guide.options
       if (guide.type === 'pattern') {
         if (guideOptions !== undefined) {
-
           // `defs` element. if there's already a descendant `defs` element, don't make another
           let elDefs = elementRoot.querySelector(':scope > defs')
           elDefs = elDefs ?? document.createElementNS('http://www.w3.org/2000/svg', 'defs')
@@ -153,7 +152,10 @@ const createShape = (
             //1 create pattern shapes
             // this ID is passed to shapes to differentiate them from normal shapes
             const parentIdPattern = `-_${elContainerNth[0]}__shape_${nth}th__pat`
-            createShapes(patternShapesUpdate, elPattern, sizeInner, elementSvg, { sizeInnerCustom: sizeInnerWithGap, parentId: parentIdPattern} )
+            createShapes(patternShapesUpdate, elPattern, sizeInner, elementSvg, {
+              sizeInnerCustom: sizeInnerWithGap,
+              parentId: parentIdPattern,
+            })
           } else {
             throw new UnspecifiedProperty('pattern guide options', ['shapes'])
           }
@@ -171,17 +173,15 @@ const createShape = (
       if (guide.type === 'position') {
         if (guideOptions !== undefined) {
           if (Array.isArray(guideOptions.shapes) && guideOptions.shapes.length) {
-
             let positionPoints
-            
-            if (shape.sides !== undefined) {
 
+            if (shape.sides !== undefined) {
               let ratioRadius
               for (const r of shape.ratios) {
                 if (r.type === 'radius') {
                   ratioRadius = {
                     type: r.options.type,
-                    value: r.options.value
+                    value: r.options.value,
                   }
                   break
                 }
@@ -205,7 +205,7 @@ const createShape = (
             // create shapes
             // this ID is passed to shapes to differentiate them from normal shapes
             const parentIdPosition = `-_${elContainerNth[0]}__shape_${nth}th__pos`
-            createShapes(shapes, elementRoot, sizeInner, elementSvg, { positionPoints, parentId: parentIdPosition },)
+            createShapes(shapes, elementRoot, sizeInner, elementSvg, { positionPoints, parentId: parentIdPosition })
           } else {
             throw new UnspecifiedProperty('position guide options', ['shapes'])
           }

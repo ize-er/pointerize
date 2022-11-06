@@ -10,7 +10,7 @@ export const presetsAnimation = {
   rotate: {
     css_properties: {
       ...defaultsCss.animation,
-      'animation-name': 'rotate'
+      'animation-name': 'rotate',
     },
     keyframes: [
       {
