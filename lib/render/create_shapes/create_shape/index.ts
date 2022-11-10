@@ -41,7 +41,6 @@ const createShape = (
     const filter = filterIds.map(id => `url(#${id})`).join(' ') // create the final filter attribute string by combining all ids
     el.setAttribute('filter', filter)
   }
-  // if it's a pattern guide
   if (shape.guides !== undefined) {
     for (const guide of shape.guides) {
       const guideOptions = guide.options
