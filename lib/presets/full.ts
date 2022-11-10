@@ -158,35 +158,9 @@ export const presetAdvanced1 = () => {
 
   // the number of shapes that are going to be positioned on the position guide
   const shapesPosNum = 60
-
-  // shapes property, already containing the position guide shape
-  const shapes: IOptionsShape[] = [
-    {
-      type: 'polygon',
-      sides: shapesPosNum,
-      svg_attributes: {
-        'stroke-width': '0', // giving it no stroke because we don't want to see this shape
-      },
-      // this determines the ratio of of the radii
-      ratios: [
-        {
-          type: 'radius',
-          options: {
-            type: 'accumulate',
-            value: 0.99,
-          },
-        },
-      ],
-      // this turns this shape into a position guide
-      guides: [
-        {
-          type: 'position',
-        },
-      ],
-    },
-  ]
-
-  // build the shapes' options and add to the rest
+  
+  //0 make the shapes that are positioned based on the positoin guide
+  //1 make some of the properties for the next object 
   const fill: string[] = []
   const ratiosSize: number[] = []
   for (let i = 0; i < shapesPosNum; i++) {
@@ -198,7 +172,7 @@ export const presetAdvanced1 = () => {
     fill.push(`hsl(${(360 / shapesPosNum) * i}, 100%, 40%)`)
     ratiosSize.push((0.2 / shapesPosNum) * (i + 1))
   }
-
+  //1 options to pass to `builder_shapes` to make the shapes
   const shapesPosOpts = {
     type: ['polygon'],
     sides: [4],
@@ -225,11 +199,39 @@ export const presetAdvanced1 = () => {
       ],
     ],
   }
-
+  //1 the final array of shapes that will be passed to position guide
   const shapesPos = builder_shapes(shapesPosNum, shapesPosOpts)
-  for (const i of shapesPos) {
-    shapes.push(i)
-  }
+
+  // shapes property
+  const shapes: IOptionsShape[] = [
+    {
+      type: 'polygon',
+      sides: shapesPosNum,
+      svg_attributes: {
+        'stroke-width': '0', // giving it no stroke because we don't want to see this shape
+      },
+      // this determines the ratio of of the radii
+      ratios: [
+        {
+          type: 'radius',
+          options: {
+            type: 'accumulate',
+            value: 0.99,
+          },
+        },
+      ],
+      // this turns this shape into a position guide
+      guides: [
+        {
+          type: 'position',
+          options: {
+            // these shapes are positioned on the current shape's vertexes
+            shapes: shapesPos
+          }
+        },
+      ],
+    },
+  ]
 
   // options
   const options: IOptions = {
@@ -251,36 +253,6 @@ export const presetAdvanced2 = () => {
    */
 
   const shapesPosNum = 20
-
-  const shapes: IOptionsShape[] = [
-    {
-      type: 'polygon',
-      sides: shapesPosNum,
-      svg_attributes: {
-        'stroke-width': '0',
-      },
-      ratios: [
-        {
-          type: 'radius',
-          options: {
-            type: 'alternate',
-            value: 0.8,
-          },
-        },
-        {
-          type: 'size',
-          options: {
-            value: 0.8,
-          },
-        },
-      ],
-      guides: [
-        {
-          type: 'position',
-        },
-      ],
-    },
-  ]
 
   const fill: string[] = []
   const ratiosSize: number[] = []
@@ -317,10 +289,40 @@ export const presetAdvanced2 = () => {
   }
 
   const shapesPos = builder_shapes(shapesPosNum, shapesPosOpts)
-  for (const i of shapesPos) {
-    shapes.push(i)
-  }
 
+  const shapes: IOptionsShape[] = [
+    {
+      type: 'polygon',
+      sides: shapesPosNum,
+      svg_attributes: {
+        'stroke-width': '0',
+      },
+      ratios: [
+        {
+          type: 'radius',
+          options: {
+            type: 'alternate',
+            value: 0.8,
+          },
+        },
+        {
+          type: 'size',
+          options: {
+            value: 0.8,
+          },
+        },
+      ],
+      guides: [
+        {
+          type: 'position',
+          options: {
+            shapes: shapesPos
+          }
+        },
+      ],
+    },
+  ]
+  
   // options
   const options: IOptions = {
     element__svg_container: {
@@ -341,6 +343,26 @@ export const presetAdvanced3 = () => {
    */
 
   const shapesNum = 10
+
+  const shapesPos: IOptionsShape[] = []
+  for (let i = 0; i < shapesNum; i++) {
+    shapesPos.push({
+      type: 'polygon',
+      sides: 4,
+      svg_attributes: {
+        'stroke-width': '0.2',
+        stroke: color_gray_2,
+      },
+      ratios: [
+        {
+          type: 'size',
+          options: {
+            value: 0.5,
+          },
+        },
+      ],
+    })
+  }
 
   const shapes: IOptionsShape[] = [
     {
@@ -366,30 +388,14 @@ export const presetAdvanced3 = () => {
       guides: [
         {
           type: 'position',
+          options: {
+            shapes: shapesPos
+          }
         },
       ],
     },
   ]
-
-  for (let i = 0; i < shapesNum; i++) {
-    shapes.push({
-      type: 'polygon',
-      sides: 4,
-      svg_attributes: {
-        'stroke-width': '0.2',
-        stroke: color_gray_2,
-      },
-      ratios: [
-        {
-          type: 'size',
-          options: {
-            value: 0.5,
-          },
-        },
-      ],
-    })
-  }
-
+  
   // options
   const options: IOptions = {
     element__svg_container: {
@@ -413,22 +419,6 @@ export const presetAdvanced4 = () => {
 
   // the number of shapes that are going to be positioned on the position guide (all used as a pattern tile)
   const shapesPatternPosNum = 4
-
-  // shapes property for the pattern guide, already containing the position guide shape
-  const shapesPattern: IOptionsShape[] = [
-    {
-      type: 'polygon',
-      sides: shapesPatternPosNum,
-      svg_attributes: {
-        'stroke-width': '0',
-      },
-      guides: [
-        {
-          type: 'position',
-        },
-      ],
-    },
-  ]
 
   const fill: string[] = []
   for (let i = 0; i < shapesPatternPosNum; i++) {
@@ -462,10 +452,26 @@ export const presetAdvanced4 = () => {
     ],
   }
 
-  const shapesRest = builder_shapes(shapesPatternPosNum, shapesPatternPosOpts)
-  for (const i of shapesRest) {
-    shapesPattern.push(i)
-  }
+  const shapesPatternPos = builder_shapes(shapesPatternPosNum, shapesPatternPosOpts)
+
+  // shapes property for the pattern guide
+  const shapesPattern: IOptionsShape[] = [
+    {
+      type: 'polygon',
+      sides: shapesPatternPosNum,
+      svg_attributes: {
+        'stroke-width': '0',
+      },
+      guides: [
+        {
+          type: 'position',
+          options: {
+            shapes: shapesPatternPos
+          }
+        },
+      ],
+    },
+  ]
 
   // shapes
   const shapes: IOptionsShape[] = [
@@ -517,39 +523,23 @@ export const presetAdvanced5 = () => {
    * An advanced example demonstrating the use of animations and filters
    */
 
-  const shapesNum = 4
-
-  const stroke: string[] = []
-  const size: number[] = []
-  const sides: number[] = []
-  const direction: string[] = []
-  for (let i = 0; i < shapesNum; i++) {
-    stroke.push(`hsl(${(360 / shapesNum) * i}, 100%, 40%)`)
-    size.push((0.7 / shapesNum) * i + 0.3)
-    sides.push(i + 3)
-    direction.push(i % 2 === 0 ? 'alternate' : 'alternate-reverse')
-  }
+  const shapesNum = 3
+  
   const shapesOpts = {
-    type: ['polygon'],
-    sides: sides,
+    type: ['square'],
+    sides: [5],
     svg_attributes: {
-      'stroke-width': ['0.5'],
-      stroke: stroke,
+      'stroke-width': ['0', '0.2', '1'],
+      stroke: ['hsl(160, 50%, 40%)'],
+      fill: ['hsl(0, 100%, 40%)', 'transparent', 'transparent']
     },
     ratios: [
       [
         {
           type: ['size'],
           options: {
-            value: size,
+            value: ['0.2', '0.7', '0.6'],
           },
-        },
-      ],
-    ],
-    effects: [
-      [
-        {
-          preset: ['glow'],
         },
       ],
     ],
@@ -559,7 +549,7 @@ export const presetAdvanced5 = () => {
           preset: ['rotate'],
           // you can further customize animations
           css_properties: {
-            'animation-direction': direction,
+            'animation-direction': ['alternate', 'alternate-reverse'],
             'animation-duration': ['40s'],
           },
         },
@@ -568,6 +558,9 @@ export const presetAdvanced5 = () => {
   }
 
   const shapes: IOptionsShape[] = builder_shapes(shapesNum, shapesOpts)
+  shapes[0].type = 'circle'
+  shapes[0].effects = [{preset: 'glow'}]
+  shapes[0].animations = undefined
 
   // options
   const options: IOptions = {
