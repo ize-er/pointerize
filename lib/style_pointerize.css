@@ -1,0 +1,19 @@
+.-_pointerize__pointer_default__non,
+.-_pointerize__pointer_default__non * {
+  cursor: none;
+}
+.-_pointerize__container {
+  width: 100%;
+  height: 100%;
+  transition: 0.2s width ease-out, 0.2s height ease-out;
+}
+.-_pointerize__container__hover {
+  transition: 0.2s width ease-out, 0.2s height ease-out;
+}
+.-_pointerize__container__hover__temp {
+  transition: 0.2s width ease-out, 0.2s height ease-out, 0.2s top ease-out, 0.2s left ease-out;
+}
+/* utility classes */
+.-_pointerize-_u__display__non {
+  display: none;
+}
