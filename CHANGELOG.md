@@ -2,6 +2,7 @@
 
 ### Added
 - `shapes` option for position guide.
+- There are new configuration options on the website.
 
 ### Changed
 - A shape chosen as position guide does not position the rest of the shapes automatically and they have to be specified with the new `shapes` option.
@@ -10,4 +11,4 @@
 
 ### Fixed
 - ID of guide shapes' shapes is unique.
-- Behavior for transform-related things is fixed. The correct `transform-origin` is set on shapes.
+- Behavior for transform-related issues is fixed. The correct `transform-origin` is set on shapes.
