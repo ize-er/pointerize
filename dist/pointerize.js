@@ -605,7 +605,10 @@ const gt = (i, e, s, l, r, o) => {
               R.size -= +y * (2 * b);
           }
           const st = `-_${n[0]}__shape_${e}th__pat`;
-          V(I, f, l, r, { sizeInnerCustom: W, parentId: st });
+          V(I, f, l, r, {
+            sizeInnerCustom: W,
+            parentId: st
+          });
         } else
           throw new X("pattern guide options", ["shapes"]);
         u.area !== void 0 && d.setAttribute(u.area, `url(#${$})`), h.appendChild(f), s.insertAdjacentElement("afterbegin", h);
@@ -840,7 +843,10 @@ const gt = (i, e, s, l, r, o) => {
     }
   }
   for (const c of t)
-    gt(c[0], c[1], e, s, l, { parentId: r == null ? void 0 : r.parentId, position: c[2] });
+    gt(c[0], c[1], e, s, l, {
+      parentId: r == null ? void 0 : r.parentId,
+      position: c[2]
+    });
 };
 var x, F, G, Z, H, J, D, K;
 class vt {
