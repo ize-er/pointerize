@@ -569,7 +569,8 @@
 
       const shapeTypes = ['polygon', 'circle']
       function makeInputShapeType(depth, nth, shapesArray, posGuideData = undefined) {
-
+        
+        let shapeObj = shapesArray[nth]
         const uuid = makeUuid()
         const shapeContainer = document.createElement('div')
         shapeContainer.classList.add('config__options__shape')
@@ -580,7 +581,7 @@
         for (const t of shapeTypes) {
           const option = document.createElement('option')
           option.value = option.textContent = t
-          if (t === shapesArray[nth].type) {
+          if (t === shapeObj.type) {
             option.selected = true
           }
           select.appendChild(option)
@@ -597,7 +598,14 @@
         }
         //1
         elRemove.addEventListener('click', (e) => {
-          shapesArray.splice(nth, 1)
+
+          /* 
+            `nth` only shows the initial order which can change when the user removes from the middle so
+            find the actual index that the object belongs to first and use that to change the array.
+            The same process is used further down for select.
+          */
+          const nthActual = shapesArray.findIndex((obj) => Object.is(obj, shapeObj))
+          shapesArray.splice(nthActual, 1)
           shapesNth[`depth${depth}`]--
 
           //0 keep a reference to parent element for future use
@@ -646,14 +654,14 @@
         }
 
         select.addEventListener('change', (e) => {
-
+          
           const shapeType = e.target.value
-          shapesArray[nth].type = shapeType
-
           if (shapeType === 'polygon') {
 
             // initial values for polygon
-            shapesArray[nth] = JSON.parse(JSON.stringify(shapePolygon))
+            const nthActual = shapesArray.findIndex((obj) => Object.is(obj, shapeObj))
+            shapeObj = JSON.parse(JSON.stringify(shapePolygon))
+            shapesArray[nthActual] = shapeObj
 
             // remove circle-related inputs
             const inputs = Array.from(shapeContainer.querySelectorAll('.input_container'))
@@ -663,10 +671,10 @@
             }
 
             // add polygon-related inputs
-            const elSides = makeInputShapeSides(depth, nth, shapesArray[nth])
-            const elGuidePos = makeInputGuidePos(depth, nth, shapesArray[nth], shapeContainer)
-            const elRatioRadius = makeInputShapeRatioRadius(nth, shapesArray[nth])
-            const elRatioSize = makeInputShapeRatioSize(nth, shapesArray[nth])
+            const elSides = makeInputShapeSides(depth, nth, shapeObj)
+            const elGuidePos = makeInputGuidePos(depth, nth, shapeObj, shapeContainer)
+            const elRatioRadius = makeInputShapeRatioRadius(nth, shapeObj)
+            const elRatioSize = makeInputShapeRatioSize(nth, shapeObj)
             const elHr = document.createElement('hr')
             
             elRemove.insertAdjacentElement('beforebegin', elSides)
@@ -678,7 +686,9 @@
           else {
 
             // initial values for circle
-            shapesArray[nth] = JSON.parse(JSON.stringify(shapeCircle))
+            const nthActual = shapesArray.findIndex((obj) => Object.is(obj, shapeObj))
+            shapeObj = JSON.parse(JSON.stringify(shapeCircle))
+            shapesArray[nthActual] = shapeObj
             
             // remove polygon-related inputs
             const inputs = Array.from(shapeContainer.querySelectorAll('.input_container'))
@@ -690,7 +700,7 @@
             elHr.remove()
 
             // add circle-related inputs
-            const elRatioSize = makeInputShapeRatioSize(nth, shapesArray[nth])
+            const elRatioSize = makeInputShapeRatioSize(nth, shapeObj)
             elRemove.insertAdjacentElement('beforebegin', elRatioSize)
           }
         })
@@ -698,13 +708,13 @@
         selectContainer.appendChild(select)
         shapeContainer.appendChild(selectContainer)
         shapeContainer.appendChild(elRemove)
-        if (shapesArray[nth].type === 'polygon') {
+        if (shapeObj.type === 'polygon') {
 
           // add polygon-related inputs
-          const elSides = makeInputShapeSides(depth, nth, shapesArray[nth])
-          const elGuidePos = makeInputGuidePos(depth, nth, shapesArray[nth], shapeContainer)
-          const elRatioRadius = makeInputShapeRatioRadius(nth, shapesArray[nth])
-          const elRatioSize = makeInputShapeRatioSize(nth, shapesArray[nth])
+          const elSides = makeInputShapeSides(depth, nth, shapeObj)
+          const elGuidePos = makeInputGuidePos(depth, nth, shapeObj, shapeContainer)
+          const elRatioRadius = makeInputShapeRatioRadius(nth, shapeObj)
+          const elRatioSize = makeInputShapeRatioSize(nth, shapeObj)
           const elHr = document.createElement('hr')
 
           elRemove.insertAdjacentElement('beforebegin', elSides)
@@ -716,7 +726,7 @@
         else {
 
           // add circle-related inputs
-          const elRatioSize = makeInputShapeRatioSize(nth, shapesArray[nth])
+          const elRatioSize = makeInputShapeRatioSize(nth, shapeObj)
           elRemove.insertAdjacentElement('beforebegin', elRatioSize)
         }
 
