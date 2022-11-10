@@ -17,12 +17,11 @@ const createShapes = (
   sizeInner: number,
   elementSvg: SVGSVGElement,
   guidesInfo?: {
-    sizeInnerCustom?: { width: number; height: number } | undefined,
-    positionPoints?: [number, number][] | undefined,
+    sizeInnerCustom?: { width: number; height: number } | undefined
+    positionPoints?: [number, number][] | undefined
     parentId?: string
   }
 ) => {
-  
   const { defaultsSvgElsAttrs, defaultsShape } = makeDefaults(sizeInner)
 
   // arguments for each shape to be used with createShape function. the results for each shape will be put in here.
@@ -30,7 +29,6 @@ const createShapes = (
 
   let nth = -1
   for (const s of shapesMerged) {
-
     nth++
     let newShape: IOptionsShapeMerged
     const size = s.size
@@ -77,7 +75,7 @@ const createShapes = (
             ...newShape,
           },
           nth,
-          positionPolygon
+          positionPolygon,
         ])
 
         break
@@ -101,7 +99,7 @@ const createShapes = (
             ...newShape,
           },
           nth,
-          positionPolygon
+          positionPolygon,
         ])
 
         break
@@ -126,7 +124,7 @@ const createShapes = (
             ...newShape,
           },
           nth,
-          positionPolygon
+          positionPolygon,
         ])
 
         break
@@ -157,7 +155,7 @@ const createShapes = (
             ...newShape,
           },
           nth,
-          positionPolygon
+          positionPolygon,
         ])
 
         break
@@ -183,7 +181,7 @@ const createShapes = (
               ...newShape,
             },
             nth,
-            positionPolygon
+            positionPolygon,
           ])
         }
         break
@@ -219,7 +217,7 @@ const createShapes = (
                 ...newShape,
               },
               nth,
-              positionPolygon
+              positionPolygon,
             ])
           }
         }
@@ -247,7 +245,7 @@ const createShapes = (
               ...newShape,
             },
             nth,
-            positionPolygon
+            positionPolygon,
           ])
         }
         break
@@ -290,7 +288,7 @@ const createShapes = (
             ...newShape,
           },
           nth,
-          positionPolygon
+          positionPolygon,
         ])
 
         break
@@ -310,7 +308,7 @@ const createShapes = (
             ...newShape,
           },
           nth,
-          positionPolygon
+          positionPolygon,
         ])
       }
     }
@@ -318,7 +316,10 @@ const createShapes = (
 
   // create svg elements and append to root element
   for (const args of createShapeArgs) {
-    createShape(args[0], args[1], elementRoot, sizeInner, elementSvg, {parentId: guidesInfo?.parentId, position: args[2]})
+    createShape(args[0], args[1], elementRoot, sizeInner, elementSvg, {
+      parentId: guidesInfo?.parentId,
+      position: args[2],
+    })
   }
 }
 
