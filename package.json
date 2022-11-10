@@ -1,7 +1,7 @@
 {
   "name": "@ize-er/pointerize",
   "private": false,
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Pointerize is suited to almost any task that involves shapes (SVG)",
   "license": "MIT",
   "type": "module",
@@ -53,7 +53,7 @@
     "preview": "vite preview",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint .",
-    "format": "prettier . --write && git add --all && git commit -m\"refactor: format\"",
+    "format": "prettier . --write",
     "preversion": "npm run test && npm run lint && npm run format",
     "version": "rm -rf dist && npm run build"
   },

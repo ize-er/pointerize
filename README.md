@@ -73,9 +73,9 @@ a wide variety of shapes and patterns to be used as:
 
 ## Quickstart
 
-Add Pointerize to your project either as an NPM package or from a CDN:
+Add Pointerize to your project either as an Npm package or from a CDN:
 
-- npm:
+- Npm:
 
   - install
 
@@ -95,13 +95,13 @@ Add Pointerize to your project either as an NPM package or from a CDN:
   - HTML
 
   ```html
-  <link rel="stylesheet" href="https://unpkg.com/@ize-er/pointerize@1/dist/style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@ize-er/pointerize@2/dist/style.css" />
   ```
 
   - import
 
   ```js
-  import Pointerize from 'https://unpkg.com/@ize-er/pointerize@1/dist/pointerize.js'
+  import Pointerize from 'https://unpkg.com/@ize-er/pointerize@2/dist/pointerize.js'
   ```
 
 And then
