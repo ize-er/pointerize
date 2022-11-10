@@ -4,16 +4,13 @@ import makeDefaults from '../make_defaults'
 /**
  * Here contains presets for various options
  */
-const { defaultsOpts, defaultsSvgAttrs, defaultsCss, defaultsSvgElsAttrs } = makeDefaults()
+const { defaultsCss, defaultsSvgElsAttrs } = makeDefaults()
 
 export const presetsAnimation = {
   rotate: {
     css_properties: {
       ...defaultsCss.animation,
-      'animation-name': 'rotate',
-      'transform-origin': `${defaultsOpts.size.inner / 2 + +defaultsSvgAttrs.attrsStroke['stroke-width'] / 2}px ${
-        defaultsOpts.size.inner / 2 + +defaultsSvgAttrs.attrsStroke['stroke-width'] / 2
-      }px`,
+      'animation-name': 'rotate'
     },
     keyframes: [
       {

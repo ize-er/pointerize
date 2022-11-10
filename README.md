@@ -186,13 +186,6 @@ cumbersome to type out you can simplify the process by using Javascript. See the
 
 ## Known Issues
 
-The issues we are aware of and will be working on to fix:
-
-- The behavior for transform-related properties (e.g. rotate animation) is incorrect.
-  It can happen with elements used on a position/pattern guide or when you specify a rotate transfrom through `svg_attributes`.
-  Probably the correct `transform-origin` will be applied to the elements to solve the problem.
-  You might like it the way it is! but please do not rely on it as it will change.
-
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
 ## Naming and Coding Style
