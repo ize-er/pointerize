@@ -1,15 +1,15 @@
-var ot = Object.defineProperty;
-var nt = (s, e, i) => e in s ? ot(s, e, { enumerable: !0, configurable: !0, writable: !0, value: i }) : s[e] = i;
-var j = (s, e, i) => (nt(s, typeof e != "symbol" ? e + "" : e, i), i), V = (s, e, i) => {
+var rt = Object.defineProperty;
+var ot = (s, e, i) => e in s ? rt(s, e, { enumerable: !0, configurable: !0, writable: !0, value: i }) : s[e] = i;
+var j = (s, e, i) => (ot(s, typeof e != "symbol" ? e + "" : e, i), i), tt = (s, e, i) => {
   if (!e.has(s))
     throw TypeError("Cannot " + i);
 };
-var k = (s, e, i) => (V(s, e, "read from private field"), i ? i.call(s) : e.get(s)), N = (s, e, i) => {
+var k = (s, e, i) => (tt(s, e, "read from private field"), i ? i.call(s) : e.get(s)), U = (s, e, i) => {
   if (e.has(s))
     throw TypeError("Cannot add the same private member more than once");
   e instanceof WeakSet ? e.add(s) : e.set(s, i);
 };
-var L = (s, e, i) => (V(s, e, "access private method"), i);
+var L = (s, e, i) => (tt(s, e, "access private method"), i);
 /**
                     * @license Pointerize
                     * Copyright (c) 2022-present Abolfazl Faturechi
@@ -18,7 +18,7 @@ var L = (s, e, i) => (V(s, e, "access private method"), i);
                     * LICENSE file at https://github.com/ize-er/pointerize.
                     */
 const O = (s = 32) => {
-  const e = "4s", p = {
+  const e = "4s", l = {
     size: {
       inner: s,
       outer: s
@@ -48,7 +48,7 @@ const O = (s = 32) => {
       fill: "transparent",
       "fill-opacity": "1"
     }
-  }, l = {
+  }, o = {
     type: "circle",
     ratios: {
       size: {
@@ -74,7 +74,7 @@ const O = (s = 32) => {
         }
       }
     }
-  }, o = +r.attrsStroke["stroke-width"] / 2, t = p.size.inner, a = {
+  }, n = +r.attrsStroke["stroke-width"] / 2, t = l.size.inner, a = {
     rect: {
       x: String(0 + t / 2 / 2 + +r.attrsStroke["stroke-width"] / 2),
       y: String(0 + +r.attrsStroke["stroke-width"] / 2),
@@ -102,16 +102,16 @@ const O = (s = 32) => {
     },
     line: {
       x1: String(t / 2),
-      y1: String(o),
+      y1: String(n),
       x2: String(t / 2),
-      y2: String(t - o),
+      y2: String(t - n),
       ...r.attrsStroke
     },
     polyline: {
-      points: `${t / 3}, ${t - o} 
-              ${t / 3}, ${o}
-              ${t / 3 * 2}, ${o}
-              ${t / 3 * 2}, ${t - o}`,
+      points: `${t / 3}, ${t - n} 
+              ${t / 3}, ${n}
+              ${t / 3 * 2}, ${n}
+              ${t / 3 * 2}, ${t - n}`,
       ...r.attrsStroke,
       ...r.attrsFill
     },
@@ -121,19 +121,19 @@ const O = (s = 32) => {
       ...r.attrsFill
     },
     path: {
-      d: `M ${t / 2}, ${o}
-          C ${t / 2}, ${o + t / 4}
-          ${t - o - t / 4}, ${t / 2}
-          ${t - o}, ${t / 2}
-          ${t - o - t / 4}, ${t / 2}
-          ${t / 2},${t - o - t / 4}
-          ${t / 2},${t - o}
-          ${t / 2},${t - o - t / 4}
-          ${0 + o + t / 4}, ${t / 2}
-          ${0 + o}, ${t / 2}
-          ${0 + o + t / 4}, ${t / 2}
-          ${t / 2}, ${o + t / 4}
-          ${t / 2}, ${o}
+      d: `M ${t / 2}, ${n}
+          C ${t / 2}, ${n + t / 4}
+          ${t - n - t / 4}, ${t / 2}
+          ${t - n}, ${t / 2}
+          ${t - n - t / 4}, ${t / 2}
+          ${t / 2},${t - n - t / 4}
+          ${t / 2},${t - n}
+          ${t / 2},${t - n - t / 4}
+          ${0 + n + t / 4}, ${t / 2}
+          ${0 + n}, ${t / 2}
+          ${0 + n + t / 4}, ${t / 2}
+          ${t / 2}, ${n + t / 4}
+          ${t / 2}, ${n}
           Z
           `,
       ...r.attrsStroke,
@@ -160,143 +160,143 @@ const O = (s = 32) => {
       width: "100%",
       height: "100%"
     }
+  }, p = {
+    animation: {
+      "animation-duration": e,
+      "animation-iteration-count": "infinite",
+      "animation-timing-function": "linear",
+      "transform-origin": `${s / 2}px ${s / 2}px`
+    }
   };
   return {
-    defaultsOpts: p,
+    defaultsOpts: l,
     defaultsSvgAttrs: r,
-    defaultsShape: l,
+    defaultsShape: o,
     defaultsSvgElsAttrs: a,
-    defaultsCss: {
-      animation: {
-        "animation-duration": e,
-        "animation-iteration-count": "infinite",
-        "animation-timing-function": "linear",
-        "transform-origin": "0px 0px"
-      }
-    }
+    defaultsCss: p
   };
-}, et = (s, e, i = 1, p = !1) => {
-  var l, o, t, a, c, _, h;
+}, Y = (s, e, i = 1, l = !1) => {
+  var o, n, t, a, p, d, c;
   const r = [];
-  for (const n of e) {
-    let m = -1, d, v, S = -1, w, g, y;
-    g = O(), y = g.defaultsShape;
-    let b = y == null ? void 0 : y.ratios.size.options.value;
-    if (Array.isArray(n.ratios))
-      for (const M of n.ratios)
-        M.type === "size" && (b = M.options.value);
-    let f = s * b;
-    g = O(f), y = g.defaultsShape;
-    const u = g.defaultsSvgAttrs;
-    f -= +((o = (l = n.svg_attributes) == null ? void 0 : l["stroke-width"]) != null ? o : u.attrsStroke["stroke-width"]);
-    let E = [];
-    if (Array.isArray(n.ratios) && n.ratios.length) {
-      E = n.ratios;
-      let M = -1;
-      for (const x of n.ratios)
-        M++, x.type === "radius" && (m = M, v = x.options, d = x);
+  for (const _ of e) {
+    let g = -1, w, A, S = -1, v, m, u;
+    m = O(), u = m.defaultsShape;
+    let h = u == null ? void 0 : u.ratios.size.options.value;
+    if (Array.isArray(_.ratios))
+      for (const y of _.ratios)
+        y.type === "size" && (h = y.options.value);
+    let f = s * h;
+    m = O(f), u = m.defaultsShape;
+    const $ = m.defaultsSvgAttrs;
+    f -= +((n = (o = _.svg_attributes) == null ? void 0 : o["stroke-width"]) != null ? n : $.attrsStroke["stroke-width"]);
+    let z = [];
+    if (Array.isArray(_.ratios) && _.ratios.length) {
+      z = _.ratios;
+      let y = -1;
+      for (const M of _.ratios)
+        y++, M.type === "radius" && (g = y, A = M.options, w = M);
     }
-    v = { ...y.ratios.radius.options, ...v }, n.type === "triangle" ? (v.value = (t = d == null ? void 0 : d.options.value) != null ? t : 1, d = { type: "radius", options: v }) : n.type === "polygon" && (v.value = (a = d == null ? void 0 : d.options.value) != null ? a : 1, d = { type: "radius", options: v }), d !== void 0 && (d = { type: "radius", options: v }, E.splice(m, 1, d));
-    let $;
-    if (Array.isArray(n.guides) && n.guides.length) {
-      $ = n.guides;
-      let M = -1;
-      for (const x of n.guides)
-        M++, x.type === "pattern" && (S = M, w = {
-          ...x,
+    A = { ...u.ratios.radius.options, ...A }, _.type === "triangle" ? (A.value = (t = w == null ? void 0 : w.options.value) != null ? t : 1, w = { type: "radius", options: A }) : _.type === "polygon" && (A.value = (a = w == null ? void 0 : w.options.value) != null ? a : 1, w = { type: "radius", options: A }), w !== void 0 && (w = { type: "radius", options: A }, z.splice(g, 1, w));
+    let E;
+    if (Array.isArray(_.guides) && _.guides.length) {
+      E = _.guides;
+      let y = -1;
+      for (const M of _.guides)
+        y++, M.type === "pattern" && (S = y, v = {
+          ...M,
           options: {
-            ...x.options,
+            ...M.options,
             ratios: {
-              tile: y.guides.pattern.ratios.tile,
-              ...(c = x.options) == null ? void 0 : c.ratios,
+              tile: u.guides.pattern.ratios.tile,
+              ...(p = M.options) == null ? void 0 : p.ratios,
               gap: {
-                row: y.guides.pattern.ratios.gap,
-                column: y.guides.pattern.ratios.gap,
-                ...(h = (_ = x.options) == null ? void 0 : _.ratios) == null ? void 0 : h.gap
+                row: u.guides.pattern.ratios.gap,
+                column: u.guides.pattern.ratios.gap,
+                ...(c = (d = M.options) == null ? void 0 : d.ratios) == null ? void 0 : c.gap
               }
             }
           }
-        }, $.splice(S, 1, w));
+        }, E.splice(S, 1, v));
     }
     i && (f *= i), r.push({
-      ...n,
+      ..._,
       size: f,
-      ratios: E,
-      guides: $,
-      ...p && { animations: void 0 }
+      ratios: z,
+      guides: E,
+      ...l && { animations: void 0 }
     });
   }
   return r;
-}, at = (s) => {
-  var S, w, g, y, b, f, u, z, E, $, M, x, D;
+}, nt = (s) => {
+  var S, v, m, u, h, f, $, b, z, E, y, M, N;
   const { defaultsOpts: e, defaultsSvgElsAttrs: i } = O();
-  let p = !1;
-  (S = s.system_preferences) != null && S.respect_reduced_motion && matchMedia("(prefers-reduced-motion: reduce)").matches && (p = !0);
+  let l = !1;
+  (S = s.system_preferences) != null && S.respect_reduced_motion && matchMedia("(prefers-reduced-motion: reduce)").matches && (l = !0);
   const r = [];
-  let l, o, t, a = -1, c = -1;
+  let o, n, t, a = -1, p = -1;
   if (Array.isArray(s.interactions)) {
-    let C = -1;
-    for (const P of s.interactions)
-      C++, P.type === "pointer" ? (a = C, l = (w = P.options) == null ? void 0 : w.css_selector__root, o = (g = P.options) == null ? void 0 : g.default_pointer, t = (y = P.options) == null ? void 0 : y.start_criteria) : P.type === "pointer__scale" && (c = C);
+    let P = -1;
+    for (const C of s.interactions)
+      P++, C.type === "pointer" ? (a = P, o = (v = C.options) == null ? void 0 : v.css_selector__root, n = (m = C.options) == null ? void 0 : m.default_pointer, t = (u = C.options) == null ? void 0 : u.start_criteria) : C.type === "pointer__scale" && (p = P);
   }
-  l = (f = (b = s.css_selector__root) != null ? b : l) != null ? f : "body", o = o != null ? o : !1, t !== void 0 ? typeof t == "string" ? t === "none" ? t = "none" : t = {
+  o = (f = (h = s.css_selector__root) != null ? h : o) != null ? f : "body", n = n != null ? n : !1, t !== void 0 ? typeof t == "string" ? t === "none" ? t = "none" : t = {
     criteria: e.interactions.pointer.start_criteria.criteria,
     frequency: e.interactions.pointer.start_criteria.frequency
   } : typeof t == "object" ? t = {
     criteria: t.criteria || e.interactions.pointer.start_criteria.criteria,
     frequency: t.frequency || e.interactions.pointer.start_criteria.frequency
   } : t = e.interactions.pointer.start_criteria : t = e.interactions.pointer.start_criteria;
-  const _ = {
+  const d = {
     type: "pointer",
     options: {
-      css_selector__root: l,
-      default_pointer: o,
+      css_selector__root: o,
+      default_pointer: n,
       start_criteria: t
     }
   };
-  a !== -1 && r.splice(a, 0, _), c !== -1 && s.interactions !== void 0 && r.splice(c, 0, s.interactions[c]);
-  let h;
-  if (((u = s.size) == null ? void 0 : u.inner) !== void 0) {
-    const C = s.size.inner, P = (z = s.size) == null ? void 0 : z.outer;
-    C !== null ? P !== void 0 ? h = { ...e.size, inner: C, outer: P } : h = { ...e.size, inner: C } : P !== void 0 ? h = { ...e.size, outer: P } : h = e.size;
+  a !== -1 && r.splice(a, 0, d), p !== -1 && s.interactions !== void 0 && r.splice(p, 0, s.interactions[p]);
+  let c;
+  if ((($ = s.size) == null ? void 0 : $.inner) !== void 0) {
+    const P = s.size.inner, C = (b = s.size) == null ? void 0 : b.outer;
+    P !== null ? C !== void 0 ? c = { ...e.size, inner: P, outer: C } : c = { ...e.size, inner: P } : C !== void 0 ? c = { ...e.size, outer: C } : c = e.size;
   } else
-    ((E = s.size) == null ? void 0 : E.outer) !== void 0 ? h = { ...e.size, outer: ($ = s.size) == null ? void 0 : $.outer } : h = e.size;
-  const n = (M = s.element__svg_container) == null ? void 0 : M.css_properties, m = { ...i.svg, ...(x = s.element__svg) == null ? void 0 : x.svg_attributes }, d = { ...(D = s.element__svg) == null ? void 0 : D.css_properties };
-  let v;
-  return Array.isArray(s.shapes) && s.shapes.length && (v = et(h.inner, s.shapes, 1, p)), {
+    ((z = s.size) == null ? void 0 : z.outer) !== void 0 ? c = { ...e.size, outer: (E = s.size) == null ? void 0 : E.outer } : c = e.size;
+  const _ = (y = s.element__svg_container) == null ? void 0 : y.css_properties, g = { ...i.svg, ...(M = s.element__svg) == null ? void 0 : M.svg_attributes }, w = { ...(N = s.element__svg) == null ? void 0 : N.css_properties };
+  let A;
+  return Array.isArray(s.shapes) && s.shapes.length && (A = Y(c.inner, s.shapes, 1, l)), {
     ...e,
     ...s,
-    css_selector__root: l,
-    size: h,
+    css_selector__root: o,
+    size: c,
     element__svg: {
-      css_properties: d,
-      svg_attributes: m
+      css_properties: w,
+      svg_attributes: g
     },
     element__svg_container: {
-      css_properties: n
+      css_properties: _
     },
-    shapes: v,
+    shapes: A,
     interactions: r,
-    ...p && { animations: void 0 }
+    ...l && { animations: void 0 }
   };
-}, ct = (s, e, i) => {
-  let p = !1;
-  function r(o, t) {
-    p || window.requestAnimationFrame(function() {
-      t(o), p = !0;
-    }), p = !1;
+}, at = (s, e, i) => {
+  let l = !1;
+  function r(n, t) {
+    l || window.requestAnimationFrame(function() {
+      t(n), l = !0;
+    }), l = !1;
   }
-  const l = (o) => r(o, i);
-  return s.addEventListener(e, l), l;
-}, Z = (s) => typeof s == "string" ? s : `${s}px`, U = function(s) {
+  const o = (n) => r(n, i);
+  return s.addEventListener(e, o), o;
+}, et = (s) => typeof s == "string" ? s : `${s}px`, q = function(s) {
   const e = document.createElementNS("http://www.w3.org/2000/svg", s.element);
   if (s.svg_attributes !== void 0)
     for (const i of Object.entries(s.svg_attributes))
       e.setAttribute(i[0], i[1]);
   if (s.element_children !== void 0)
     for (const i of s.element_children) {
-      const p = U(i);
-      e.appendChild(p);
+      const l = q(i);
+      e.appendChild(l);
     }
   return e;
 };
@@ -305,19 +305,18 @@ class lt extends Error {
     super(), this.message = "The root element could not be selected, please provide a different value.", this.name = this.constructor.name;
   }
 }
-class st extends Error {
+class X extends Error {
   constructor(e, i) {
     super();
-    const p = i.map((r) => `"${r}"`).join(", ");
-    this.message = `for "${e}", you must specify one of: ${p}`, this.name = this.constructor.name;
+    const l = i.map((r) => `"${r}"`).join(", ");
+    this.message = `for "${e}", you must specify one of: ${l}`, this.name = this.constructor.name;
   }
 }
-const { defaultsOpts: J, defaultsSvgAttrs: K, defaultsCss: pt, defaultsSvgElsAttrs: Y } = O(), B = {
+const { defaultsCss: ct, defaultsSvgElsAttrs: Q } = O(), T = {
   rotate: {
     css_properties: {
-      ...pt.animation,
-      "animation-name": "rotate",
-      "transform-origin": `${J.size.inner / 2 + +K.attrsStroke["stroke-width"] / 2}px ${J.size.inner / 2 + +K.attrsStroke["stroke-width"] / 2}px`
+      ...ct.animation,
+      "animation-name": "rotate"
     },
     keyframes: [
       {
@@ -334,11 +333,11 @@ const { defaultsOpts: J, defaultsSvgAttrs: K, defaultsCss: pt, defaultsSvgElsAtt
       }
     ]
   }
-}, _t = {
+}, pt = {
   glow: {
     element: "filter",
     svg_attributes: {
-      ...Y.filter
+      ...Q.filter
     },
     element_children: [
       {
@@ -422,17 +421,17 @@ const { defaultsOpts: J, defaultsSvgAttrs: K, defaultsCss: pt, defaultsSvgElsAtt
       }
     ]
   }
-}, dt = {
+}, _t = {
   circle: {
     element: "pattern",
     svg_attributes: {
-      ...Y.pattern
+      ...Q.pattern
     },
     element_children: [
       {
         element: "circle",
         svg_attributes: {
-          ...Y.circle,
+          ...Q.circle,
           r: "4",
           cx: "4",
           cy: "4"
@@ -440,570 +439,570 @@ const { defaultsOpts: J, defaultsSvgAttrs: K, defaultsCss: pt, defaultsSvgElsAtt
       }
     ]
   }
-}, tt = (s, e, i, p, r) => {
-  let l, o;
-  const t = (e.width - s) / 2, a = (e.height - s) / 2, c = e.width / 2, _ = e.height / 2;
+}, dt = (s, e, i, l) => {
+  let r, o;
+  const n = (e.width - s) / 2, t = (e.height - s) / 2, a = e.width / 2, p = e.height / 2;
   if (s < e.width && s < e.height)
-    i.points && !p ? (o = [c + i.points[r][0], _ + i.points[r][1]], l = [t + i.points[r][0], a + i.points[r][1]]) : (o = [c, _], l = [t, a]);
+    i !== void 0 ? (o = [i[l][0], i[l][1]], r = [i[l][0] - s / 2, i[l][1] - s / 2]) : (o = [a, p], r = [n, t]);
   else {
-    const h = s / 2;
-    i.points && !p ? (o = [h + i.points[r][0], h + i.points[r][1]], l = [t + i.points[r][0], a + i.points[r][1]]) : (o = [h, h], l = [t, a]);
+    const d = s / 2;
+    i !== void 0 ? (o = [d + i[l][0], d + i[l][1]], r = [n + i[l][0], t + i[l][1]]) : (o = [d, d], r = [n, t]);
   }
   return {
     positionPolygon: o,
-    positionRect: l
+    positionRect: r
   };
-}, W = (s, e, i, p, r = "string") => {
-  const l = (o) => o.map((t) => t.join(",")).join(" ");
+}, B = (s, e, i, l, r = "string") => {
+  const o = (n) => n.map((t) => t.join(",")).join(" ");
   if (e !== void 0) {
-    const o = [];
+    const n = [];
     let t = s / 2;
     const a = 2 * Math.PI / i;
-    let c;
-    for (let _ = 0; _ <= i; _++) {
-      e.type === "alternate" ? (t = s / 2, t = _ % 2 === 0 ? t : t * e.value) : _ !== 0 && (t = t * e.value), i % 2 !== 0 && (i % 3 === 1 || i % 3 === 0) ? c = Number((a * _ + a / 4).toFixed(12)) : i % 2 !== 0 && (i % 3 === 1 || i % 3 === 2) ? c = Number((a * _ - a / 4).toFixed(12)) : i % 2 === 0 && i % 4 !== 0 ? c = Number((a * _ + a / 2).toFixed(12)) : c = Number((a * _).toFixed(12));
-      const h = t * Math.cos(c) + p[0], n = t * Math.sin(c) + p[1];
-      o.push([h, n]);
+    let p;
+    for (let d = 0; d <= i; d++) {
+      e.type === "alternate" ? (t = s / 2, t = d % 2 === 0 ? t : t * e.value) : d !== 0 && (t = t * e.value), i % 2 !== 0 && (i % 3 === 1 || i % 3 === 0) ? p = Number((a * d + a / 4).toFixed(12)) : i % 2 !== 0 && (i % 3 === 1 || i % 3 === 2) ? p = Number((a * d - a / 4).toFixed(12)) : i % 2 === 0 && i % 4 !== 0 ? p = Number((a * d + a / 2).toFixed(12)) : p = Number((a * d).toFixed(12));
+      const c = t * Math.cos(p) + l[0], _ = t * Math.sin(p) + l[1];
+      n.push([c, _]);
     }
-    return o.pop(), r === "string" ? l(o) : o;
+    return n.pop(), r === "string" ? o(n) : n;
   } else
     return null;
 }, ft = (s, e) => {
-  const i = e / 2, p = `${i}px ${i}px`, r = s.preset, l = [];
+  let i;
+  (e == null ? void 0 : e.position) !== void 0 && (i = `${e.position[0]}px ${e.position[1]}px`);
+  const l = s.preset, r = [];
   let o = -1;
   if (s.keyframes !== void 0)
-    for (const a of s.keyframes) {
+    for (const t of s.keyframes) {
       o++;
-      let c;
-      r !== void 0 && (c = B[r].keyframes[o]), l.push({
-        ...r && c,
-        ...a,
+      let a;
+      l !== void 0 && (a = T[l].keyframes[o]), r.push({
+        ...l && a,
+        ...t,
         css_properties: {
-          ...r && (c == null ? void 0 : c.css_properties),
-          ...a.css_properties
+          ...l && (a == null ? void 0 : a.css_properties),
+          ...t.css_properties
         }
       });
     }
-  else if (r !== void 0)
-    for (const a of B[r].keyframes)
-      o++, l.push({
-        ...a,
+  else if (l !== void 0)
+    for (const t of T[l].keyframes)
+      o++, r.push({
+        ...t,
         css_properties: {
-          ...a.css_properties
+          ...t.css_properties
         }
       });
   return {
-    ...r && B[r],
+    ...l && T[l],
     ...s,
     css_properties: {
-      ...r && B[r].css_properties,
-      "transform-origin": p,
+      ...l && T[l].css_properties,
+      ...i && { "transform-origin": i },
       ...s.css_properties
     },
-    keyframes: l
+    keyframes: r
   };
 };
 function ut(s, e, i) {
-  const p = [], r = [];
+  const l = [], r = [];
   if (s !== void 0) {
-    let l = -1;
-    for (const o of s) {
-      l++;
+    let o = -1;
+    for (const n of s) {
+      o++;
       let t, a;
-      if (o.preset !== void 0) {
-        a = `-_${i}__filter_${o.preset}_${e}th_${l}th`, p.push(a);
-        const c = _t[o.preset];
-        c.svg_attributes !== void 0 ? c.svg_attributes.id = a : c.svg_attributes = { id: a }, t = U(c);
-      } else if (o.custom !== void 0) {
-        a = `filter_custom_${e}th_${l}th`, p.push(a);
-        const c = o.custom;
-        c.svg_attributes !== void 0 ? c.svg_attributes.id = a : c.svg_attributes = { id: a }, t = U(c);
+      if (n.preset !== void 0) {
+        a = `-_${i}__filter_${n.preset}_${e}th_${o}th`, l.push(a);
+        const p = pt[n.preset];
+        p.svg_attributes !== void 0 ? p.svg_attributes.id = a : p.svg_attributes = { id: a }, t = q(p);
+      } else if (n.custom !== void 0) {
+        a = `filter_custom_${e}th_${o}th`, l.push(a);
+        const p = n.custom;
+        p.svg_attributes !== void 0 ? p.svg_attributes.id = a : p.svg_attributes = { id: a }, t = q(p);
       } else
-        throw new st("effect", ["preset", "custom"]);
+        throw new X("effect", ["preset", "custom"]);
       r.push(t);
     }
   }
-  return { filterEls: r, filterIds: p };
+  return { filterEls: r, filterIds: l };
 }
-function gt(s, e, i, p) {
+function ht(s, e, i, l) {
   var r;
   if (e.animations !== void 0) {
-    const l = [];
-    let o = "";
+    const o = [];
+    let n = "";
     const t = {};
-    for (const _ of e.animations) {
-      const h = ft(_, i);
-      if (l.push(h), h !== null && h.css_properties !== void 0)
-        for (const n of Object.entries(h.css_properties))
-          /^animation/.test(n[0]) && n[0] in t ? t[n[0]] += `,${n[1]}` : t[n[0]] = n[1];
+    for (const d of e.animations) {
+      const c = ft(d, l);
+      if (o.push(c), c !== null && c.css_properties !== void 0)
+        for (const _ of Object.entries(c.css_properties))
+          /^animation/.test(_[0]) && _[0] in t ? t[_[0]] += `,${_[1]}` : t[_[0]] = _[1];
     }
-    o += `#${(r = p.parentElement) == null ? void 0 : r.id} #${s.id}{`;
-    for (const _ of Object.entries(t))
-      o += `${_[0]}:${t[_[0]]};`;
-    o += "}";
-    for (const _ of l)
-      if (_ !== null && _.css_properties !== void 0 && (_ == null ? void 0 : _.keyframes) !== void 0) {
-        o += `@keyframes ${_.css_properties["animation-name"]}{`;
-        for (const h of _.keyframes) {
-          o += `${h.keyframe_selector}{`;
-          const n = h.css_properties;
-          if (n !== void 0)
-            for (const m of Object.entries(n))
-              o += `${m[0]}:${m[1]};`;
-          o += "}";
+    n += `#${(r = i.parentElement) == null ? void 0 : r.id} #${s.id}{`;
+    for (const d of Object.entries(t))
+      n += `${d[0]}:${t[d[0]]};`;
+    n += "}";
+    for (const d of o)
+      if (d !== null && d.css_properties !== void 0 && (d == null ? void 0 : d.keyframes) !== void 0) {
+        n += `@keyframes ${d.css_properties["animation-name"]}{`;
+        for (const c of d.keyframes) {
+          n += `${c.keyframe_selector}{`;
+          const _ = c.css_properties;
+          if (_ !== void 0)
+            for (const g of Object.entries(_))
+              n += `${g[0]}:${g[1]};`;
+          n += "}";
         }
-        o += "}";
+        n += "}";
       }
-    let c = p.querySelector(":scope > style");
-    c === null && (c = document.createElement("style"), p.insertAdjacentElement("afterbegin", c)), c.textContent += o;
+    let p = i.querySelector(":scope > style");
+    p === null && (p = document.createElement("style"), i.insertAdjacentElement("afterbegin", p)), p.textContent += n;
   }
 }
-const ht = (s, e, i, p, r) => {
-  var _, h, n, m, d, v, S;
-  const l = s.svg_attributes, o = s.effects, t = (_ = r.parentElement) == null ? void 0 : _.id.match(/\dth/), a = `-_${t[0]}__shape_${e}th_${s.type}`, c = document.createElementNS("http://www.w3.org/2000/svg", s.type);
-  if (c.id = a, l !== void 0)
-    for (const w of Object.entries(l))
-      w[1] !== void 0 && c.setAttribute(w[0], w[1]);
-  if (gt(c, s, p, r), o !== void 0) {
-    const { filterEls: w, filterIds: g } = ut(o, e, t[0]);
-    for (const b of w)
-      i.insertAdjacentElement("afterbegin", b);
-    const y = g.map((b) => `url(#${b})`).join(" ");
-    c.setAttribute("filter", y);
+const gt = (s, e, i, l, r, o) => {
+  var c, _, g, w, A, S, v;
+  const n = s.svg_attributes, t = s.effects, a = (c = r.parentElement) == null ? void 0 : c.id.match(/\dth/);
+  let p;
+  (o == null ? void 0 : o.parentId) !== void 0 ? p = `${o.parentId}__shape_${e}th_${s.type}` : p = `-_${a[0]}__shape_${e}th_${s.type}`;
+  const d = document.createElementNS("http://www.w3.org/2000/svg", s.type);
+  if (d.id = p, n !== void 0)
+    for (const m of Object.entries(n))
+      m[1] !== void 0 && d.setAttribute(m[0], m[1]);
+  if (ht(d, s, r, (o == null ? void 0 : o.position) && { position: o == null ? void 0 : o.position }), t !== void 0) {
+    const { filterEls: m, filterIds: u } = ut(t, e, a[0]);
+    for (const f of m)
+      i.insertAdjacentElement("afterbegin", f);
+    const h = u.map((f) => `url(#${f})`).join(" ");
+    d.setAttribute("filter", h);
   }
   if (s.guides !== void 0)
-    for (const w of s.guides) {
-      const g = w.options;
-      if (w.type === "pattern" && g !== void 0) {
-        let y = i.querySelector(":scope > defs");
-        y = y != null ? y : document.createElementNS("http://www.w3.org/2000/svg", "defs");
-        let b, f;
-        if (g.preset !== void 0) {
-          f = `-_${t[0]}__pattern_${g.preset}_${e}th`;
-          const u = dt[g.preset];
-          u.svg_attributes !== void 0 ? u.svg_attributes.id = f : u.svg_attributes = { id: f }, b = U(u);
-        } else if (g.custom !== void 0) {
-          f = `-_${t[0]}__pattern_custom_${e}th`;
-          const u = g.custom;
-          u.svg_attributes !== void 0 ? u.svg_attributes.id = f : u.svg_attributes = { id: f }, b = U(u);
-        } else if (Array.isArray(g.shapes) && g.shapes.length) {
-          const u = (h = g.ratios) == null ? void 0 : h.tile, z = (m = (n = g.ratios) == null ? void 0 : n.gap) == null ? void 0 : m.row, E = (v = (d = g.ratios) == null ? void 0 : d.gap) == null ? void 0 : v.column, $ = (S = s.svg_attributes) == null ? void 0 : S["stroke-width"];
-          $ !== void 0 && $ !== "0" && (z > 0 || E > 0), p = (s.size - +($ || 0)) * u;
-          const { defaultsSvgElsAttrs: M } = O(p);
-          b = document.createElementNS("http://www.w3.org/2000/svg", "pattern"), f = `-_${t[0]}__pattern_custom_${e}th`;
-          const x = M.pattern;
-          x.id = f;
-          for (const T of Object.entries(x))
-            b.setAttribute(T[0], T[1]);
-          const D = E === 0 ? p : p + (s.size - +($ || 0)) * E, C = z === 0 ? p : p + (s.size - +($ || 0)) * z, P = {
-            width: D,
+    for (const m of s.guides) {
+      const u = m.options;
+      if (m.type === "pattern" && u !== void 0) {
+        let h = i.querySelector(":scope > defs");
+        h = h != null ? h : document.createElementNS("http://www.w3.org/2000/svg", "defs");
+        let f, $;
+        if (u.preset !== void 0) {
+          $ = `-_${a[0]}__pattern_${u.preset}_${e}th`;
+          const b = _t[u.preset];
+          b.svg_attributes !== void 0 ? b.svg_attributes.id = $ : b.svg_attributes = { id: $ }, f = q(b);
+        } else if (u.custom !== void 0) {
+          $ = `-_${a[0]}__pattern_custom_${e}th`;
+          const b = u.custom;
+          b.svg_attributes !== void 0 ? b.svg_attributes.id = $ : b.svg_attributes = { id: $ }, f = q(b);
+        } else if (Array.isArray(u.shapes) && u.shapes.length) {
+          const b = (_ = u.ratios) == null ? void 0 : _.tile, z = (w = (g = u.ratios) == null ? void 0 : g.gap) == null ? void 0 : w.row, E = (S = (A = u.ratios) == null ? void 0 : A.gap) == null ? void 0 : S.column, y = (v = s.svg_attributes) == null ? void 0 : v["stroke-width"];
+          y !== void 0 && y !== "0" && (z > 0 || E > 0), l = (s.size - +(y || 0)) * b;
+          const { defaultsSvgElsAttrs: M } = O(l);
+          f = document.createElementNS("http://www.w3.org/2000/svg", "pattern"), $ = `-_${a[0]}__pattern_custom_${e}th`;
+          const N = M.pattern;
+          N.id = $;
+          for (const R of Object.entries(N))
+            f.setAttribute(R[0], R[1]);
+          const P = E === 0 ? l : l + (s.size - +(y || 0)) * E, C = z === 0 ? l : l + (s.size - +(y || 0)) * z, W = {
+            width: P,
             height: C
           };
-          b.setAttribute("width", String(P.width)), b.setAttribute("height", String(P.height));
-          const { defaultsOpts: rt } = O(), Q = et(rt.size.inner, g.shapes, u);
-          if (g.area === "fill" && $ !== void 0 && $ !== "0") {
-            b.setAttribute("x", $), b.setAttribute("y", $);
-            for (const T of Q)
-              T.size -= +$ * (2 * u);
+          f.setAttribute("width", String(W.width)), f.setAttribute("height", String(W.height));
+          const { defaultsOpts: st } = O(), I = Y(st.size.inner, u.shapes, b);
+          if (u.area === "fill" && y !== void 0 && y !== "0") {
+            f.setAttribute("x", y), f.setAttribute("y", y);
+            for (const R of I)
+              R.size -= +y * (2 * b);
           }
-          it(Q, b, p, r, P);
+          const it = `-_${a[0]}__shape_${e}th__pat`;
+          V(I, f, l, r, { sizeInnerCustom: W, parentId: it });
         } else
-          throw new st("pattern guide options", ["preset", "custom"]);
-        g.area !== void 0 && c.setAttribute(g.area, `url(#${f})`), y.appendChild(b), i.insertAdjacentElement("afterbegin", y);
+          throw new X("pattern guide options", ["shapes"]);
+        u.area !== void 0 && d.setAttribute(u.area, `url(#${$})`), h.appendChild(f), i.insertAdjacentElement("afterbegin", h);
       }
+      if (m.type === "position" && u !== void 0)
+        if (Array.isArray(u.shapes) && u.shapes.length) {
+          let h;
+          if (s.sides !== void 0) {
+            let b;
+            for (const E of s.ratios)
+              if (E.type === "radius") {
+                b = {
+                  type: E.options.type,
+                  value: E.options.value
+                };
+                break;
+              }
+            const z = B(
+              s.size,
+              b,
+              s.sides,
+              o == null ? void 0 : o.position,
+              "array"
+            );
+            z !== null && (h = z);
+          }
+          const f = Y(l, u.shapes), $ = `-_${a[0]}__shape_${e}th__pos`;
+          V(f, i, l, r, { positionPoints: h, parentId: $ });
+        } else
+          throw new X("position guide options", ["shapes"]);
     }
-  i.appendChild(c);
-}, it = (s, e, i, p, r) => {
-  var _, h;
-  const { defaultsSvgElsAttrs: l, defaultsShape: o } = O(i), t = { type: void 0, points: void 0 };
-  for (const n of s) {
-    let m = !1;
-    if (Array.isArray(n.guides)) {
-      for (const v of n.guides)
-        if (v.type === "position") {
-          m = !0;
+  i.appendChild(d);
+}, V = (s, e, i, l, r) => {
+  var p, d;
+  const { defaultsSvgElsAttrs: o, defaultsShape: n } = O(i), t = [];
+  let a = -1;
+  for (const c of s) {
+    a++;
+    let _;
+    const g = c.size, w = (r == null ? void 0 : r.sizeInnerCustom) || { width: i, height: i }, A = r == null ? void 0 : r.positionPoints, S = dt(g, w, A, a), v = S.positionPolygon, m = S.positionRect;
+    let u = n.ratios.radius.options;
+    if (Array.isArray(c.ratios)) {
+      for (const h of c.ratios)
+        if (h.type === "radius") {
+          u = h.options;
           break;
         }
     }
-    let d;
-    if (Array.isArray(n.ratios)) {
-      for (const v of n.ratios)
-        if (v.type === "radius") {
-          d = v.options;
-          break;
-        }
-    }
-    if (m && n.sides !== void 0) {
-      const v = W(
-        n.size,
-        d,
-        n.sides,
-        [0, 0],
-        "array"
-      );
-      v !== null && (t.type = "polygon", t.points = v);
-    }
-  }
-  const a = [];
-  let c = -1;
-  for (const n of s) {
-    c++;
-    let m;
-    const d = n.size;
-    let v = !1;
-    if (Array.isArray(n.guides)) {
-      for (const f of n.guides)
-        if (f.type === "position") {
-          v = !0;
-          break;
-        }
-    }
-    const S = v ? c - 1 : c;
-    let w;
-    r ? w = tt(d, r, t, v, S - 1) : w = tt(d, { width: i, height: i }, t, v, S - 1);
-    const g = w.positionPolygon, y = w.positionRect;
-    let b = o.ratios.radius.options;
-    if (Array.isArray(n.ratios)) {
-      for (const f of n.ratios)
-        if (f.type === "radius") {
-          b = f.options;
-          break;
-        }
-    }
-    switch (n.type) {
+    switch (c.type) {
       case "rectangle": {
-        const f = d * b.value, u = d, z = y[0] + (d - f) / 2, E = y[1];
-        m = {
-          ...n,
+        const h = g * u.value, f = g, $ = m[0] + (g - h) / 2, b = m[1];
+        _ = {
+          ...c,
           type: "rect",
           svg_attributes: {
-            ...l.rect,
-            width: String(f),
-            height: String(u),
-            x: String(z),
-            y: String(E),
-            ...n.svg_attributes
+            ...o.rect,
+            width: String(h),
+            height: String(f),
+            x: String($),
+            y: String(b),
+            ...c.svg_attributes
           }
-        }, a.push([
+        }, t.push([
           {
-            ...m
+            ..._
           },
-          c
+          a,
+          v
         ]);
         break;
       }
       case "square": {
-        m = {
-          ...n,
+        _ = {
+          ...c,
           type: "rect",
           svg_attributes: {
-            ...l.rect,
-            width: String(d),
-            height: String(d),
-            x: String(y[0]),
-            y: String(y[1]),
-            ...n.svg_attributes
+            ...o.rect,
+            width: String(g),
+            height: String(g),
+            x: String(m[0]),
+            y: String(m[1]),
+            ...c.svg_attributes
           }
-        }, a.push([
+        }, t.push([
           {
-            ...m
+            ..._
           },
-          c
+          a,
+          v
         ]);
         break;
       }
       case "circle": {
-        const f = g[0], u = g[1];
-        m = {
-          ...n,
+        const h = v[0], f = v[1];
+        _ = {
+          ...c,
           type: "circle",
           svg_attributes: {
-            ...l.circle,
-            r: String(d / 2),
-            cx: String(f),
-            cy: String(u),
-            ...n.svg_attributes
+            ...o.circle,
+            r: String(g / 2),
+            cx: String(h),
+            cy: String(f),
+            ...c.svg_attributes
           }
-        }, a.push([
+        }, t.push([
           {
-            ...m
+            ..._
           },
-          c
+          a,
+          v
         ]);
         break;
       }
       case "ellipse": {
-        const f = d / 2, u = f * b.value, z = f, E = g[0], $ = g[1];
-        m = {
-          ...n,
+        const h = g / 2, f = h * u.value, $ = h, b = v[0], z = v[1];
+        _ = {
+          ...c,
           type: "ellipse",
           svg_attributes: {
-            ...l.ellipse,
-            rx: String(u),
-            ry: String(z),
-            cx: String(E),
-            cy: String($),
-            ...n.svg_attributes
+            ...o.ellipse,
+            rx: String(f),
+            ry: String($),
+            cx: String(b),
+            cy: String(z),
+            ...c.svg_attributes
           }
-        }, a.push([
+        }, t.push([
           {
-            ...m
+            ..._
           },
-          c
+          a,
+          v
         ]);
         break;
       }
       case "triangle": {
-        const u = W(n.size, b, 3, g, "string");
-        u !== null && (m = {
-          ...n,
+        const f = B(c.size, u, 3, v, "string");
+        f !== null && (_ = {
+          ...c,
           type: "polygon",
           svg_attributes: {
-            ...l.path,
-            points: u,
-            ...n.svg_attributes
+            ...o.path,
+            points: f,
+            ...c.svg_attributes
           }
-        }, a.push([
+        }, t.push([
           {
-            ...m
+            ..._
           },
-          c
+          a,
+          v
         ]));
         break;
       }
       case "polygon": {
-        const f = n.sides;
-        if (f !== void 0) {
-          const u = W(n.size, b, f, g, "string");
-          u !== null && (m = {
-            ...n,
+        const h = c.sides;
+        if (h !== void 0) {
+          const f = B(c.size, u, h, v, "string");
+          f !== null && (_ = {
+            ...c,
             type: "polygon",
             svg_attributes: {
-              ...l.polygon,
-              points: u,
-              ...n.svg_attributes
+              ...o.polygon,
+              points: f,
+              ...c.svg_attributes
             }
-          }, a.push([
+          }, t.push([
             {
-              ...m
+              ..._
             },
-            c
+            a,
+            v
           ]));
         }
         break;
       }
       case "star": {
-        const u = d / 2, z = W(u, b, 10, g, "string");
-        z !== null && (m = {
-          ...n,
+        const f = g / 2, $ = B(f, u, 10, v, "string");
+        $ !== null && (_ = {
+          ...c,
           type: "polygon",
           svg_attributes: {
-            ...l.polygon,
-            points: z,
-            ...n.svg_attributes
+            ...o.polygon,
+            points: $,
+            ...c.svg_attributes
           }
-        }, a.push([
+        }, t.push([
           {
-            ...m
+            ..._
           },
-          c
+          a,
+          v
         ]));
         break;
       }
       case "image": {
-        let f, u;
-        d < i ? (f = y[0] + d / 2 / 2, u = y[1]) : ((_ = n.svg_attributes) != null && _.width ? f = (d - +n.svg_attributes.width) / 2 : f = d / 2 / 2, (h = n.svg_attributes) != null && h.height ? u = (d - +n.svg_attributes.height) / 2 : u = 0), m = {
-          ...n,
+        let h, f;
+        g < i ? (h = m[0] + g / 2 / 2, f = m[1]) : ((p = c.svg_attributes) != null && p.width ? h = (g - +c.svg_attributes.width) / 2 : h = g / 2 / 2, (d = c.svg_attributes) != null && d.height ? f = (g - +c.svg_attributes.height) / 2 : f = 0), _ = {
+          ...c,
           type: "image",
           svg_attributes: {
-            width: String(d / 2),
-            height: String(d),
-            x: String(f),
-            y: String(u),
-            ...n.svg_attributes
+            width: String(g / 2),
+            height: String(g),
+            x: String(h),
+            y: String(f),
+            ...c.svg_attributes
           }
-        }, a.push([
+        }, t.push([
           {
-            ...m
+            ..._
           },
-          c
+          a,
+          v
         ]);
         break;
       }
       default:
-        m = {
-          ...n,
-          type: n.type,
+        _ = {
+          ...c,
+          type: c.type,
           svg_attributes: {
-            ...l[n.type],
-            ...n.svg_attributes
+            ...o[c.type],
+            ...c.svg_attributes
           }
-        }, a.push([
+        }, t.push([
           {
-            ...m
+            ..._
           },
-          c
+          a,
+          v
         ]);
     }
   }
-  for (const n of a)
-    ht(n[0], n[1], e, i, p);
+  for (const c of t)
+    gt(c[0], c[1], e, i, l, { parentId: r == null ? void 0 : r.parentId, position: c[2] });
 };
-var A, q, F, G, H, I, R, X;
+var x, F, G, Z, H, J, D, K;
 class vt {
   constructor(e) {
-    N(this, F);
-    N(this, H);
-    N(this, R);
+    U(this, G);
+    U(this, H);
+    U(this, D);
     j(this, "element__root");
     j(this, "options__merged");
     j(this, "element__svg");
     j(this, "element__svg_container");
     j(this, "id");
-    N(this, A, {
+    U(this, x, {
       pointer: void 0,
       pointer__elements: {
         root: null
       },
       pointer__pointer__scale: void 0
     });
-    N(this, q, []);
-    var p, r;
-    if (this.element__svg = null, this.options__merged = at(e), this.element__svg_container = null, this.options__merged.interactions !== void 0)
-      for (const l of this.options__merged.interactions)
-        l.type === "pointer" && (k(this, A).pointer = l), l.type === "pointer__scale" && (k(this, A).pointer__pointer__scale = l);
+    U(this, F, []);
+    var l, r;
+    if (this.element__svg = null, this.options__merged = nt(e), this.element__svg_container = null, this.options__merged.interactions !== void 0)
+      for (const o of this.options__merged.interactions)
+        o.type === "pointer" && (k(this, x).pointer = o), o.type === "pointer__scale" && (k(this, x).pointer__pointer__scale = o);
     else
-      k(this, A).pointer = void 0;
+      k(this, x).pointer = void 0;
     const i = document.querySelector(this.options__merged.css_selector__root);
     if (!(i instanceof HTMLElement))
       throw new lt();
-    this.element__root = i, ((r = (p = k(this, A).pointer) == null ? void 0 : p.options) == null ? void 0 : r.default_pointer) === !1 && this.element__root.classList.add("-_pointerize__pointer_default__non");
+    this.element__root = i, ((r = (l = k(this, x).pointer) == null ? void 0 : l.options) == null ? void 0 : r.default_pointer) === !1 && this.element__root.classList.add("-_pointerize__pointer_default__non");
   }
   start() {
-    var e, i, p, r, l, o, t;
-    if (k(this, A).pointer !== void 0) {
+    var e, i, l, r, o, n, t;
+    if (k(this, x).pointer !== void 0) {
       let a;
-      const c = (_) => {
-        a = _.matches, a ? (L(this, F, G).call(this), L(this, H, I).call(this)) : this.element__svg_container !== null && this.stop();
+      const p = (d) => {
+        a = d.matches, a ? (L(this, G, Z).call(this), L(this, H, J).call(this)) : this.element__svg_container !== null && this.stop();
       };
-      if (typeof ((e = k(this, A).pointer.options) == null ? void 0 : e.start_criteria) == "string")
-        ((i = k(this, A).pointer.options) == null ? void 0 : i.start_criteria) === "none" && (a = !0);
-      else if (typeof ((p = k(this, A).pointer.options) == null ? void 0 : p.start_criteria) == "object" && typeof ((r = k(this, A).pointer.options) == null ? void 0 : r.start_criteria.criteria) == "string") {
-        const _ = matchMedia((l = k(this, A).pointer.options) == null ? void 0 : l.start_criteria.criteria);
-        ((o = k(this, A).pointer.options) == null ? void 0 : o.start_criteria.frequency) === "once" ? c(_) : ((t = k(this, A).pointer.options) == null ? void 0 : t.start_criteria.frequency) === "always" && (this.element__svg_container === null && c(_), _.addEventListener("change", c));
+      if (typeof ((e = k(this, x).pointer.options) == null ? void 0 : e.start_criteria) == "string")
+        ((i = k(this, x).pointer.options) == null ? void 0 : i.start_criteria) === "none" && (a = !0);
+      else if (typeof ((l = k(this, x).pointer.options) == null ? void 0 : l.start_criteria) == "object" && typeof ((r = k(this, x).pointer.options) == null ? void 0 : r.start_criteria.criteria) == "string") {
+        const d = matchMedia((o = k(this, x).pointer.options) == null ? void 0 : o.start_criteria.criteria);
+        ((n = k(this, x).pointer.options) == null ? void 0 : n.start_criteria.frequency) === "once" ? p(d) : ((t = k(this, x).pointer.options) == null ? void 0 : t.start_criteria.frequency) === "always" && (this.element__svg_container === null && p(d), d.addEventListener("change", p));
       }
     } else
-      L(this, F, G).call(this), L(this, H, I).call(this);
+      L(this, G, Z).call(this), L(this, H, J).call(this);
   }
   stop() {
-    var e, i, p;
-    for (const r of k(this, q))
+    var e, i, l;
+    for (const r of k(this, F))
       r.element.removeEventListener(r.event, r.handler);
-    (e = this.element__svg_container) == null || e.remove(), (p = (i = k(this, A).pointer) == null ? void 0 : i.options) != null && p.default_pointer || this.element__root.classList.remove("-_pointerize__pointer_default__non");
+    (e = this.element__svg_container) == null || e.remove(), (l = (i = k(this, x).pointer) == null ? void 0 : i.options) != null && l.default_pointer || this.element__root.classList.remove("-_pointerize__pointer_default__non");
   }
   hide() {
-    var e, i, p;
-    (e = this.element__svg_container) == null || e.classList.add("-_pointerize-_u__display__non"), (p = (i = k(this, A).pointer) == null ? void 0 : i.options) != null && p.default_pointer || this.element__root.classList.remove("-_pointerize__pointer_default__non");
+    var e, i, l;
+    (e = this.element__svg_container) == null || e.classList.add("-_pointerize-_u__display__non"), (l = (i = k(this, x).pointer) == null ? void 0 : i.options) != null && l.default_pointer || this.element__root.classList.remove("-_pointerize__pointer_default__non");
   }
   show() {
     var e, i;
-    this.element__svg_container !== null && (this.element__svg_container.classList.remove("-_pointerize-_u__display__non"), (i = (e = k(this, A).pointer) == null ? void 0 : e.options) != null && i.default_pointer || this.element__root.classList.add("-_pointerize__pointer_default__non"));
+    this.element__svg_container !== null && (this.element__svg_container.classList.remove("-_pointerize-_u__display__non"), (i = (e = k(this, x).pointer) == null ? void 0 : e.options) != null && i.default_pointer || this.element__root.classList.add("-_pointerize__pointer_default__non"));
   }
 }
-A = new WeakMap(), q = new WeakMap(), F = new WeakSet(), G = function() {
-  var _, h, n, m, d, v;
+x = new WeakMap(), F = new WeakMap(), G = new WeakSet(), Z = function() {
+  var d, c, _, g, w, A;
   const e = document.createElement("div");
   this.element__svg_container = e;
   let i;
-  const p = Array.from(document.querySelectorAll("[id*=-_pointerize__container]"));
-  if (p.length === 0)
+  const l = Array.from(document.querySelectorAll("[id*=-_pointerize__container]"));
+  if (l.length === 0)
     i = "0";
   else {
     let S = -1;
-    for (const w of p) {
-      const g = +((n = (h = (_ = w.getAttribute("id")) == null ? void 0 : _.match(/(?<number>\d+)th$/)) == null ? void 0 : h.groups) == null ? void 0 : n.number);
-      g > S && (S = g);
+    for (const v of l) {
+      const m = +((_ = (c = (d = v.getAttribute("id")) == null ? void 0 : d.match(/(?<number>\d+)th$/)) == null ? void 0 : c.groups) == null ? void 0 : _.number);
+      m > S && (S = m);
     }
     i = S + 1;
   }
   const r = `-_pointerize__container_${i}th`;
   e.id = r, this.id = r, e.classList.add("-_pointerize__container");
-  const l = Z(this.options__merged.size.outer);
-  e.style.width = l, e.style.height = l;
-  const o = (m = this.options__merged.element__svg_container) == null ? void 0 : m.css_properties;
-  if (o !== void 0)
-    for (const S of Object.entries(o))
+  const o = et(this.options__merged.size.outer);
+  e.style.width = o, e.style.height = o;
+  const n = (g = this.options__merged.element__svg_container) == null ? void 0 : g.css_properties;
+  if (n !== void 0)
+    for (const S of Object.entries(n))
       e.style.setProperty(S[0], S[1]);
-  k(this, A).pointer !== void 0 && (e.style.setProperty("transform", "translate(-50%, -50%)"), e.style.setProperty("pointer-events", "none"), e.setAttribute("aria-hidden", ""));
+  k(this, x).pointer !== void 0 && (e.style.setProperty("transform", "translate(-50%, -50%)"), e.style.setProperty("pointer-events", "none"), e.setAttribute("aria-hidden", ""));
   const t = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   this.element__svg = t;
-  const a = (d = this.options__merged.element__svg) == null ? void 0 : d.svg_attributes, c = (v = this.options__merged.element__svg) == null ? void 0 : v.css_properties;
+  const a = (w = this.options__merged.element__svg) == null ? void 0 : w.svg_attributes, p = (A = this.options__merged.element__svg) == null ? void 0 : A.css_properties;
   if (a !== void 0)
     for (const S of Object.entries(a))
       t.setAttribute(S[0], S[1]);
-  if (c !== void 0)
-    for (const S of Object.entries(c))
+  if (p !== void 0)
+    for (const S of Object.entries(p))
       t.style.setProperty(S[0], S[1]);
-  t.setAttribute("viewBox", `0 0 ${this.options__merged.size.inner} ${this.options__merged.size.inner}`), e.appendChild(t), Array.isArray(this.options__merged.shapes) && it(this.options__merged.shapes, t, this.options__merged.size.inner, t), this.element__root.appendChild(e);
-}, H = new WeakSet(), I = function() {
-  var i, p;
+  t.setAttribute("viewBox", `0 0 ${this.options__merged.size.inner} ${this.options__merged.size.inner}`), e.appendChild(t), Array.isArray(this.options__merged.shapes) && V(this.options__merged.shapes, t, this.options__merged.size.inner, t), this.element__root.appendChild(e);
+}, H = new WeakSet(), J = function() {
+  var i, l;
   if (this.options__merged.interactions !== void 0) {
     for (const r of this.options__merged.interactions)
       if (r.type === "pointer__scale" && ((i = r.options) == null ? void 0 : i.elements) !== void 0) {
-        if ((p = r.options) != null && p.elements.length) {
-          const o = [];
+        if ((l = r.options) != null && l.elements.length) {
+          const n = [];
           for (const a of r.options.elements) {
-            const c = Array.from(document.querySelectorAll(a));
-            o.push(...c);
+            const p = Array.from(document.querySelectorAll(a));
+            n.push(...p);
           }
           const t = (a) => {
             if (a.length > 0) {
-              for (const c of a)
-                if (c instanceof HTMLElement) {
-                  c.dataset.pointerize = "pointer__scale__child";
-                  const _ = Array.from(c.children);
-                  _.length > 0 && t(_);
+              for (const p of a)
+                if (p instanceof HTMLElement) {
+                  p.dataset.pointerize = "pointer__scale__child";
+                  const d = Array.from(p.children);
+                  d.length > 0 && t(d);
                 }
             }
           };
-          for (const a of o)
+          for (const a of n)
             if (a instanceof HTMLElement) {
               a.dataset.pointerize = "pointer__scale";
-              const c = Array.from(a.children);
-              t(c);
+              const p = Array.from(a.children);
+              t(p);
             }
         }
-        const l = this.element__svg_container;
-        l.addEventListener("transitionend", () => {
-          l.classList.remove("-_pointerize__container__hover__temp");
+        const o = this.element__svg_container;
+        o.addEventListener("transitionend", () => {
+          o.classList.remove("-_pointerize__container__hover__temp");
         });
       }
   }
   const e = (r) => {
     var t;
-    const l = this.element__svg_container, o = r.target;
-    if (o.dataset.pointerize === "pointer__scale") {
-      const a = o.getBoundingClientRect();
-      l.classList.contains("-_pointerize__container") && (l.classList.add("-_pointerize__container__hover__temp"), l.classList.add("-_pointerize__container__hover"), l.style.height = `${a.height}px`, l.style.width = `${a.width}px`, l.style.top = `${a.top + a.height / 2}px`, l.style.left = `${a.left + a.width / 2}px`);
-    } else if (o.dataset.pointerize !== "pointer__scale__child") {
-      if (l.classList.contains("-_pointerize__container__hover")) {
-        l.classList.remove("-_pointerize__container__hover");
-        const a = Z(this.options__merged.size.outer);
-        l.style.width = l.style.height = a;
+    const o = this.element__svg_container, n = r.target;
+    if (n.dataset.pointerize === "pointer__scale") {
+      const a = n.getBoundingClientRect();
+      o.classList.contains("-_pointerize__container") && (o.classList.add("-_pointerize__container__hover__temp"), o.classList.add("-_pointerize__container__hover"), o.style.height = `${a.height}px`, o.style.width = `${a.width}px`, o.style.top = `${a.top + a.height / 2}px`, o.style.left = `${a.left + a.width / 2}px`);
+    } else if (n.dataset.pointerize !== "pointer__scale__child") {
+      if (o.classList.contains("-_pointerize__container__hover")) {
+        o.classList.remove("-_pointerize__container__hover");
+        const a = et(this.options__merged.size.outer);
+        o.style.width = o.style.height = a;
       }
-      L(this, R, X).call(this, l, r);
+      L(this, D, K).call(this, o, r);
     }
-    /pointer__scale/.test((t = o.dataset.pointerize) != null ? t : "") || L(this, R, X).call(this, l, r);
+    /pointer__scale/.test((t = n.dataset.pointerize) != null ? t : "") || L(this, D, K).call(this, o, r);
   };
-  if (k(this, A).pointer !== void 0) {
-    const r = ct(this.element__root, "pointermove", e);
-    k(this, q).push({
+  if (k(this, x).pointer !== void 0) {
+    const r = at(this.element__root, "pointermove", e);
+    k(this, F).push({
       element: this.element__root,
       event: "pointerMove",
       handler: r
     });
   }
-}, R = new WeakSet(), X = function(e, i) {
+}, D = new WeakSet(), K = function(e, i) {
   e.style.left = `${i.clientX}px`, e.style.top = `${i.clientY}px`;
 };
 export {

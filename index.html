@@ -107,7 +107,7 @@
         padding: var(--padding-text);
         background-color: var(--color-brand-1-2);
       }
-      details > p{
+      details > p {
         text-align: left;
       }
       details {
@@ -317,7 +317,7 @@
         ]
       }
       document.querySelector('#sides').value = shape.sides
-      document.querySelector('#radius_ratio').value = shape.ratios[0].options.value
+      document.querySelector('#radius_ratio').value = shape.ratios[0].options.value * 10
       const shapesNumber = 4
       document.querySelector('#shapes_number').value = shapesNumber
 
@@ -325,13 +325,22 @@
       let pointerize0th
       function pattern(sides, radiusRatio, shapesNum) {
 
-        //0 pattern shapes
+        //0 make pattern shapes
+        //1 shapes on position guide
+        const patternShapesPos = []
+        const shape0th = shape
+        shape0th.sides = sides
+        shape0th.ratios[0].options.value = radiusRatio
+        for (let i = 0; i < shapesNum; i++) {
+          patternShapesPos.push(shape0th)
+        }
+        //1 pattern shapes
         const patternShapes = [
           {
             type: 'polygon',
             sides: shapesNum,
             svg_attributes: {
-              'stroke-width': 0
+              'stroke-width': '0'
             },
             ratios: [
               {
@@ -343,19 +352,15 @@
             ],
             guides: [
               {
-                type: 'position'
+                type: 'position',
+                options: {
+                  shapes: patternShapesPos
+                }
               }
             ]
           },
         ]
-        // rest of the shapes
-        const shape0th = shape
-        shape0th.sides = sides
-        shape0th.ratios[0].options.value = radiusRatio
-        for (let i = 0; i < shapesNum; i++) {
-          patternShapes.push(shape0th)
-        }
-
+        
         //0 pattern target
         const patternTarget = {
           type: 'square',
@@ -515,13 +520,26 @@
         pointerize2th.start()
 
         //0 1th
+        //1 position guide shapes
+        const shapesIntro1thPos = []
+        const shape3th = {
+          ...shape,
+          svg_attributes: {
+            stroke: color_brand_2_2
+          }
+        }
+        shape3th.sides = sides
+        shape3th.ratios[0].options.value = radiusRatio
+        for (let i = 0; i < shapesNum; i++) {
+          shapesIntro1thPos.push(shape3th)
+        }
         //1 shapes
         const shapesIntro1th = [
           {
             type: 'polygon',
             sides: shapesNum,
             svg_attributes: {
-              'stroke-width': 0,
+              'stroke-width': '0',
             },
             ratios: [
               {
@@ -533,23 +551,15 @@
             ],
             guides: [
               {
-                type: 'position'
+                type: 'position',
+                options: {
+                  shapes: shapesIntro1thPos
+                }
               }
             ]
           },
         ]
-        //1 rest of the shapes
-        const shape3th = {
-          ...shape,
-          svg_attributes: {
-            stroke: color_brand_2_2
-          }
-        }
-        shape3th.sides = sides
-        shape3th.ratios[0].options.value = radiusRatio
-        for (let i = 0; i < shapesNum; i++) {
-          shapesIntro1th.push(shape3th)
-        }
+        
         //1 options
         let options3th = {
           element__svg_container: {

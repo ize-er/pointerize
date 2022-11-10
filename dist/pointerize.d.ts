@@ -18,9 +18,9 @@ interface IOptionsShapeRatio {
 interface IOptionsShapeGuide {
     type: 'position' | 'pattern' | 'motion';
     options?: {
+        shapes?: IOptionsShape[];
         preset?: 'circle';
         custom?: IElement;
-        shapes?: IOptionsShape[];
         area?: 'fill' | 'stroke';
         ratios?: {
             tile?: number;
