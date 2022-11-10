@@ -12,9 +12,10 @@
 
 - [Table of contents](#table-of-contents)
 - [Introduction](#introduction)
-  - [Straightforward Shape Creation](#straightforward-shape-creation)
-  - [No Complex Calculations](#no-complex-calculations)
-  - [Flexibility](#flexibility)
+  - [Highlights](#highlights)
+    - [Straightforward Shape Creation](#straightforward-shape-creation)
+    - [No Complex Calculations](#no-complex-calculations)
+    - [Flexibility](#flexibility)
 - [Quickstart](#quickstart)
 - [Let Your Imagination Loose](#let-your-imagination-loose)
 - [Handy Tips](#handy-tips)
@@ -32,9 +33,11 @@
 
 ## Introduction
 
-Pointerize is suited to almost any task that involves shapes (SVG), here are the highlights:
+Pointerize is suited to almost any task that involves shapes (SVG).
 
-### Straightforward Shape Creation
+### Highlights
+
+#### Straightforward Shape Creation
 
 - **Ratios**:
   - **size**:  
@@ -47,7 +50,7 @@ Pointerize is suited to almost any task that involves shapes (SVG), here are the
   - **Pattern**:  
     Shapes can be configured to be the tiles of a pattern which is on another shape's (chosen as the pattern guide) fill or stroke.
 
-### No Complex Calculations
+#### No Complex Calculations
 
 - **Automatic positioning**:  
   SVG shapes are automatically centered inside the SVG.
@@ -56,7 +59,7 @@ Pointerize is suited to almost any task that involves shapes (SVG), here are the
   - The size ratio includes the stroke as well.
   - If the shape has a pattern fill, the pattern is scaled down.
 
-### Flexibility
+#### Flexibility
 
 The mixture of the above-mentioned points and various API options means you can create
 a wide variety of shapes and patterns to be used as:
@@ -72,7 +75,7 @@ a wide variety of shapes and patterns to be used as:
 
 Add Pointerize to your project either as an NPM package or from a CDN:
 
-- NPM:
+- npm:
 
   - install
 
@@ -89,7 +92,7 @@ Add Pointerize to your project either as an NPM package or from a CDN:
 
 - CDN
 
-  - html
+  - HTML
 
   ```html
   <link rel="stylesheet" href="https://unpkg.com/@ize-er/pointerize@1/dist/style.css" />
@@ -120,7 +123,7 @@ pointerize.stop() /* removes elements and event listeners (if there are any )
                      if it's not already visible) */
 
 // properties you have access to on the instance
-console.log('Id of current instance (on container)', pointerize.id)
+console.log('ID of current instance (on container)', pointerize.id)
 console.log('The element chosen as root', pointerize.element__root)
 console.log('The SVG element', pointerize.element__svg)
 console.log('The SVG container element (div)', pointerize.element__svg_container)
@@ -147,21 +150,15 @@ tinkering around with the presets in `presets/full.ts`. The possibilities are _l
 - Only use string values for properties of `svg_attributes` and `css_properties`.
 - For custom images use shape `type` of `image` and set `href` attribute.
 - It's best not to rely on features that are not documented yet.
-- Usually where there is similar funtionality, the options are similar too:
-  - **`css_properties`** and **`svg_attributes`**: CSS properties and SVG attributes
-  - **`shapes`**: SVG shapes
-  - **`preset`**: ready-made preset
-  - Arrays with object items are used wherever a group of things can be used:
-    `shapes`, `animations`, `effects`, `interactions`, `ratios`, `guides`, `elements`, `element_children`
-  - Similar structure is used for Array items in: `ratios`, `guides`, `interactions` and it's like:
-    ```js
-    {
-      type: ...,
-      options: {
-        ...
-      }
+- Similar structure is used for Array items in: `ratios`, `guides`, `interactions` and it's like:
+  ```js
+  {
+    type: ...,
+    options: {
+      ...
     }
-    ```
+  }
+  ```
 
 ### Potential Conflicts
 
@@ -186,6 +183,8 @@ cumbersome to type out you can simplify the process by using Javascript. See the
 
 ## Known Issues
 
+None
+
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
 ## Naming and Coding Style
@@ -209,9 +208,7 @@ It is helpful to know:
 
 ## There Is More
 
-There's more to Poinerize than meets the eye. I will publish the full API docs after some changes. but
-if you're curious, you can look around the `types.ts`.  
-Some of them may change completely. You may also find `TODO`s in the source code, if it has a `?` (`TODO?`) it means we're not sure.
+There's more to Poinerize than meets the eye. I will publish the full API docs in due time.
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
@@ -253,8 +250,6 @@ This library adheres to [Semantic Versioning 2.0.0](https://semver.org/)
 ## Contact
 
 Mail: [afaturechi@gmail.com](mailto:afaturechi@gmail.com)
-
-Project Link: [https://github.com/ize-er/pointerize](https://github.com/ize-er/pointerize)
 
 _Due to recent events in my country I may be unable to answer promptly_
 
