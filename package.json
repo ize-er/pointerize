@@ -1,6 +1,6 @@
 {
   "name": "@ize-er/pointerize",
-  "private": true,
+  "private": false,
   "version": "1.0.0",
   "description": "Pointerize is suited to almost any task that involves shapes (SVG)",
   "license": "MIT",
@@ -57,9 +57,9 @@
     "preversion": "npm run test && npm run lint && npm run format",
     "version": "rm -rf dist && npm run build",
     "postversion": "git push && git push --tags",
-    "release:patch": "npm version patch && npm publish --access public",
-    "release:minor": "npm version minor && npm publish --access public",
-    "release:major": "npm version major && npm publish --access public"
+    "release:patch": "npm version patch && npm publish",
+    "release:minor": "npm version minor && npm publish",
+    "release:major": "npm version major && npm publish"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.4.0",
