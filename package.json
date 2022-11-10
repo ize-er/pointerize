@@ -56,10 +56,7 @@
     "format": "prettier . --write",
     "preversion": "npm run test && npm run lint && npm run format",
     "version": "rm -rf dist && npm run build",
-    "postversion": "git push && git push --tags",
-    "release:patch": "npm version patch && npm publish",
-    "release:minor": "npm version minor && npm publish",
-    "release:major": "npm version major && npm publish"
+    "postversion": "git push && git push --tags"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.4.0",
