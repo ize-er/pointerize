@@ -191,7 +191,7 @@ const createShape = (
                 shape.size,
                 ratioRadius as { type: string; value: number },
                 shape.sides,
-                [0, 0],
+                guidesInfo?.position as [number, number],
                 'array'
               )
               if (points !== null) {

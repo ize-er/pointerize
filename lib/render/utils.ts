@@ -19,9 +19,9 @@ export const makePosition = (
     // if there is a guide shape
     if (positionPoints !== undefined) {
       // polygon
-      positionPolygon = [posPolyMemberX + positionPoints[nth][0], posPolyMemberY + positionPoints[nth][1]]
+      positionPolygon = [positionPoints[nth][0], positionPoints[nth][1]]
       // rectangle
-      positionRect = [posRectMemberX + positionPoints[nth][0], posRectMemberY + positionPoints[nth][1]]
+      positionRect = [positionPoints[nth][0] - sizeShape/2, positionPoints[nth][1] - sizeShape/2]
     } else {
       positionPolygon = [posPolyMemberX, posPolyMemberY]
       positionRect = [posRectMemberX, posRectMemberY]
