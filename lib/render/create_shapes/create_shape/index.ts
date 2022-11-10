@@ -14,12 +14,21 @@ const createShape = (
   nth: number,
   elementRoot: SVGSVGElement | SVGPatternElement,
   sizeInner: number,
-  elementSvg: SVGSVGElement
+  elementSvg: SVGSVGElement,
+  parentId?: string
 ): void => {
   const attrs = shape.svg_attributes
   const effects = shape.effects
   const elContainerNth = elementSvg.parentElement?.id.match(/\dth/) as RegExpMatchArray
-  const elId = `-_${elContainerNth[0]}__shape_${nth}th_${shape.type}`
+
+  let elId
+  if (parentId !== undefined) {
+    elId = `${parentId}__shape_${nth}th_${shape.type}`
+  }
+  else {
+    elId = `-_${elContainerNth[0]}__shape_${nth}th_${shape.type}`
+  }
+  
   const el = document.createElementNS('http://www.w3.org/2000/svg', shape.type)
   el.id = elId
   // attributes
@@ -139,7 +148,9 @@ const createShape = (
             }
 
             //1 create pattern shapes
-            createShapes(patternShapesUpdate, elPattern, sizeInner, elementSvg, { sizeInnerCustom: sizeInnerWithGap} )
+            // this ID is passed to shapes to differentiate them from normal shapes
+            const parentIdPattern = `-_${elContainerNth[0]}__shape_${nth}th__pat`
+            createShapes(patternShapesUpdate, elPattern, sizeInner, elementSvg, { sizeInnerCustom: sizeInnerWithGap, parentId: parentIdPattern} )
           } else {
             throw new UnspecifiedProperty('pattern guide options', ['shapes'])
           }
@@ -189,7 +200,9 @@ const createShape = (
             const shapes = processShapes(sizeInner, guideOptions.shapes)
 
             // create shapes
-            createShapes(shapes, elementRoot, sizeInner, elementSvg, { positionPoints })
+            // this ID is passed to shapes to differentiate them from normal shapes
+            const parentIdPosition = `-_${elContainerNth[0]}__shape_${nth}th__pos`
+            createShapes(shapes, elementRoot, sizeInner, elementSvg, { positionPoints, parentId: parentIdPosition },)
           } else {
             throw new UnspecifiedProperty('position guide options', ['shapes'])
           }
