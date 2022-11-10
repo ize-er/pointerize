@@ -10,7 +10,7 @@ import tokens from '../brand/tokens'
  */
 
 // colors
-const { color_gray_2 } = { ...tokens.colors}
+const { color_gray_2 } = { ...tokens.colors }
 
 //0 basic examples
 //1 shapes for all basic examples
@@ -34,8 +34,8 @@ const shapes: IOptionsShape[] = [
     type: 'polygon',
     sides: 8,
     svg_attributes: {
-      stroke: color_gray_2
-    }
+      stroke: color_gray_2,
+    },
   },
 ]
 
@@ -309,9 +309,9 @@ export const presetAdvanced2 = () => {
           type: ['radius'],
           options: {
             type: ['alternate'],
-            value: [0.4]
-          }
-        }
+            value: [0.4],
+          },
+        },
       ],
     ],
   }
@@ -347,49 +347,49 @@ export const presetAdvanced3 = () => {
       type: 'polygon',
       sides: shapesNum,
       svg_attributes: {
-        "stroke-width": '0'
+        'stroke-width': '0',
       },
       ratios: [
         {
           type: 'radius',
           options: {
-            value: 1
-          }
+            value: 1,
+          },
         },
         {
           type: 'size',
           options: {
-            value: 0.5
-          }
-        }
+            value: 0.5,
+          },
+        },
       ],
       guides: [
         {
-          type: 'position'
-        }
-      ]
+          type: 'position',
+        },
+      ],
     },
   ]
-  
+
   for (let i = 0; i < shapesNum; i++) {
     shapes.push({
       type: 'polygon',
       sides: 4,
       svg_attributes: {
         'stroke-width': '0.2',
-        stroke: color_gray_2
+        stroke: color_gray_2,
       },
       ratios: [
         {
           type: 'size',
           options: {
-            value: 0.5
-          }
-        }
-      ]
+            value: 0.5,
+          },
+        },
+      ],
     })
   }
-  
+
   // options
   const options: IOptions = {
     element__svg_container: {
