@@ -15,27 +15,15 @@ export const makePosition = (
   const posRectMemberY = (sizeInner.height - sizeShape) / 2
   const posPolyMemberX = sizeInner.width / 2
   const posPolyMemberY = sizeInner.height / 2
-  if (sizeShape < sizeInner.width && sizeShape < sizeInner.height) {
-    // if there is a guide shape
-    if (positionPoints !== undefined) {
-      // polygon
-      positionPolygon = [positionPoints[nth][0], positionPoints[nth][1]]
-      // rectangle
-      positionRect = [positionPoints[nth][0] - sizeShape/2, positionPoints[nth][1] - sizeShape/2]
-    } else {
-      positionPolygon = [posPolyMemberX, posPolyMemberY]
-      positionRect = [posRectMemberX, posRectMemberY]
-    }
+  // if there is a guide shape
+  if (positionPoints !== undefined) {
+    // polygon
+    positionPolygon = [positionPoints[nth][0], positionPoints[nth][1]]
+    // rectangle
+    positionRect = [positionPoints[nth][0] - sizeShape/2, positionPoints[nth][1] - sizeShape/2]
   } else {
-    const posPolyMember = sizeShape / 2
-    // if there is a guide shape
-    if (positionPoints !== undefined) {
-      positionPolygon = [posPolyMember + positionPoints[nth][0], posPolyMember + positionPoints[nth][1]]
-      positionRect = [posRectMemberX + positionPoints[nth][0], posRectMemberY + positionPoints[nth][1]]
-    } else {
-      positionPolygon = [posPolyMember, posPolyMember]
-      positionRect = [posRectMemberX, posRectMemberY]
-    }
+    positionPolygon = [posPolyMemberX, posPolyMemberY]
+    positionRect = [posRectMemberX, posRectMemberY]
   }
   return {
     positionPolygon,
