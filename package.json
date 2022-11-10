@@ -55,8 +55,7 @@
     "lint": "eslint .",
     "format": "prettier . --write && git add --all && git commit -m\"refactor: format\"",
     "preversion": "npm run test && npm run lint && npm run format",
-    "version": "rm -rf dist && npm run build",
-    "postversion": "git push && git push --tags"
+    "version": "rm -rf dist && npm run build"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.4.0",
