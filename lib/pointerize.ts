@@ -49,10 +49,6 @@ export default class Pointerize implements IPointerize {
       throw new InvalidRoot()
     }
     this.element__root = elementRoot
-
-    if (this.#options__interactions.pointer?.options?.default_pointer === false) {
-      this.element__root.classList.add('-_pointerize__pointer_default__non')
-    }
   }
 
   #render(): void {
@@ -240,10 +236,19 @@ export default class Pointerize implements IPointerize {
       const decideMQL = (m: MediaQueryList | MediaQueryListEvent) => {
         isAllowed = m.matches
         if (isAllowed) {
+          // related to `pointer` interaction
+          if (!this.#options__interactions.pointer?.options?.default_pointer) {
+            this.element__root.classList.add('-_pointerize__pointer_default__non')
+          }
+          //
           this.#render()
           this.#add_listeners()
         } else {
           if (this.element__svg_container !== null) {
+            // related to `pointer` interaction
+            if (!this.#options__interactions.pointer?.options?.default_pointer) {
+              this.element__root.classList.remove('-_pointerize__pointer_default__non')
+            }
             // call `stop` only if pointerize elements exist
             this.stop()
           }
@@ -294,7 +299,7 @@ export default class Pointerize implements IPointerize {
   }
 
   hide() {
-    // add non-visibility class to svg container and
+    // add non-visibility class to svg container
     this.element__svg_container?.classList.add('-_pointerize-_u__display__non')
     // related to `pointer` interaction, show the default pointer if it's not already there
     if (!this.#options__interactions.pointer?.options?.default_pointer) {
