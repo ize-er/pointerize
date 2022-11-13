@@ -262,6 +262,7 @@ export interface IElement {
   }
   element_children?: IElement[]
 }
+
 // effects
 export interface IElementPresetEffects extends Omit<IElement, 'element_children'> {
   element_children: IElement[]
@@ -269,13 +270,15 @@ export interface IElementPresetEffects extends Omit<IElement, 'element_children'
 export interface IPresetsEffects {
   glow: IElementPresetEffects
 }
+
 // debounced addEventListener using requestAnimationFrame
-export interface IEventHandler<T> {
-  (event: T): void
+export interface IEventHandler {
+  (event: TEvents): void
 }
 export interface IDomEvents {
   // all the events that are added by pointerize, it is used for removing them
   element: HTMLElement // element that has event listener
   event: string // type of event
-  handler: IEventHandler<any> // event handler
+  handler: IEventHandler // event handler
 }
+export type TEvents = Event | PointerEvent 

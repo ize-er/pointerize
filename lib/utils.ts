@@ -1,13 +1,13 @@
-import type { IEventHandler, IElement } from './types'
+import type { IElement, TEvents } from './types'
 
-export const addListenerDebounce = <T>(
+export const addListenerDebounce = (
   element: HTMLElement,
-  eventName: any,
-  lastCallback: (e: T) => void
-): IEventHandler<T> => {
+  eventName: keyof HTMLElementEventMap,
+  lastCallback: (e: TEvents) => void
+) => {
   // using eventHandler and eventHandlerInner because the addventListener's listener needs parameters (which are passed to the inner function)
   let ticking = false
-  function eventHandlerInner(event: T, callback: (e: T) => void) {
+  function eventHandlerInner(event: TEvents, callback: (e: TEvents) => void) {
     if (!ticking) {
       window.requestAnimationFrame(function () {
         callback(event)
@@ -17,8 +17,8 @@ export const addListenerDebounce = <T>(
     ticking = false
   }
 
-  const eventHandler = (e: T) => eventHandlerInner(e, lastCallback)
-  element.addEventListener(eventName, eventHandler)
+  const eventHandler = (e: TEvents) => eventHandlerInner(e, lastCallback)
+  element.addEventListener(eventName, (eventHandler as EventListener))
   return eventHandler
 }
 

@@ -1,4 +1,4 @@
-import type { IPointerize, IOptions, IOptionsMerged, IDomEvents, IOptionsInteractions } from './types'
+import type { IPointerize, IOptions, IOptionsMerged, IDomEvents, IOptionsInteractions, TEvents } from './types'
 import processOptions from './process_options/process_options'
 import { addListenerDebounce } from './utils'
 import { makeCssPixelValue } from './utils'
@@ -181,7 +181,7 @@ export default class Pointerize implements IPointerize {
     }
 
     // event handlers
-    const pointerMove = (event: PointerEvent) => {
+    const pointerMove = (event: TEvents) => {
       const container = this.element__svg_container as HTMLDivElement
       const eventTarget = event.target as HTMLDivElement
       // pointer__scale interaction
@@ -205,19 +205,19 @@ export default class Pointerize implements IPointerize {
             const size = makeCssPixelValue(this.options__merged.size.outer)
             container.style.width = container.style.height = size
           }
-          this.#move_pointer(container, event)
+          this.#move_pointer(container, event as PointerEvent)
         }
       }
       if (!/pointer__scale/.test(eventTarget.dataset.pointerize ?? '')) {
         // if it's not on an `pointer__scale` interaction element
-        this.#move_pointer(container, event)
+        this.#move_pointer(container, event as PointerEvent)
       }
     }
 
     // add event listeners
     if (this.#options__interactions.pointer !== undefined) {
       // if there is `pointer` interaciton
-      const eventHandler = addListenerDebounce<PointerEvent>(this.element__root, 'pointermove', pointerMove)
+      const eventHandler = addListenerDebounce(this.element__root, 'pointermove', pointerMove)
       this.#domEvents.push({
         element: this.element__root,
         event: 'pointerMove',
