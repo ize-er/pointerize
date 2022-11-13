@@ -2,9 +2,9 @@
 
 <div style="text-align:center;">
 
-  <h1 ">Pointerize</h1>
+  <h1>Pointerize</h1>
 
-  <p ">Zero-dependency shapes library</p>
+  <p>Zero-dependency shapes library</p>
 
 </div>
 
@@ -95,13 +95,13 @@ Add Pointerize to your project either as an Npm package or from a CDN:
   - HTML
 
   ```html
-  <link rel="stylesheet" href="https://unpkg.com/@ize-er/pointerize@2/dist/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ize-er/pointerize@2/dist/style.css" />
   ```
 
   - import
 
   ```js
-  import Pointerize from 'https://unpkg.com/@ize-er/pointerize@2/dist/pointerize.js'
+  import Pointerize from 'https://cdn.jsdelivr.net/npm/@ize-er/pointerize@2/dist/pointerize.min.js'
   ```
 
 And then
@@ -225,7 +225,7 @@ Clone the repository. You can find:
 npm run dev
 ```
 
-> Note: use `main.ts`.
+> Note: Use `main.ts`.
 
 ### Run Unit Tests
 
