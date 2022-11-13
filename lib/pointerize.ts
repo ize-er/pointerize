@@ -250,19 +250,20 @@ export default class Pointerize implements IPointerize {
         }
       }
       // criteria
-      if (typeof this.#options__interactions.pointer.options?.start_criteria === 'string') {
-        if (this.#options__interactions.pointer.options?.start_criteria === 'none') {
+      const startCriteria = this.#options__interactions.pointer.options?.start_criteria
+      if (typeof startCriteria === 'string') {
+        if (startCriteria === 'none') {
           // if user chose `none`, don't do any checks
           isAllowed = true
         }
-      } else if (typeof this.#options__interactions.pointer.options?.start_criteria === 'object') {
-        if (typeof this.#options__interactions.pointer.options?.start_criteria.criteria === 'string') {
+      } else if (typeof startCriteria === 'object') {
+        if (typeof startCriteria.criteria === 'string') {
           // mediaQueryString
-          const mql = matchMedia(this.#options__interactions.pointer.options?.start_criteria.criteria)
+          const mql = matchMedia(startCriteria.criteria)
 
-          if (this.#options__interactions.pointer.options?.start_criteria.frequency === 'once') {
+          if (startCriteria.frequency === 'once') {
             decideMQL(mql)
-          } else if (this.#options__interactions.pointer.options?.start_criteria.frequency === 'always') {
+          } else if (startCriteria.frequency === 'always') {
             if (this.element__svg_container === null) {
               // if pointerize elements don't exist, run the function once
               decideMQL(mql)
