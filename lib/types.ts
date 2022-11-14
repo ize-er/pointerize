@@ -10,9 +10,8 @@ export interface IPointerize {
   show(): void
 }
 export interface IOptionsShapeRatio {
-  // TODO: implement intensity for animations, effects, etc.
   //`radius` is used for rectangle and ellipse to find the `width`/`height` for rectangle and 'rx'/'ry' for ellipse, and for polygons to find the radii, ratio of the smaller number to larger one
-  type: 'size' | 'radius' | 'intensity'
+  type: 'size' | 'radius'
   options: {
     // radius options
     type?: 'alternate' | 'accumulate'
@@ -20,7 +19,7 @@ export interface IOptionsShapeRatio {
   }
 }
 export interface IOptionsShapeGuide {
-  // TODO: Position should use the shapes property aswell instead of using the rest of the shapes. Implemenet motion
+  // TODO: Implemenet motion
   // `position` determines whether this shape should be used as a guiding path for other shapes to be on, only for polygon, circle
   type: 'position' | 'pattern' | 'motion'
   options?: {
@@ -98,7 +97,7 @@ export interface IOptionsShape {
 export interface IOptionsShapeMerged extends Omit<IOptionsShape, 'size' | 'ratio'> {
   size: number
   ratios: {
-    type: 'size' | 'radius' | 'intensity'
+    type: 'size' | 'radius'
     options: {
       // `radius` options
       type?: 'alternate' | 'accumulate'
@@ -119,9 +118,6 @@ export interface IDefaultsOptionsShape extends Omit<IOptionsShape, 'size' | 'rat
         type: 'alternate' | 'accumulate'
         value: number
       }
-    }
-    intensity: {
-      options: Record<string, never>
     }
   }
   guides: {

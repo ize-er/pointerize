@@ -58,10 +58,7 @@ const makeDefaults = (size = 32) => {
           type: 'alternate',
           value: goldenRatio,
         },
-      },
-      intensity: {
-        options: {},
-      },
+      }
     },
     guides: {
       pattern: {
