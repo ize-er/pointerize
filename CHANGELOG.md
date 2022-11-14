@@ -1,6 +1,8 @@
 ## [Unlreleased]
 
-...
+### Fixed
+
+- For a custom pointer, whether the default pointer should exist or not after a stop() + start()
 
 ## [2.0.0] - 2022-11-06
 
