@@ -27,7 +27,10 @@ export interface IOptionsShapeGuide {
     //1 pattern and position
     shapes?: IOptionsShape[]
     //0 pattern options
-    preset?: 'circle'
+    preset?: {
+      type: 'circle',
+      data: IElement
+    }
     custom?: IElement
     area?: 'fill' | 'stroke'
     ratios?: {
@@ -129,8 +132,32 @@ export interface IDefaultsOptionsShape extends Omit<IOptionsShape, 'size' | 'rat
     }
   }
 }
+
+// animations
+
 export interface ICssAnimation {
   css_properties: {
+    'animation-delay'?: string
+    'animation-direction'?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse'
+    'animation-duration'?: string
+    'animation-fill-mode'?: 'none' | 'forwards' | 'backwards' | 'both'
+    'animation-iteration-count'?: 'infinite' | string
+    'animation-name'?: string
+    'animation-play-state'?: 'running' | 'paused'
+    'animation-timing-function'?: string
+    'transform-origin'?: string
+  }
+  keyframes: {
+    keyframe_selector?: string
+    css_properties?: {
+      [key: string]: string
+    }
+  }[]
+}
+export interface IAnimationsOptions extends Omit<ICssAnimation, 'css_properties' | 'keyframes'> {
+  preset?: IPresetAnimation
+  when?: string | string[] // 'still', 'moving', 'active', 'hover', 'always' // TODO? implement
+  css_properties?: {
     'animation-delay'?: string
     'animation-direction'?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse'
     'animation-duration'?: string
@@ -148,24 +175,10 @@ export interface ICssAnimation {
     }
   }[]
 }
-export interface IAnimationsOptions extends Omit<ICssAnimation, 'css_properties'> {
-  preset?: 'rotate'
-  when?: string | string[] // 'still', 'moving', 'active', 'hover', 'always' // TODO? implement
-  css_properties?: {
-    'animation-delay'?: string
-    'animation-direction'?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse'
-    'animation-duration'?: string
-    'animation-fill-mode'?: 'none' | 'forwards' | 'backwards' | 'both'
-    'animation-iteration-count'?: 'infinite' | string
-    'animation-name'?: string
-    'animation-play-state'?: 'running' | 'paused'
-    'animation-timing-function'?: string
-    'transform-origin'?: string
-  }
-}
-export default interface IEffectsOptions {
-  preset?: 'glow'
-  custom?: IElement
+
+export interface IPresetAnimation {
+  type: 'rotate',
+  data: ICssAnimation
 }
 
 export interface IOptions {
@@ -189,7 +202,7 @@ export interface IOptions {
     inner?: number // size of the shapes' container (svg). Note that this is used for setting the `viewBox` and the svg's `width`/`height` is always the same as it's container
     outer?: number // size of the svg's container (div)
   }
-  preset?: string // TODO?: implement
+  preset?: IOptions // TODO?: implement
   shapes?: IOptionsShape[] // circle, rectangle, square, triangle, cross, crescent, heart, star, rhombus, pentagon, hexagon, heptagon, octagon, nonagon, random
   animations?: IAnimationsOptions[] // TODO?: implement
   effects?: IEffectsOptions[] //TODO?: implement
@@ -245,12 +258,8 @@ export interface IDefaultsSvgEls {
   svg: IStringProps
 }
 
-// animations
-export interface IPresetsAnimation {
-  ['rotate']: ICssAnimation
-}
-
 // general
+
 export interface IElement {
   element: string
   svg_attributes?: {
@@ -260,11 +269,18 @@ export interface IElement {
 }
 
 // effects
+
+export default interface IEffectsOptions {
+  preset?: IPresetEffect
+  custom?: IElement
+}
 export interface IElementPresetEffects extends Omit<IElement, 'element_children'> {
   element_children: IElement[]
 }
-export interface IPresetsEffects {
-  glow: IElementPresetEffects
+
+export interface IPresetEffect {
+  type: 'glow',
+  data: IElementPresetEffects
 }
 
 // debounced addEventListener using requestAnimationFrame

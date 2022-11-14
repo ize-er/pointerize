@@ -88,6 +88,9 @@ Add Pointerize to your project either as an Npm package or from a CDN:
   ```js
   import '@ize-er/pointerize/style.css'
   import Pointerize from '@ize-er/pointerize'
+
+  // and in case you're using a preset
+  import { rotate } from '@ize-er/pointerize/presets/animations.js'
   ```
 
 - CDN
@@ -102,6 +105,9 @@ Add Pointerize to your project either as an Npm package or from a CDN:
 
   ```js
   import Pointerize from 'https://cdn.jsdelivr.net/npm/@ize-er/pointerize@2/dist/pointerize.min.js'
+  
+  // and in case you're using a preset
+  import { rotate } from 'https://cdn.jsdelivr.net/npm/@ize-er/pointerize@2/dist/presets/animations.min.js'
   ```
 
 And then

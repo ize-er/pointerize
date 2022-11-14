@@ -1,6 +1,7 @@
 import { builder_shapes } from '../options_builders/builder_shapes'
 import type { IOptions, IOptionsShape } from '../types'
 import tokens from '../brand/tokens'
+import { rotate, glow } from './misc'
 
 /**
  *
@@ -114,8 +115,8 @@ export const presetBasic3 = () => {
          We need `position: fixed` since event listeners change `left` and `top` properties
          to move the pointer, we are also specifying the initial `top` and `left` for the
          pointer based on its `width` and `height` to move it out of sight until the user
-         moves the pointer and it becomes visible. z-index` is set to place the pointer above 
-         other elements; change it if you need to.
+         moves the pointer and it becomes visible. a high `z-index` is specified in order to 
+         place the pointer above other elements; change it if you need to.
       */
       css_properties: {
         position: 'fixed',
@@ -549,7 +550,7 @@ export const presetAdvanced5 = () => {
     animations: [
       [
         {
-          preset: ['rotate'],
+          preset: [rotate()],
           // you can further customize animations
           css_properties: {
             'animation-direction': ['alternate', 'alternate-reverse'],
@@ -562,7 +563,7 @@ export const presetAdvanced5 = () => {
 
   const shapes: IOptionsShape[] = builder_shapes(shapesNum, shapesOpts)
   shapes[0].type = 'circle'
-  shapes[0].effects = [{ preset: 'glow' }]
+  shapes[0].effects = [{ preset: glow() }]
   shapes[0].animations = undefined
 
   // options

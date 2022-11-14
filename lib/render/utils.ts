@@ -1,5 +1,4 @@
 import type { IAnimationsOptions } from '../types'
-import { presetsAnimation } from '../presets/misc'
 
 // finds shape's position
 export const makePosition = (
@@ -114,7 +113,7 @@ export const updateAnimation = (
       // add preset's keyframes and then the user's keyframes
       let presetKeyframe
       if (preset !== undefined) {
-        presetKeyframe = presetsAnimation[preset].keyframes[index]
+        presetKeyframe = preset.data.keyframes[index]
       }
       keyframes.push({
         ...(preset && presetKeyframe),
@@ -126,7 +125,7 @@ export const updateAnimation = (
       })
     }
   } else if (preset !== undefined) {
-    for (const keyframe of presetsAnimation[preset].keyframes) {
+    for (const keyframe of preset.data.keyframes) {
       index++
       // add preset's keyframes
       keyframes.push({
@@ -140,10 +139,10 @@ export const updateAnimation = (
 
   //0 merge them. order of merging is: preset stuff, updated stuff, user's stuff
   const animationUpdated: IAnimationsOptions = {
-    ...(preset && presetsAnimation[preset]),
+    ...(preset && preset.data),
     ...animation,
     css_properties: {
-      ...(preset && presetsAnimation[preset].css_properties),
+      ...(preset && preset.data.css_properties),
       ...(transformOrigin && { 'transform-origin': transformOrigin }),
       ...animation.css_properties,
     },

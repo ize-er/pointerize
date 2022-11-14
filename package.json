@@ -18,6 +18,18 @@
     "./style.css": {
       "import": "./dist/style.css",
       "require": "./dist/style.css"
+    },
+    "./presets/animations.js": {
+      "import": "./dist/presets/animations.js",
+      "require": "./dist/presets/animations.js"
+    },
+    "./presets/effects.js": {
+      "import": "./dist/presets/effects.js",
+      "require": "./dist/presets/effects.js"
+    },
+    "./presets/patterns.js": {
+      "import": "./dist/presets/patterns.js",
+      "require": "./dist/presets/patterns.js"
     }
   },
   "types": "./dist/pointerize.d.ts",
@@ -47,9 +59,10 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:site && tsc && vite build && npm run build:types",
+    "build": "npm run build:site && tsc && vite build && npm run build:presets && npm run build:types",
     "build:types": "tsup ./lib/pointerize.ts --dts-only",
     "build:site": "vite build -c site.config.ts",
+    "build:presets": "vite build -c vite.config.presets.ts",
     "preview": "vite preview",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint .",

@@ -2,7 +2,6 @@ import type { IOptionsShapeMerged } from '../../../types'
 import applyEffects from './apply_effects'
 import applyAnimations from './apply_animations'
 import { createSvgElementsDeep } from '../../../utils'
-import { presetsPatterns } from '../../../presets/misc'
 import { UnspecifiedProperty } from '../../../errors'
 import createShapes from '..'
 import processShapes from '../../../process_options/process_shapes'
@@ -67,11 +66,12 @@ const createShape = (
           let attrId
 
           if (guideOptions.preset !== undefined) {
+
             // presets
-            attrId = `-_${elContainerNth[0]}__pattern_${guideOptions.preset}_${nth}th`
+            attrId = `-_${elContainerNth[0]}__pattern_${guideOptions.preset.type}_${nth}th`
+            const elInfoUpdated = guideOptions.preset.data
 
             // give `id` attribute to the root pattern element
-            const elInfoUpdated = presetsPatterns[guideOptions.preset]
             if (elInfoUpdated.svg_attributes !== undefined) {
               elInfoUpdated.svg_attributes.id = attrId
             } else {

@@ -1,5 +1,4 @@
 import type { IOptionsShapeMerged } from '../../../types'
-import { presetsEffects } from '../../../presets/misc'
 import { createSvgElementsDeep } from '../../../utils'
 import { UnspecifiedProperty } from '../../../errors'
 
@@ -18,11 +17,11 @@ export default function applyEffects(
       let attrId
       if (ef.preset !== undefined) {
         // presets
-        attrId = `-_${elementContainerNth}__filter_${ef.preset}_${nth}th_${index}th`
+        attrId = `-_${elementContainerNth}__filter_${ef.preset.type}${nth}th_${index}th`
         filterIds.push(attrId)
 
         // give `id` attribute to the root filter element
-        const elInfoUpdated = presetsEffects[ef.preset]
+        const elInfoUpdated = ef.preset.data
         if (elInfoUpdated.svg_attributes !== undefined) {
           elInfoUpdated.svg_attributes.id = attrId
         } else {
@@ -32,7 +31,7 @@ export default function applyEffects(
         elFilter = createSvgElementsDeep(elInfoUpdated) as SVGFilterElement
       } else if (ef.custom !== undefined) {
         // custom effect
-        attrId = `filter_custom_${nth}th_${index}th`
+        attrId = `-_${elementContainerNth}__filter_custom_${nth}th_${index}th`
         filterIds.push(attrId)
 
         // give `id` attribute to the root filter element
