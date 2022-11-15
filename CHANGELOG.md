@@ -4,6 +4,35 @@
 
 - For a custom pointer, whether the default pointer should exist or not after a stop() + start()
 
+### Deprecated
+
+- All presets will be separated from the core library to reduce size. `preset` option will no longer accept a string, instead: 
+
+```js
+import { animationRotate } from '@ize-er/pointerize/presets/animations.js'
+import { effectGlow } from '@ize-er/pointerize/presets/effects.js'
+
+const options = {
+  shapes: [
+    {
+      .
+      .
+      .
+      animations: [
+        {
+          preset: animationRotate()
+        }
+      ],
+      effects: [
+        {
+          preset: effectGlow()
+        }
+      ]
+    }
+  ]
+}
+```
+
 ## [2.0.0] - 2022-11-06
 
 ### Added
