@@ -49,7 +49,7 @@
     "dev": "vite",
     "build": "npm run build:site && tsc && vite build && npm run build:types",
     "build:types": "tsup ./lib/pointerize.ts --dts-only",
-    "build:site": "vite build -c site.config.ts",
+    "build:site": "vite build -c vite.config.site.ts",
     "preview": "vite preview",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint .",
