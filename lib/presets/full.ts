@@ -552,7 +552,7 @@ export const presetAdvanced5 = () => {
           preset: ['rotate'],
           // you can further customize animations
           css_properties: {
-            'animation-direction': ['alternate', 'alternate-reverse'],
+            'animation-direction': ['normal', 'normal', 'alternate-reverse'],
             'animation-duration': ['40s'],
           },
         },
@@ -563,7 +563,7 @@ export const presetAdvanced5 = () => {
   const shapes: IOptionsShape[] = builder_shapes(shapesNum, shapesOpts)
   shapes[0].type = 'circle'
   shapes[0].effects = [{ preset: 'glow' }]
-  shapes[0].animations = undefined
+  delete shapes[0].animations
 
   // options
   const options: IOptions = {
