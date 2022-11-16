@@ -41,7 +41,24 @@ export interface IOptionsShapeGuide {
   }
 }
 export interface IOptionsShape {
-  type:
+  /**
+   * `.make_multiple` is used to specify the shapes less verbosely. All the normal shape properties are
+   * wrapped in arrays and applied one by one to the shapes. 
+   * If an array only has one member, that value is used for all shapes. 
+   * If a shape doesn't need a property but other shapes do, assign `undefined` to it.
+   * You either use this property to make multiple shapes or use the rest of 
+   * the properties to make one shape.
+   * */ 
+  make_multiple?: 
+    {
+      type:'shapes',
+      options: {
+        number: number,
+        value: TOptionsShapeMakeMulti
+      }
+    }[]
+  // properties to make a shape
+  type?:
     | 'ellipse'
     | 'rect'
     | 'circle'
@@ -55,7 +72,6 @@ export interface IOptionsShape {
     | 'star'
     | 'image'
     | 'use'
-  // size?: number
   sides?: number // number of polygon's sides
   ratios?: IOptionsShapeRatio[]
   guides?: IOptionsShapeGuide[]
@@ -94,6 +110,7 @@ export interface IOptionsShape {
   animations?: IAnimationsOptions[] // CSS animations
   effects?: IEffectsOptions[]
 }
+
 export interface IOptionsShapeMerged extends Omit<IOptionsShape, 'size' | 'ratio'> {
   size: number
   ratios: {
@@ -278,3 +295,8 @@ export interface IDomEvents {
   handler: IEventHandler // event handler
 }
 export type TEvents = Event | PointerEvent 
+
+type TPutPropsInArray<Type> = {
+  [Property in keyof Type]: Type[Property][]
+}
+export type TOptionsShapeMakeMulti = TPutPropsInArray<IOptionsShape>

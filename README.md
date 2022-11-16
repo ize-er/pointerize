@@ -1,6 +1,6 @@
 <div id="top"></div>
 
-<div style="text-align:center;">
+<div style="text-align:center" align="center">
 
   <h1>Pointerize</h1>
 
@@ -21,9 +21,7 @@
 - [Handy Tips](#handy-tips)
   - [Potential Conflicts](#potential-conflicts)
   - [Simplify Options Creation](#simplify-options-creation)
-- [Known Issues](#known-issues)
 - [Naming and Coding Style](#naming-and-coding-style)
-- [There Is More](#there-is-more)
 - [Development](#development)
   - [Start a Dev Server](#start-a-dev-server)
   - [Run Unit Tests](#run-unit-tests)
@@ -136,8 +134,8 @@ console.log('The final merged and updated options used for creating this instanc
 
 ## Let Your Imagination Loose
 
-Discover what you can do with Pointerize by visiting the [website](https://ize-er.github.io/pointerize/) and
-tinkering around with the presets in `presets/full.ts`. The possibilities are _limitless_
+What can be created by Pointerize? The possibilities are _limitless_. Visit the [website](https://ize-er.github.io/pointerize/) and
+tinker around with the presets in `presets/full.ts`.
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
@@ -149,16 +147,6 @@ tinkering around with the presets in `presets/full.ts`. The possibilities are _l
   There will be improvements in this regard.
 - Only use string values for properties of `svg_attributes` and `css_properties`.
 - For custom images use shape `type` of `image` and set `href` attribute.
-- It's best not to rely on features that are not documented yet.
-- Similar structure is used for Array items in: `ratios`, `guides`, `interactions` and it's like:
-  ```js
-  {
-    type: ...,
-    options: {
-      ...
-    }
-  }
-  ```
 
 ### Potential Conflicts
 
@@ -181,12 +169,6 @@ cumbersome to type out you can simplify the process by using Javascript. See the
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
-## Known Issues
-
-None
-
-<p style="text-align:right;"><a href="#top">back to top</a></p>
-
 ## Naming and Coding Style
 
 I am using the principles of a naming/coding methodology/convention that I am working on and that I may publish in the future.
@@ -203,12 +185,6 @@ It is helpful to know:
   for example, `//0 comment here` is the first depth. same-number comments are in the same depth and they are the children of the
   smaller number that came before (just like a tree structure). It helps us identify the relation between code snippets
   that are in the same scope.
-
-<p style="text-align:right;"><a href="#top">back to top</a></p>
-
-## There Is More
-
-There's more to Poinerize than meets the eye. I will publish the full API docs in due time.
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 

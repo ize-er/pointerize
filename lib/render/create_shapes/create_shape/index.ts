@@ -32,7 +32,7 @@ const createShape = (
     elId = `-_${elContainerNth[0]}__shape_${nth}th_${shape.type}`
   }
 
-  const el = document.createElementNS('http://www.w3.org/2000/svg', shape.type)
+  const el = document.createElementNS('http://www.w3.org/2000/svg', shape.type as string)
   el.id = elId
   // attributes
   if (attrs !== undefined) {
