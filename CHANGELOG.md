@@ -33,6 +33,44 @@ const options = {
 }
 ```
 
+### Added
+
+- `make_multiple` property to create multiple shapes with less boilerplate: 
+```js
+{
+  shapes: [
+    {
+      make_multiple: [
+        {
+          type: 'shapes',
+          options: {
+            number: 10,// the number of shapes to be made
+            /* 
+              This is the same shape object but with all property values wrapped in an array. If array has one
+              member, it is applied to all shapes, otherwise they are applied in order.
+            */
+            value: { 
+              type: ['polygon'],
+              sides: [8],
+              svg_attributes: [
+                {}, {}, // and the rest ...
+              ],
+              ratios: [
+                [], [], // and the rest ...
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Changed
+
+- The experimental `builder_shapes` function is dropped in favor of `make_multiple`
+
 ## [2.0.0] - 2022-11-06
 
 ### Added
