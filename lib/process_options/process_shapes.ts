@@ -1,12 +1,12 @@
-import type { IOptionsShape, IOptionsShapeMerged, IOptionsShapeRatio, IOptionsShapeGuide } from '../types'
+import type { IOptionsShape, IOptionsShapeRatio, IOptionsShapeGuide, IOptionsShapeMerged } from '../types'
 import makeDefaults from '../make_defaults'
 
 /**
  *
- * @param {IOptionsShape[]} shapes
- * @param {number} ratioTile - if the shapes are for a pattern, certain shape properties are multiplied by this
- * @param {boolean} respectReducedMotion - if true, animations are removed
- * @returns {IOptionsShapeMerged[]} the merged shapes
+ * @param shapes
+ * @param ratioTile - if the shapes are for a pattern, certain shape properties are multiplied by this
+ * @param respectReducedMotion - if true, animations are removed
+ * @returns the merged shapes
  */
 const processShapes = (
   sizeInner: number,

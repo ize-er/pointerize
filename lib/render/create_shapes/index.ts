@@ -164,7 +164,7 @@ const createShapes = (
         // polygon with 3 sides
 
         const sides = 3
-        const points = makeRadialPoints(s.size, ratioRadius, sides, positionPolygon, 'string') as string
+        const points = makeRadialPoints(size, ratioRadius, sides, positionPolygon, 'string') as string
         if (points !== null) {
           newShape = {
             ...s,
@@ -200,7 +200,7 @@ const createShapes = (
           */
         const sides = s.sides
         if (sides !== undefined) {
-          const points = makeRadialPoints(s.size, ratioRadius, sides, positionPolygon, 'string') as string
+          const points = makeRadialPoints(size, ratioRadius, sides, positionPolygon, 'string') as string
           if (points !== null) {
             newShape = {
               ...s,

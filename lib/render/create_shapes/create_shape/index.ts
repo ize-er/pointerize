@@ -79,19 +79,6 @@ const createShape = (
             }
 
             elPattern = createSvgElementsDeep(elInfoUpdated) as SVGPatternElement
-          } else if (guideOptions.custom !== undefined) {
-            // custom pattern
-            attrId = `-_${elContainerNth[0]}__pattern_custom_${nth}th`
-
-            // give `id` attribute to the root pattern element
-            const elInfoUpdated = guideOptions.custom
-            if (elInfoUpdated.svg_attributes !== undefined) {
-              elInfoUpdated.svg_attributes.id = attrId
-            } else {
-              elInfoUpdated.svg_attributes = { id: attrId }
-            }
-
-            elPattern = createSvgElementsDeep(elInfoUpdated) as SVGPatternElement
           } else if (Array.isArray(guideOptions.shapes) && guideOptions.shapes.length) {
             const ratioTiles = guideOptions.ratios?.tile as number
             const ratioGapRow = guideOptions.ratios?.gap?.row as number

@@ -64,7 +64,6 @@ describe('Pointerize options', () => {
       {
         type: 'pointer',
         options: {
-          css_selector__root: '.pointerize_root',
           start_criteria: {
             criteria: '(pointer: fine)',
             frequency: 'once',
