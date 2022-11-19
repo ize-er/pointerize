@@ -6,7 +6,9 @@
 
 ### Deprecated
 
-- All presets will be separated from the core library to reduce size. `preset` option will no longer accept a string, instead: 
+Since the purpose of the core library is to create SVG shapes and also to reduce size, other parts will be seperated; it means:
+- A plugin system will be created and used for animations, effects, interactions.
+- All presets will be separated from the core library. `preset` option will no longer accept a string, instead: 
 
 ```js
 import { animationRotate } from '@ize-er/pointerize/presets/animations.js'
