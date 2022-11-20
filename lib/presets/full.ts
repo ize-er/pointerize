@@ -1,5 +1,5 @@
 import type { IOptions, IOptionsShape, TOptionsShapeMakeMulti } from '../types'
-import tokens from '../brand/tokens'
+import tokens from '../../brand/tokens'
 
 /**
  *
