@@ -11,8 +11,8 @@ Since the purpose of the core library is to create SVG shapes and also to reduce
 - All presets will be separated from the core library. `preset` option will no longer accept a string, instead: 
 
 ```js
-import { animationRotate } from '@ize-er/pointerize/presets/animations.js'
-import { effectGlow } from '@ize-er/pointerize/presets/effects.js'
+import { rotate } from '@ize-er/pointerize/presets/animations.js'
+import { glow } from '@ize-er/pointerize/presets/effects.js'
 
 const options = {
   shapes: [
@@ -22,12 +22,12 @@ const options = {
       .
       animations: [
         {
-          preset: animationRotate()
+          preset: rotate()
         }
       ],
       effects: [
         {
-          preset: effectGlow()
+          preset: glow()
         }
       ]
     }
