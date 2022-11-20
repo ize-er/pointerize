@@ -4,36 +4,37 @@
 
 - For a custom pointer, whether the default pointer should exist or not after a stop() + start()
 
-### Deprecated
+### Changed
 
-Since the purpose of the core library is to create SVG shapes and also to reduce size, other parts will be seperated; it means:
-- A plugin system will be created and used for animations, effects, interactions.
-- All presets will be separated from the core library. `preset` option will no longer accept a string, instead: 
+- The experimental `builder_shapes` function is dropped in favor of `make_multiple`.
+- Since the purpose of the core library is to create SVG shapes and also in order to reduce size, other parts will be seperated; it means:
+  - A plugin system will be created and used for animations, effects, interactions.
+  - All presets will be separated from the core library. `preset` option will no longer accept a string, instead: 
 
-```js
-import { rotate } from '@ize-er/pointerize/presets/animations.js'
-import { glow } from '@ize-er/pointerize/presets/effects.js'
+  ```js
+  import { rotate } from '@ize-er/pointerize/presets/animations.js'
+  import { glow } from '@ize-er/pointerize/presets/effects.js'
 
-const options = {
-  shapes: [
-    {
-      .
-      .
-      .
-      animations: [
-        {
-          preset: rotate()
-        }
-      ],
-      effects: [
-        {
-          preset: glow()
-        }
-      ]
-    }
-  ]
-}
-```
+  const options = {
+    shapes: [
+      {
+        .
+        .
+        .
+        animations: [
+          {
+            preset: rotate()
+          }
+        ],
+        effects: [
+          {
+            preset: glow()
+          }
+        ]
+      }
+    ]
+  }
+  ```
 
 ### Added
 
@@ -68,10 +69,6 @@ const options = {
   ]
 }
 ```
-
-### Changed
-
-- The experimental `builder_shapes` function is dropped in favor of `make_multiple`
 
 ## [2.0.0] - 2022-11-06
 
