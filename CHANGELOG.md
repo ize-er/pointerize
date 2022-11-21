@@ -7,9 +7,12 @@
 ### Changed
 
 - The experimental `builder_shapes` function is dropped in favor of `make_multiple`.
-- Since the purpose of the core library is to create SVG shapes and also in order to reduce size, other parts will be seperated; it means:
+
+### Will Change
+
+- Since the purpose of the core library is to create SVG shapes and also in order to reduce size, there will be separations; it means:
   - A plugin system will be created and used for animations, effects, interactions.
-  - All presets will be separated from the core library. `preset` option will no longer accept a string, instead: 
+  - All presets will be separated from the core library. New presets will be added for the shape types that can already be created by options. `preset` option will no longer accept a string, instead: 
 
   ```js
   import { rotate } from '@ize-er/pointerize/presets/animations.js'
