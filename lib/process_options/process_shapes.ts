@@ -69,10 +69,14 @@ const processShapes = (
     let size = sizeInner * ratioSize
     defaults = makeDefaults(size)
     defaultsShape = defaults.defaultsShape
-    const defaultsSvgAttrs = defaults.defaultsSvgAttrs
 
     //1 adjust the shape's size based on `stroke-width`
-    const strokeWidth = s.svg_attributes?.['stroke-width'] ?? defaultsSvgAttrs.attrsStroke['stroke-width']
+    /* Instead of using the above defaults created by size variable we'll use defaults made by
+      `sizeInner` because the `stroke-width` shouldn't be influenced by size ratio. (in `create_shapes`
+       the defaults are made with `sizeInner`)
+     */
+    const { defaultsSvgAttrs: defaultsSvgAttrsTemp } = makeDefaults(sizeInner) 
+    const strokeWidth = s.svg_attributes?.['stroke-width'] ?? defaultsSvgAttrsTemp.attrsStroke['stroke-width']
     size -= +strokeWidth
 
     //0 ratios
