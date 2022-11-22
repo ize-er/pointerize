@@ -22,6 +22,7 @@
   - [Potential Conflicts](#potential-conflicts)
   - [Simplify Options Creation](#simplify-options-creation)
 - [Naming and Coding Style](#naming-and-coding-style)
+- [Tasks](#tasks)
 - [Development](#development)
   - [Start a Dev Server](#start-a-dev-server)
   - [Run Unit Tests](#run-unit-tests)
@@ -180,6 +181,15 @@ It is helpful to know:
   for example, `//0 comment here` is the first depth. same-number comments are in the same depth and they are the children of the
   smaller number that came before (just like a tree structure). It helps us identify the relation between code snippets
   that are in the same scope.
+
+<p style="text-align:right;"><a href="#top">back to top</a></p>
+
+## Tasks
+
+- [x] Add functionality to create multiple shapes (commit 4f669a23d09)
+- [x] Add API docs 
+- [ ] Separate presets from the core lib and turn some shape types into presets ([branch](https://github.com/ize-er/pointerize/tree/separate_presets))
+- [ ] Create a plugin system and use it for animations, effects, interactions
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
