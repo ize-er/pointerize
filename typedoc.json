@@ -1,6 +1,6 @@
 {
   "navigationLinks": {
-      "Home": "../index.html"
+      "Home": "https://ize-er.github.io/pointerize/"
   },
   "includeVersion": true,
   "exclude": ["./node_modules/**/*"],
