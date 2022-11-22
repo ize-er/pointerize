@@ -1,0 +1,10 @@
+{
+  "navigationLinks": {
+      "Home": "../index.html"
+  },
+  "includeVersion": true,
+  "exclude": ["./node_modules/**/*"],
+  "entryPointStrategy": "expand",
+  "out": "docs",
+  "entryPoints": ["lib/pointerize.ts"],
+}
