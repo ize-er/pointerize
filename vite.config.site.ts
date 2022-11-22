@@ -12,7 +12,7 @@ export default defineConfig({
     },
     rollupOptions: {
       input: {
-        tokens: resolve(__dirname, 'lib/brand/tokens.ts'),
+        tokens: resolve(__dirname, 'brand/tokens.ts'),
         presets: resolve(__dirname, 'lib/presets/full.ts'),
       },
       output: {
