@@ -47,16 +47,16 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:site && tsc && vite build && npm run build:types",
+    "build": "npm run build:site && tsc && vite build && npm run build:types && npm run build:docs",
     "build:types": "tsup ./lib/pointerize.ts --dts-only",
     "build:site": "vite build -c vite.config.site.ts",
+    "build:docs": "typedoc",
     "preview": "vite preview",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint .",
     "format": "prettier . --write",
     "preversion": "npm run test && npm run lint && npm run format",
-    "version": "rm -rf dist && npm run build",
-    "typedoc": "typedoc"
+    "version": "rm -rf dist && npm run build"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.4.0",
