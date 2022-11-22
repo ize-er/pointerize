@@ -192,7 +192,7 @@ It is helpful to know:
 ## Tasks
 
 - [x] Add functionality to create multiple shapes (commit 4f669a23d09)
-- [ ] Add API docs ([branch](https://github.com/ize-er/pointerize/tree/docs))
+- [x] Add API docs 
 - [ ] Separate presets from the core lib and turn some shape types into presets ([branch](https://github.com/ize-er/pointerize/tree/separate_presets))
 - [ ] Create a plugin system and use it for animations, effects, interactions
 
