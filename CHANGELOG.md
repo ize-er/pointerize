@@ -1,8 +1,9 @@
-## [Unlreleased]
+## [2.1.0] - 2022-11-22
 
 ### Fixed
 
 - For a custom pointer, whether the default pointer should exist or not after a stop() + start()
+- Shape size when there is size ratio and stroke
 
 ### Changed
 
