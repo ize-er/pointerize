@@ -214,6 +214,20 @@ section:last-of-type {
 #notes {
   background-color: var(--color-gray-1);
 }
+.links {
+  display: grid;
+  grid-auto-flow: column;
+  gap: var(--padding-text-l);
+  align-content: space-around;
+  background-color: var(--color-gray-1);
+  padding: var(--padding-text-l);
+}
+.links > :nth-child(odd) {
+  justify-self: end;
+}
+.links > :nth-child(even) {
+  justify-self: start;
+}
 input[type=checkbox] {
   margin: var(--padding-text-l);
   width: 1.5em;
