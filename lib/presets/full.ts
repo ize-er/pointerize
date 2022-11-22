@@ -151,8 +151,8 @@ export const presetAdvanced1 = () => {
 
   //0 make the shapes that are going to be positioned on the position guide
   //1 make some of the large properties for `make_multiple`
-  const svgAttributes:TOptionsShapeMakeMulti['svg_attributes'] = []
-  const ratios:TOptionsShapeMakeMulti['ratios']  = []
+  const svgAttributes: TOptionsShapeMakeMulti['svg_attributes'] = []
+  const ratios: TOptionsShapeMakeMulti['ratios'] = []
   for (let i = 0; i < shapesPosNum; i++) {
     /* 
        Using a loop with the number of shapes to make some properties.
@@ -164,24 +164,22 @@ export const presetAdvanced1 = () => {
       fill: `hsl(${(360 / shapesPosNum) * i}, 100%, 40%)`,
     })
 
-    ratios.push(
-      [
-        {
-          type: 'size',
-          options: {
-            value: (0.2 / shapesPosNum) * (i + 1),
-          },
+    ratios.push([
+      {
+        type: 'size',
+        options: {
+          value: (0.2 / shapesPosNum) * (i + 1),
         },
-        // this is turning a polygon with 4 sides (square) into a rhombus
-        {
-          type: 'radius',
-          options: {
-            type: 'alternate',
-            value: 0.4,
-          },
-        }
-      ]
-    )
+      },
+      // this is turning a polygon with 4 sides (square) into a rhombus
+      {
+        type: 'radius',
+        options: {
+          type: 'alternate',
+          value: 0.4,
+        },
+      },
+    ])
   }
 
   //1 the final shapes that will be passed to position guide
@@ -196,12 +194,12 @@ export const presetAdvanced1 = () => {
               type: ['polygon'],
               sides: [4],
               svg_attributes: svgAttributes,
-              ratios: ratios
-            }
-          }
-        }
-      ]
-    }
+              ratios: ratios,
+            },
+          },
+        },
+      ],
+    },
   ]
 
   // the main shapes property
@@ -259,10 +257,9 @@ export const presetAdvanced2 = () => {
   const svgAttributes: TOptionsShapeMakeMulti['svg_attributes'] = []
   const ratios: TOptionsShapeMakeMulti['ratios'] = []
   for (let i = 0; i < shapesPosNum; i++) {
-
     svgAttributes.push({
       'stroke-width': '0',
-      fill: `hsl(${(360 / shapesPosNum) * i}, 100%, 40%)`
+      fill: `hsl(${(360 / shapesPosNum) * i}, 100%, 40%)`,
     })
 
     ratios.push([
@@ -294,12 +291,12 @@ export const presetAdvanced2 = () => {
               type: ['polygon'],
               sides: [8],
               svg_attributes: svgAttributes,
-              ratios: ratios
-            }
-          }
-        }
-      ]
-    }
+              ratios: ratios,
+            },
+          },
+        },
+      ],
+    },
   ]
 
   const shapes: IOptionsShape[] = [
@@ -369,7 +366,7 @@ export const presetAdvanced3 = () => {
                 {
                   'stroke-width': '0.2',
                   stroke: color_gray_2,
-                }
+                },
               ],
               ratios: [
                 [
@@ -378,14 +375,14 @@ export const presetAdvanced3 = () => {
                     options: {
                       value: 0.5,
                     },
-                  }
-                ]
-              ]
-            }
-          }
-        }
-      ]
-    }
+                  },
+                ],
+              ],
+            },
+          },
+        },
+      ],
+    },
   ]
 
   const shapes: IOptionsShape[] = [
@@ -446,12 +443,11 @@ export const presetAdvanced4 = () => {
   const svgAttributes: TOptionsShapeMakeMulti['svg_attributes'] = []
   const ratios: TOptionsShapeMakeMulti['ratios'] = []
   for (let i = 0; i < shapesPatternPosNum; i++) {
-
     svgAttributes.push({
       'stroke-width': '0',
       fill: `hsl(${(60 / shapesPatternPosNum) * i}, 100%, 40%)`,
     })
-    
+
     ratios.push([
       {
         type: 'size',
@@ -469,7 +465,7 @@ export const presetAdvanced4 = () => {
       },
     ])
   }
-  
+
   // shapes property for the position guide
   const shapesPatternPos: IOptionsShape[] = [
     {
@@ -482,13 +478,13 @@ export const presetAdvanced4 = () => {
               type: ['polygon'],
               sides: [14],
               svg_attributes: svgAttributes,
-              ratios: ratios
-            }
-          }
-        }
-      ]
-    }
-  ] 
+              ratios: ratios,
+            },
+          },
+        },
+      ],
+    },
+  ]
 
   // shapes property for the pattern guide
   const shapesPattern: IOptionsShape[] = [
@@ -582,7 +578,7 @@ export const presetAdvanced5 = () => {
                   'stroke-width': '1',
                   stroke: 'hsl(160, 50%, 40%)',
                   fill: 'transparent',
-                }
+                },
               ],
               ratios: [
                 [
@@ -597,7 +593,7 @@ export const presetAdvanced5 = () => {
                   {
                     type: 'size',
                     options: {
-                      value: 0.7
+                      value: 0.7,
                     },
                   },
                 ],
@@ -605,7 +601,7 @@ export const presetAdvanced5 = () => {
                   {
                     type: 'size',
                     options: {
-                      value: 0.6
+                      value: 0.6,
                     },
                   },
                 ],
@@ -636,17 +632,17 @@ export const presetAdvanced5 = () => {
               effects: [
                 [
                   {
-                    preset: 'glow'
-                  }
+                    preset: 'glow',
+                  },
                 ],
                 undefined,
-                undefined
-              ]
-            }
-          }
-        }
-      ]
-    }
+                undefined,
+              ],
+            },
+          },
+        },
+      ],
+    },
   ]
 
   const options: IOptions = {

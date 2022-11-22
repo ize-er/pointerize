@@ -6,7 +6,6 @@ import { InvalidRoot } from './errors'
 import createShapes from './render/create_shapes'
 
 export default class Pointerize implements IPointerize {
-  
   element__root: HTMLElement
   options__merged: IOptionsMerged
   element__svg: SVGSVGElement | null
@@ -27,9 +26,9 @@ export default class Pointerize implements IPointerize {
     pointer__pointer__scale: undefined,
   }
   #domEvents: IDomEvents[] = []
-  
+
   /**
-   * 
+   *
    * @param options Options based on which the instance is created.
    */
   constructor(options: IOptions) {

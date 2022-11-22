@@ -17,14 +17,13 @@ export default defineConfig({
       },
       output: {
         dir: 'dist__site',
-        banner: 
-`/**
+        banner: `/**
   * @license Pointerize
   * Copyright (c) 2022-present Abolfazl Faturechi
   * 
   * This source code is licensed under the MIT license found in the
   * LICENSE file at https://github.com/ize-er/pointerize.
-  */`
+  */`,
       },
     },
   },

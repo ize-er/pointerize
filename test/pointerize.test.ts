@@ -205,16 +205,16 @@ describe('Pointerize options', () => {
                     {
                       type: 'size',
                       options: {
-                        value: 0.5
-                      }
-                    }
-                  ]
-                ]
-              }
-            }
-          }
-        ]
-      }
+                        value: 0.5,
+                      },
+                    },
+                  ],
+                ],
+              },
+            },
+          },
+        ],
+      },
     ],
   }
   describe('instance 1', () => {
@@ -259,7 +259,9 @@ describe('Pointerize options', () => {
       expect(document.querySelector('#-_pointerize__container_1th > svg > circle')?.getAttribute('stroke')).toBe('red')
       //0 ratios
       //1 `make_multiple`
-      expect(document.querySelector('#-_pointerize__container_1th > svg > *:last-child')?.getAttribute('width')).toBe(String(32/2 - 32/20))
+      expect(document.querySelector('#-_pointerize__container_1th > svg > *:last-child')?.getAttribute('width')).toBe(
+        String(32 / 2 - 32 / 20)
+      )
       // animations
       expect(
         document

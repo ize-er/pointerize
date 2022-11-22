@@ -12,8 +12,9 @@
 ### Deprecated
 
 - Since the purpose of the core library is to create SVG shapes and also in order to reduce size, there will be separations; it means:
+
   - A plugin system will be created and used for animations, effects, interactions.
-  - All presets will be separated from the core library. New presets will be added for the shape types that can already be created by options. `preset` option will no longer accept a string, instead: 
+  - All presets will be separated from the core library. New presets will be added for the shape types that can already be created by options. `preset` option will no longer accept a string, instead:
 
   ```js
   import { rotate } from '@ize-er/pointerize/presets/animations.js'
@@ -42,7 +43,8 @@
 
 ### Added
 
-- `make_multiple` property to create multiple shapes with less boilerplate: 
+- `make_multiple` property to create multiple shapes with less boilerplate:
+
 ```js
 {
   shapes: [
@@ -51,25 +53,27 @@
         {
           type: 'shapes',
           options: {
-            number: 10,// the number of shapes to be made
+            number: 10, // the number of shapes to be made
             /* 
               This is the same shape object but with all property values wrapped in an array. If array has one
               member, it is applied to all shapes, otherwise they are applied in order.
             */
-            value: { 
+            value: {
               type: ['polygon'],
               sides: [8],
               svg_attributes: [
-                {}, {}, // and the rest ...
+                {},
+                {}, // and the rest ...
               ],
               ratios: [
-                [], [], // and the rest ...
-              ]
-            }
-          }
-        }
-      ]
-    }
+                [],
+                [], // and the rest ...
+              ],
+            },
+          },
+        },
+      ],
+    },
   ]
 }
 ```

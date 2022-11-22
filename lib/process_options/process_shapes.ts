@@ -14,21 +14,19 @@ const processShapes = (
   ratioTile = 1,
   respectReducedMotion = false
 ): IOptionsShapeMerged[] => {
-
   // If a shape object has `make_multiple`, make and add it's shapes and remove the object
   let indexMultiShape = -1
   for (const s of shapes) {
     indexMultiShape++
-    
+
     if (s.make_multiple !== undefined) {
       for (const m of s.make_multiple) {
         for (let i = 0; i < m.options.number; i++) {
-          const shapeMulti: {[s: string]: unknown} = {}
+          const shapeMulti: { [s: string]: unknown } = {}
           for (const [k, v] of Object.entries(m.options.value)) {
             if (v.length === 1) {
               shapeMulti[k] = JSON.parse(JSON.stringify(v[0]))
-            }
-            else {
+            } else {
               if (v[i] !== undefined) {
                 shapeMulti[k] = v[i]
               }
@@ -42,10 +40,10 @@ const processShapes = (
       shapes.splice(indexMultiShape, 1)
     }
   }
-  
+
   //
   const shapesUpdated: IOptionsShapeMerged[] = []
-  
+
   for (const s of shapes) {
     let ratioRadiusIndex = -1
     let ratioRadius: IOptionsShapeRatio | undefined
@@ -75,7 +73,7 @@ const processShapes = (
       `sizeInner` because the `stroke-width` shouldn't be influenced by size ratio. (in `create_shapes`
        the defaults are made with `sizeInner`)
      */
-    const { defaultsSvgAttrs: defaultsSvgAttrsTemp } = makeDefaults(sizeInner) 
+    const { defaultsSvgAttrs: defaultsSvgAttrsTemp } = makeDefaults(sizeInner)
     const strokeWidth = s.svg_attributes?.['stroke-width'] ?? defaultsSvgAttrsTemp.attrsStroke['stroke-width']
     size -= +strokeWidth
 
@@ -146,7 +144,7 @@ const processShapes = (
     if (ratioTile) {
       size *= ratioTile
     }
-    
+
     //
     shapesUpdated.push({
       ...s,

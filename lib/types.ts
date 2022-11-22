@@ -1,4 +1,3 @@
-
 // TODO?: remove hard-coded values for attributes:
 export interface IPointerize {
   /**
@@ -107,18 +106,17 @@ export interface IOptionsShapeGuide {
 export interface IOptionsShape {
   /**
    * `.make_multiple` is used to specify the shapes less verbosely. All the normal shape properties are
-   * wrapped in arrays and applied one by one to the shapes. 
-   * If an array only has one member, that value is used for all shapes. 
+   * wrapped in arrays and applied one by one to the shapes.
+   * If an array only has one member, that value is used for all shapes.
    * If a shape doesn't need a property but other shapes do, the property should be `undefined`.
-   * */ 
-  make_multiple?: 
-    {
-      type:'shapes',
-      options: {
-        number: number,
-        value: TOptionsShapeMakeMulti
-      }
-    }[]
+   * */
+  make_multiple?: {
+    type: 'shapes'
+    options: {
+      number: number
+      value: TOptionsShapeMakeMulti
+    }
+  }[]
   type?:
     | 'ellipse'
     | 'rect'
@@ -313,7 +311,7 @@ export interface IOptions {
   interactions?: IOptionsInteractions[]
   size?: {
     /**
-     * Size of the `svg` element. This is used for setting the `viewBox` 
+     * Size of the `svg` element. This is used for setting the `viewBox`
      * and the `svg`'s `width`/`height` is the same as its container.
      */
     inner?: number
@@ -354,13 +352,13 @@ export interface IOptionsInteractions {
     /**
      * Determines the criteria for the existence of Pointerize on the page.
      * `none` means pointerize starts unconditionally.
-     * @remarks 
+     * @remarks
      * `pointer` option
      */
     start_criteria?: IStartCriteria | 'none'
     /**
      * CSS selector strings.
-     * @remarks 
+     * @remarks
      * `pointer__scale` option
      */
     elements?: string[]
@@ -447,7 +445,7 @@ export interface IDomEvents {
 }
 
 //1
-export type TEvents = Event | PointerEvent 
+export type TEvents = Event | PointerEvent
 
 // general
 
