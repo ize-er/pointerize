@@ -47,7 +47,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:site && tsc && vite build && npm run build:types && npm run build:docs",
+    "build": "npm run build:docs && npm run build:site && tsc && vite build && npm run build:types",
     "build:types": "tsup ./lib/pointerize.ts --dts-only",
     "build:site": "vite build -c vite.config.site.ts",
     "build:docs": "typedoc",
