@@ -166,7 +166,6 @@ export default class Pointerize implements IPointerize {
                 }
               }
             }
-            console
             const container = this.element__svg_container as HTMLDivElement
             /* 
                This class will be added when pointer is on the element and should be 
