@@ -131,7 +131,7 @@ console.log(pointerize.options__merged)
 
 ## Let Your Imagination Loose
 
-What can be created by Pointerize? The possibilities are _limitless_. Visit the [website](https://ize-er.github.io/pointerize/) to create something, see the presets and read the API docs. presets' code can be found in `presets/full.ts`.
+What can be created by Pointerize? The possibilities are _limitless_. Visit the [website](https://ize-er.github.io/pointerize/) to create something, see the presets and read the API docs. presets' code can be found in `presets` folder.
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
@@ -187,7 +187,7 @@ It is helpful to know:
 ## Tasks
 
 - [x] Add functionality to create multiple shapes (commit 4f669a23d09)
-- [x] Add API docs 
+- [x] Add API docs (https://github.com/ize-er/pointerize/pull/2)
 - [ ] Separate presets from the core lib and turn some shape types into presets ([branch](https://github.com/ize-er/pointerize/tree/separate_presets))
 - [ ] Create a plugin system and use it for animations, effects, interactions
 
