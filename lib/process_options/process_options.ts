@@ -24,7 +24,7 @@ const processOptions = (opts: IOptions): IOptionsMerged => {
   //0 interactions
   const interactions: IOptionsMerged['interactions'] = []
   //1 find all interactions' properties
-  let cssSelectorRoot, default_pointer, startCriteria
+  let default_pointer, startCriteria
   let indexPointer = -1
   let indexPointerScale = -1
   if (Array.isArray(opts.interactions)) {
@@ -33,7 +33,6 @@ const processOptions = (opts: IOptions): IOptionsMerged => {
       index++
       if (inter.type === 'pointer') {
         indexPointer = index
-        cssSelectorRoot = inter.options?.css_selector__root
         default_pointer = inter.options?.default_pointer
         startCriteria = inter.options?.start_criteria
       } else if (inter.type === 'pointer__scale') {
@@ -42,7 +41,7 @@ const processOptions = (opts: IOptions): IOptionsMerged => {
     }
   }
   //2 css_selector__root
-  cssSelectorRoot = opts.css_selector__root ?? cssSelectorRoot ?? 'body'
+  const cssSelectorRoot = opts.css_selector__root ?? 'body'
   //2 default_pointer
   default_pointer = default_pointer ?? false
   //2 start_criteria
@@ -77,7 +76,6 @@ const processOptions = (opts: IOptions): IOptionsMerged => {
   const interactionPointer: IOptionsInteractions = {
     type: 'pointer',
     options: {
-      css_selector__root: cssSelectorRoot,
       default_pointer: default_pointer,
       start_criteria: startCriteria as IStartCriteria,
     },

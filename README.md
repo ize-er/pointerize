@@ -109,24 +109,20 @@ And then
 const options = { ... }
 const pointerize = new Pointerize(options)
 
-pointerize.start() // starts
+pointerize.start()
 
 
 // more methods that you can use
-pointerize.hide() /* makes it invisible (if it's used as a custom pointer,
-                     show the default pointer if it's not already visible) */
-pointerize.show() /* makes it visible (if it's used as a custom pointer,
-                     removes the default pointer if necessary) */
-pointerize.stop() /* removes elements and event listeners (if there are any )
-                     (if it's used as a custom pointer, show the default pointer
-                     if it's not already visible) */
+pointerize.hide()
+pointerize.show()
+pointerize.stop()
 
 // properties you have access to on the instance
-console.log('ID of current instance (on container)', pointerize.id)
-console.log('The element chosen as root', pointerize.element__root)
-console.log('The SVG element', pointerize.element__svg)
-console.log('The SVG container element (div)', pointerize.element__svg_container)
-console.log('The final merged and updated options used for creating this instance', pointerize.options__merged)
+console.log(pointerize.id)
+console.log(pointerize.element__root)
+console.log(pointerize.element__svg)
+console.log(pointerize.element__svg_container)
+console.log(pointerize.options__merged)
 
 // Also note that you can create as many instances as you'd like
 ```
@@ -135,8 +131,7 @@ console.log('The final merged and updated options used for creating this instanc
 
 ## Let Your Imagination Loose
 
-What can be created by Pointerize? The possibilities are _limitless_. Visit the [website](https://ize-er.github.io/pointerize/) and
-tinker around with the presets in `presets/full.ts`.
+What can be created by Pointerize? The possibilities are _limitless_. Visit the [website](https://ize-er.github.io/pointerize/) to create something, see the presets and read the API docs. presets' code can be found in `presets/full.ts`.
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
@@ -192,7 +187,7 @@ It is helpful to know:
 ## Tasks
 
 - [x] Add functionality to create multiple shapes (commit 4f669a23d09)
-- [ ] Add API docs ([branch](https://github.com/ize-er/pointerize/tree/docs))
+- [x] Add API docs 
 - [ ] Separate presets from the core lib and turn some shape types into presets ([branch](https://github.com/ize-er/pointerize/tree/separate_presets))
 - [ ] Create a plugin system and use it for animations, effects, interactions
 

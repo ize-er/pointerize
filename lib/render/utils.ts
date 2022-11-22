@@ -1,4 +1,4 @@
-import type { IAnimationsOptions } from '../types'
+import type { IOptionsShapeAnimation } from '../types'
 import { presetsAnimation } from '../presets/misc'
 
 // finds shape's position
@@ -93,9 +93,9 @@ export const makeRadialPoints = (
    change the necessary attributes and return the updated attributes 
 */
 export const updateAnimation = (
-  animation: IAnimationsOptions,
+  animation: IOptionsShapeAnimation,
   guidesInfo?: { position?: [number, number] }
-): IAnimationsOptions | null => {
+): IOptionsShapeAnimation | null => {
   //0 add the animation attrs we calculated and then the user's over them
   //1 transform origin
   let transformOrigin
@@ -139,7 +139,7 @@ export const updateAnimation = (
   }
 
   //0 merge them. order of merging is: preset stuff, updated stuff, user's stuff
-  const animationUpdated: IAnimationsOptions = {
+  const animationUpdated: IOptionsShapeAnimation = {
     ...(preset && presetsAnimation[preset]),
     ...animation,
     css_properties: {

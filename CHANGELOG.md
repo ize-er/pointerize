@@ -8,7 +8,7 @@
 
 - The experimental `builder_shapes` function is dropped in favor of `make_multiple`.
 
-### Will Change
+### Deprecated
 
 - Since the purpose of the core library is to create SVG shapes and also in order to reduce size, there will be separations; it means:
   - A plugin system will be created and used for animations, effects, interactions.
