@@ -79,7 +79,7 @@ describe('Pointerize options', () => {
     ],
     // not using `size` because the dimensions stated above need to be tested here
     shapes: [
-      // 7 basic shapes
+      // 7 basic shapes and `make_multiple`
       {
         type: 'circle',
         guides: [
@@ -192,6 +192,29 @@ describe('Pointerize options', () => {
       {
         type: 'path',
       },
+      {
+        make_multiple: [
+          {
+            type: 'shapes',
+            options: {
+              number: 2,
+              value: {
+                type: ['circle', 'square'],
+                ratios: [
+                  [
+                    {
+                      type: 'size',
+                      options: {
+                        value: 0.5
+                      }
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ]
+      }
     ],
   }
   describe('instance 1', () => {
@@ -227,11 +250,16 @@ describe('Pointerize options', () => {
     })
 
     test('shapes', () => {
-      // the existence of elements and in right order
+      //0 the existence of elements and in right order
       expect(document.querySelector('#-_pointerize__container_1th > svg > circle')).not.toBe(null)
       expect(document.querySelector('#-_pointerize__container_1th > svg > path')).not.toBe(null)
+      //1 `make_multiple`
+      expect(document.querySelector('#-_pointerize__container_1th > svg > *:last-child')?.tagName).toBe('rect')
       // svg attributes
       expect(document.querySelector('#-_pointerize__container_1th > svg > circle')?.getAttribute('stroke')).toBe('red')
+      //0 ratios
+      //1 `make_multiple`
+      expect(document.querySelector('#-_pointerize__container_1th > svg > *:last-child')?.getAttribute('width')).toBe(String(32/2 - 32/20))
       // animations
       expect(
         document
@@ -252,46 +280,6 @@ describe('Pointerize options', () => {
       )
     })
   })
-
-  // // instance 2
-  // const options_2: IOptions = {
-  //   css_selector__root: '.pointerize_root',
-  //   size: {
-  //     inner: 40,
-  //     outer: 60,
-  //   },
-  //   shapes: [
-  //     {
-  //       name: 'circle',
-  //       animations: [
-  //         {
-  //           preset: 'rotate',
-  //         },
-  //       ],
-  //     },
-  //   ],
-  //   system_preferences: {
-  //     respect_reduced_motion: true,
-  //   },
-  // }
-  // describe('instance 2', () => {
-  //   const pointerize = new Pointerize(options_2)
-  //   pointerize.start()
-
-  //   test('root element', () => {
-  //     expect(pointerize.element__root.classList).toContain('pointerize_root')
-  //   })
-
-  //   test('size', () => {
-  //     expect(pointerize.element__svg_container?.style.getPropertyValue('width')).toBe('60px')
-  //     expect(pointerize.element__svg?.getAttribute('viewBox')).toBe('0 0 40 40')
-  //   })
-
-  //   test('system preferences', () => {
-  //     // there shouldn't be animations (they go inside style element)
-  //     expect(document.querySelector('#-_pointerize__container_2th > svg > style')).toBe(null)
-  //   })
-  // })
 })
 
 export {}
