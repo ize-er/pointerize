@@ -7,5 +7,6 @@
   "entryPointStrategy": "expand",
   "out": "docs",
   "entryPoints": ["lib/pointerize.ts"],
-  "tsconfig": "tsconfig.json"
+  "tsconfig": "tsconfig.json",
+  "theme": "hierarchy"
 }
