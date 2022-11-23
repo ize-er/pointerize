@@ -51,6 +51,7 @@
     "build:types": "tsup ./lib/pointerize.ts --dts-only",
     "build:site": "vite build -c vite.config.site.ts",
     "build:docs": "typedoc",
+    "replace_site_build": "git add -f dist dist__site docs && git stash && git switch develop__gh-pages && rm -r dist dist__site docs && git add --all && git commit -m\"build: remove old\" && git stash pop && git add --all && git commit -m\"build: add new\"",
     "preview": "vite preview",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint .",
