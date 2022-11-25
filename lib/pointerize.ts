@@ -7,10 +7,10 @@ import createShapes from './render/create_shapes'
 
 export default class Pointerize implements IPointerize {
   element__root: HTMLElement
-  options__merged: IOptionsMerged // merge of default options and user's options
-  element__svg: SVGSVGElement | null // svg element
-  element__svg_container: HTMLDivElement | null // svg's container element (div)
-  id: string | undefined // id of the current instance (on element__svg_container)
+  options__merged: IOptionsMerged
+  element__svg: SVGSVGElement | null
+  element__svg_container: HTMLDivElement | null
+  id: string | undefined
   #options__interactions: {
     // info related to `options`' `interactions` property and related elements. stored here because it's used in multiple places
     pointer: IOptionsInteractions | undefined
@@ -27,6 +27,10 @@ export default class Pointerize implements IPointerize {
   }
   #domEvents: IDomEvents[] = []
 
+  /**
+   *
+   * @param options Options based on which the instance is created.
+   */
   constructor(options: IOptions) {
     this.element__svg = null
     this.options__merged = processOptions(options)
@@ -161,7 +165,6 @@ export default class Pointerize implements IPointerize {
                 }
               }
             }
-            console
             const container = this.element__svg_container as HTMLDivElement
             /* 
                This class will be added when pointer is on the element and should be 

@@ -1,50 +1,131 @@
 // TODO?: remove hard-coded values for attributes:
 export interface IPointerize {
+  /**
+   * The root element.
+   */
   element__root: HTMLElement
-  element__svg: SVGSVGElement | null // svg element
-  element__svg_container: HTMLDivElement | null // svg's container element (div)
-  options__merged: IOptionsMerged // merge of default options and user's options
+  /**
+   * The `svg` element.
+   */
+  element__svg: SVGSVGElement | null
+  /**
+   * The `svg`'s container element (`div`).
+   */
+  element__svg_container: HTMLDivElement | null
+  /**
+   * The final merged and updated options used for creating this instance.
+   */
+  options__merged: IOptionsMerged
+  /**
+   * ID of current instance (on container).
+   */
+  id: string | undefined
+  /**
+   * Starts.
+   */
   start(): void
+  /**
+   * Removes elements and event listeners (if there are any ).
+   * If it's used as a custom pointer, shows the default pointer if it's not already visible.
+   */
   stop(): void
+  /**
+   * Makes it invisible.
+   * If it's used as a custom pointer, shows the default pointer if it's not already visible.
+   */
   hide(): void
+  /**
+   * Makes it visible.
+   * If it's used as a custom pointer, removes the default pointer if necessary.
+   */
   show(): void
 }
-export interface IOptionsShapeRatio {
-  //`radius` is used for rectangle and ellipse to find the `width`/`height` for rectangle and 'rx'/'ry' for ellipse, and for polygons to find the radii, ratio of the smaller number to larger one
-  type: 'size' | 'radius'
-  options: {
-    // radius options
-    type?: 'alternate' | 'accumulate'
-    value: number
-  }
-}
-export interface IOptionsShapeGuide {
-  // TODO: Implemenet motion
-  // `position` determines whether this shape should be used as a guiding path for other shapes to be on, only for polygon, circle
-  type: 'position' | 'pattern' | 'motion'
-  options?: {
-    //0 shared options
-    //1 pattern and position
-    shapes?: IOptionsShape[]
-    //0 pattern options
-    preset?: {
-      type: 'circle',
-      data: IElement
+
+// options
+
+export interface IOptions {
+  /**
+   * CSS selector string for the root element to apply the pointer to.
+   * @defaultValue 'body'
+   */
+  css_selector__root?: string
+  /**
+   * {@link IPointerize.element__svg}
+   */
+  element__svg?: {
+    svg_attributes?: {
+      [key: string]: string
     }
-    custom?: IElement
-    area?: 'fill' | 'stroke'
-    ratios?: {
-      tile?: number // ratio of the tile's size to the size of the tiles' container
-      gap?: {
-        // ratio of the gap's size to the size of the tiles' container
-        row: number
-        column: number
-      }
+    css_properties?: {
+      [key: string]: string
     }
   }
+  /**
+   * {@link IPointerize.element__svg_container}
+   */
+  element__svg_container?: {
+    css_properties?: {
+      [key: string]: string
+    }
+  }
+  /**
+   * Interactions that can exist between elements created by Pointerize and anything else on the page.
+   */
+  interactions?: IOptionsInteractions[]
+  size?: {
+    /**
+     * Size of the `svg` element. This is used for setting the `viewBox`
+     * and the `svg`'s `width`/`height` is the same as its container.
+     */
+    inner?: number
+    /**
+     * Size of the `svg`'s container (`div`).
+     */
+    outer?: number
+  }
+  /**
+   * The shapes that will be created.
+   */
+  // TODO?: circle, rectangle, square, triangle, cross, crescent, heart, star, rhombus, pentagon, hexagon, heptagon, octagon, nonagon, random
+  shapes?: IOptionsShape[]
+  /**
+   * Preferences in user's system.
+   */
+  system_preferences?: {
+    /**
+     * If true and if the user has requested that the system minimize the amount of non-essential motion it uses, disables animations.
+     */
+    respect_reduced_motion: boolean
+  }
 }
+
+export interface IOptionsMerged extends Omit<IOptions, 'size' | 'shapes' | 'css_selector__root' | 'css_properties'> {
+  css_selector__root: string
+  css_properties: {
+    [key: string]: string | undefined
+  }
+  size: {
+    inner: number
+    outer: number
+  }
+  shapes?: IOptionsShapeMerged[]
+}
+
 export interface IOptionsShape {
-  type:
+  /**
+   * `.make_multiple` is used to specify the shapes less verbosely. All the normal shape properties are
+   * wrapped in arrays and applied one by one to the shapes.
+   * If an array only has one member, that value is used for all shapes.
+   * If a shape doesn't need a property but other shapes do, the property should be `undefined`.
+   * */
+  make_multiple?: {
+    type: 'shapes'
+    options: {
+      number: number
+      value: TOptionsShapeMakeMulti
+    }
+  }[]
+  type?:
     | 'ellipse'
     | 'rect'
     | 'circle'
@@ -58,9 +139,18 @@ export interface IOptionsShape {
     | 'star'
     | 'image'
     | 'use'
-  // size?: number
-  sides?: number // number of polygon's sides
+  /**
+   * Number of a polygon's sides
+   */
+  sides?: number
+  /**
+   * Ratios are used as a simple way of doing calculations that could have been very complex otherwise.
+   */
   ratios?: IOptionsShapeRatio[]
+  /**
+   * The kinds of guides that this shape can be.
+   * A shape is used as a guide fot other shapes to achieve a particular result.
+   */
   guides?: IOptionsShapeGuide[]
   svg_attributes?: {
     stroke?: string
@@ -94,46 +184,100 @@ export interface IOptionsShape {
     'clip-rule'?: 'nonzero' | 'evenodd' | 'inherit'
     [key: string]: string | undefined
   }
-  animations?: IAnimationsOptions[] // CSS animations
-  effects?: IEffectsOptions[]
+  /**
+   * CSS animations.
+   */
+  animations?: IOptionsShapeAnimation[]
+  /**
+   * Effects that are created by using SVG `filter` and filter primitive elements.
+   */
+  effects?: IOptionsShapeEffect[]
+  /**
+   * Added when processing the options.
+   */
+  size?: number
 }
+
 export interface IOptionsShapeMerged extends Omit<IOptionsShape, 'size' | 'ratio'> {
   size: number
   ratios: {
     type: 'size' | 'radius'
     options: {
-      // `radius` options
       type?: 'alternate' | 'accumulate'
       value: number
     }
   }[]
 }
-export interface IDefaultsOptionsShape extends Omit<IOptionsShape, 'size' | 'ratios' | 'guides'> {
-  // size: number // this one differs from options.size in that it is calculated for svg and can only be a number, nevertheless strings are also allowed for consistency as long as they are in pixel format; e.g. '20px'
-  ratios: {
-    size: {
-      options: {
-        value: number
-      }
-    }
-    radius: {
-      options: {
-        type: 'alternate' | 'accumulate'
-        value: number
-      }
-    }
+
+export interface IOptionsShapeRatio {
+  /**
+   * `radius`: Determines polygons' radii ratio, rectangles `width` and `height` ratio, ellipses' `rx` and `ry` ratio.
+   * `size`: Determines shapes' size.
+   */
+  type: 'size' | 'radius'
+  options: {
+    /**
+     * `alternate` radii are multiplied by `value` alternately.
+     * `accumulate` each radius is the previous radius multipled by `value`.
+     * @remarks
+     * `radius` option
+     */
+    type?: 'alternate' | 'accumulate'
+    /**
+     * Ratio of the smaller number to larger one.
+     */
+    value: number
   }
-  guides: {
-    pattern: {
-      ratios: {
-        tile: number
-        gap: number
+}
+
+export interface IOptionsShapeGuide {
+  /**
+   * `position`: Configures shapes to be positioned evenly on a circle or on a polygon' vertexes.
+   * `pattern`: Configures shapes to be the tiles of a pattern which is on the current shape's fill or stroke.
+   */
+  type: 'position' | 'pattern' // TODO?: Implemenet `motion`
+  options?: {
+    shapes?: IOptionsShape[]
+    /**
+     * A preset that can be used instead of specifying the options.
+     * @remarks
+     * `pattern` option
+     */
+     preset?: {
+       type: 'circle',
+       data: IElement
+     }
+    /**
+     * The area of the shape in which pattern is.
+     * @remarks
+     * `pattern` option
+     */
+    area?: 'fill' | 'stroke'
+    /**
+     * @remarks
+     * `pattern` option
+     */
+    ratios?: {
+      /**
+       * Ratio of the tile's size to the size of the tiles' container.
+       */
+      tile?: number
+      gap?: {
+        /**
+         * Ratio of the gap's size to the size of the tiles' container.
+         */
+        row: number
+        column: number
       }
     }
   }
 }
 
 // animations
+
+export interface IPresetsAnimation {
+  ['rotate']: ICssAnimation
+}
 
 export interface ICssAnimation {
   css_properties: {
@@ -147,6 +291,9 @@ export interface ICssAnimation {
     'animation-timing-function'?: string
     'transform-origin'?: string
   }
+  /**
+   * It is used to create CSS `@keyframes`
+   */
   keyframes: {
     keyframe_selector?: string
     css_properties?: {
@@ -154,9 +301,13 @@ export interface ICssAnimation {
     }
   }[]
 }
-export interface IAnimationsOptions extends Omit<ICssAnimation, 'css_properties' | 'keyframes'> {
+
+export interface IOptionsShapeAnimation extends Omit<ICssAnimation, 'css_properties' | 'keyframes'> {
+  /**
+   * A preset that can be used instead of specifying the options.
+   */
   preset?: IPresetAnimation
-  when?: string | string[] // 'still', 'moving', 'active', 'hover', 'always' // TODO? implement
+  // TODO?: when?: string | string[] ('still', 'moving', 'active', 'hover', 'always')
   css_properties?: {
     'animation-delay'?: string
     'animation-direction'?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse'
@@ -181,82 +332,105 @@ export interface IPresetAnimation {
   data: ICssAnimation
 }
 
-export interface IOptions {
-  css_selector__root?: string // css selector for the root element, this is used when Pointerize is used generally
-  // so if there is nother root in interactions specified, that one might have priority voer this
-  element__svg?: {
-    svg_attributes?: {
-      [key: string]: string
-    }
-    css_properties?: {
-      [key: string]: string
-    }
-  }
-  element__svg_container?: {
-    css_properties?: {
-      [key: string]: string
-    }
-  }
-  interactions?: IOptionsInteractions[]
-  size?: {
-    inner?: number // size of the shapes' container (svg). Note that this is used for setting the `viewBox` and the svg's `width`/`height` is always the same as it's container
-    outer?: number // size of the svg's container (div)
-  }
-  preset?: IOptions // TODO?: implement
-  shapes?: IOptionsShape[] // circle, rectangle, square, triangle, cross, crescent, heart, star, rhombus, pentagon, hexagon, heptagon, octagon, nonagon, random
-  animations?: IAnimationsOptions[] // TODO?: implement
-  effects?: IEffectsOptions[] //TODO?: implement
-  system_preferences?: {
-    // preferences in user's system
-    respect_reduced_motion: boolean // if true, if the user has requested that the system minimize the amount of non-essential motion it uses, disables aniamtions
-  }
-  // layout?: // determines the layout of the elements
-  // color?: string | string[]; // red, #000, random, rgba(), hsla(), random
-}
+// interactions
+
 export interface IOptionsInteractions {
-  type: 'pointer__scale' | 'pointer' // TODO?: implement ratio for pointer__scale (first pointer scale has to be decided)
+  /**
+   * The accepted value will be changed; please refer to `CHANGELOG.md`.
+   * @experimental `pointer__scale` is experimental
+   */
+  type: 'pointer__scale' | 'pointer' // TODO?: implement ratio for pointer__scale
   options?: {
-    // `pointer` options
-    css_selector__root?: string // CSS selector string or HTML Element. the root element to apply the pointer to
-    default_pointer?: boolean // whether to show the default user-agent pointer or not
-    start_criteria?: IStartCriteria | 'none' // string `none` means pointerize starts unconditionally. if there is a need for criteria, user implements it themselves by using class methods
-
-    // `pointer__scale` options
-    elements?: string[] // CSS selector strings
-
-    //...
+    /**
+     * Whether to show the default user-agent pointer or not
+     * @remarks
+     * `pointer` option
+     */
+    default_pointer?: boolean
+    /**
+     * Determines the criteria for the existence of Pointerize on the page.
+     * `none` means pointerize starts unconditionally.
+     * @remarks
+     * `pointer` option
+     */
+    start_criteria?: IStartCriteria | 'none'
+    /**
+     * CSS selector strings.
+     * @remarks
+     * `pointer__scale` option
+     */
+    elements?: string[]
   }
 }
+
 export interface IStartCriteria {
-  criteria?: string // mediaQueryString. default is `(pointer: fine)`
-  frequency?: 'once' | 'always' // default is `once`, `once` means matchMedia runs once, `always` means an event listener is added on it's return value (`MeidaQueryList`)
+  /**
+   * `mediaQueryString`
+   * @defaultValue `(pointer: fine)`
+   */
+  criteria?: string
+  /**
+   * Determines whether the criteria is checked once or more.
+   * `once` means `matchMedia` runs once. `always` means an event listener is added on its return value (`MeidaQueryList`).
+   * @defaultValue `once`
+   */
+  frequency?: 'once' | 'always'
 }
-export interface IOptionsMerged extends Omit<IOptions, 'size' | 'shapes' | 'css_selector__root' | 'css_properties'> {
-  css_selector__root: string
-  css_properties: {
-    [key: string]: string | undefined
-  }
-  size: {
-    inner: number
-    outer: number
-  }
-  shapes?: IOptionsShapeMerged[]
+
+// effects
+
+export default interface IOptionsShapeEffect {
+  /**
+   * A preset that can be used instead of specifying the options.
+   */
+  preset?: IPresetEffect
+  /**
+   * A custom effect.
+   */
+  custom?: IElement
 }
-interface IStringProps {
-  [key: string]: string
+
+export default interface IEffectsOptions {
+  preset?: IPresetEffect
+  custom?: IElement
 }
-export interface IDefaultsSvgEls {
-  rect: IStringProps
-  circle: IStringProps
-  ellipse: IStringProps
-  line: IStringProps
-  polyline: IStringProps
-  polygon: IStringProps
-  path: IStringProps
-  filter: IStringProps
-  pattern: IStringProps
-  svg: IStringProps
+
+export interface IElementPresetEffects extends Omit<IElement, 'element_children'> {
+  element_children: IElement[]
 }
+
+export interface IPresetEffect {
+  type: 'glow',
+  data: IElementPresetEffects
+}
+
+//0 events
+//1 debounced addEventListener using requestAnimationFrame
+export interface IEventHandler {
+  (event: TEvents): void
+}
+
+//1
+/**
+ * All the events that are added by pointerize, it is used for removing them.
+ */
+export interface IDomEvents {
+  /**
+   * Element that has event listener.
+   */
+  element: HTMLElement
+  /**
+   * Type of event.
+   */
+  event: string
+  /**
+   * Event handler.
+   */
+  handler: IEventHandler
+}
+
+//1
+export type TEvents = Event | PointerEvent
 
 // general
 
@@ -268,29 +442,47 @@ export interface IElement {
   element_children?: IElement[]
 }
 
-// effects
-
-export default interface IEffectsOptions {
-  preset?: IPresetEffect
-  custom?: IElement
-}
-export interface IElementPresetEffects extends Omit<IElement, 'element_children'> {
-  element_children: IElement[]
+type TPutPropsInArray<Type> = {
+  [Property in keyof Type]: Type[Property][]
 }
 
-export interface IPresetEffect {
-  type: 'glow',
-  data: IElementPresetEffects
+export type TOptionsShapeMakeMulti = TPutPropsInArray<IOptionsShape>
+
+// defaults
+
+export interface IDefaultsOptionsShape extends Omit<IOptionsShape, 'size' | 'ratios' | 'guides'> {
+  ratios: {
+    size: {
+      options: {
+        value: number
+      }
+    }
+    radius: {
+      options: {
+        type: 'alternate' | 'accumulate'
+        value: number
+      }
+    }
+  }
+  guides: {
+    pattern: {
+      ratios: {
+        tile: number
+        gap: number
+      }
+    }
+  }
 }
 
-// debounced addEventListener using requestAnimationFrame
-export interface IEventHandler {
-  (event: TEvents): void
+export interface IDefaultsSvgEls {
+  rect: Record<string, string>
+  circle: Record<string, string>
+  ellipse: Record<string, string>
+  line: Record<string, string>
+  polyline: Record<string, string>
+  polygon: Record<string, string>
+  path: Record<string, string>
+  filter: Record<string, string>
+  pattern: Record<string, string>
+  svg: Record<string, string>
 }
-export interface IDomEvents {
-  // all the events that are added by pointerize, it is used for removing them
-  element: HTMLElement // element that has event listener
-  event: string // type of event
-  handler: IEventHandler // event handler
-}
-export type TEvents = Event | PointerEvent 

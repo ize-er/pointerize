@@ -1,7 +1,7 @@
 {
   "name": "@ize-er/pointerize",
   "private": false,
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Pointerize is suited to almost any task that involves shapes (SVG)",
   "license": "MIT",
   "type": "module",
@@ -59,10 +59,12 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:site && tsc && vite build && npm run build:presets && npm run build:types",
+    "build": "npm run build:docs && npm run build:site && tsc && vite build && npm run build:presets && npm run build:types",
     "build:types": "tsup ./lib/pointerize.ts --dts-only",
-    "build:site": "vite build -c site.config.ts",
+    "build:site": "vite build -c vite.config.site.ts",
     "build:presets": "vite build -c vite.config.presets.ts",
+    "build:docs": "typedoc",
+    "replace_site_build": "git add -f dist dist__site docs && git stash && git switch develop__gh-pages && rm -r dist dist__site docs && git add --all && git commit -m\"build: remove old\" && git stash pop && git add --all && git commit -m\"build: add new\"",
     "preview": "vite preview",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint .",
@@ -82,6 +84,10 @@
     "prettier": "2.7.1",
     "ts-jest": "^28.0.7",
     "tsup": "^6.2.3",
+    "typedoc": "^0.23.21",
+    "typedoc-plugin-missing-exports": "^1.0.0",
+    "typedoc-plugin-rename-defaults": "^0.6.4",
+    "typedoc-theme-hierarchy": "^3.0.0",
     "typescript": "^4.5.4",
     "vite": "^3.1.8"
   }

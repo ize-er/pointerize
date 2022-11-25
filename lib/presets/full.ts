@@ -1,7 +1,8 @@
-import { builder_shapes } from '../options_builders/builder_shapes'
-import type { IOptions, IOptionsShape } from '../types'
-import tokens from '../brand/tokens'
+
+import type { IOptions, IOptionsShape, TOptionsShapeMakeMulti } from '../types'
+import tokens from '../../brand/tokens'
 import { rotate, glow } from './misc'
+
 
 /**
  *
@@ -140,18 +141,6 @@ export const presetBasic3 = () => {
 }
 
 //0 advanced examples
-
-/* 
-   About `builder_shapes`:
-   to make it easier and faster to create the options we will use loops to create arrays and pass
-   them to the `builder_shapes` function, all that this function does is loop through those arrays 
-   and create the options properties for multiple shapes that would have taken us a long time to write.
-   the options passed to that function are essentially the same as normal options with values wrapped
-   in arrays. you can read more details in it's file.
-   you may just as easily come up with your own solution to generate the options, `builder_shapes` is
-   intended to be a general solution and is experimental.
-*/
-
 //1 ratios and guides
 //2 this first one has the explanations for the parts that are going to be repeated in later presets
 
@@ -163,50 +152,60 @@ export const presetAdvanced1 = () => {
   // the number of shapes that are going to be positioned on the position guide
   const shapesPosNum = 60
 
-  //0 make the shapes that are positioned based on the positoin guide
-  //1 make some of the properties for the next object
-  const fill: string[] = []
-  const ratiosSize: number[] = []
+  //0 make the shapes that are going to be positioned on the position guide
+  //1 make some of the large properties for `make_multiple`
+  const svgAttributes: TOptionsShapeMakeMulti['svg_attributes'] = []
+  const ratios: TOptionsShapeMakeMulti['ratios'] = []
   for (let i = 0; i < shapesPosNum; i++) {
     /* 
-       Using a loop and the number of shapes to make the options
-       based on how we want the final shapes. It's just easier this way than
-       writing them in arrays one by one
+       Using a loop with the number of shapes to make some properties.
+       It's just easier this way than writing them in arrays one by one.
     */
-    fill.push(`hsl(${(360 / shapesPosNum) * i}, 100%, 40%)`)
-    ratiosSize.push((0.2 / shapesPosNum) * (i + 1))
-  }
-  //1 options to pass to `builder_shapes` to make the shapes
-  const shapesPosOpts = {
-    type: ['polygon'],
-    sides: [4],
-    svg_attributes: {
-      'stroke-width': ['0'],
-      fill: fill,
-    },
-    ratios: [
-      [
-        {
-          type: ['size'],
-          options: {
-            value: ratiosSize,
-          },
+
+    svgAttributes.push({
+      'stroke-width': '0',
+      fill: `hsl(${(360 / shapesPosNum) * i}, 100%, 40%)`,
+    })
+
+    ratios.push([
+      {
+        type: 'size',
+        options: {
+          value: (0.2 / shapesPosNum) * (i + 1),
         },
-        // this is turning a polygon with 4 sides (square) into a rhombus
+      },
+      // this is turning a polygon with 4 sides (square) into a rhombus
+      {
+        type: 'radius',
+        options: {
+          type: 'alternate',
+          value: 0.4,
+        },
+      },
+    ])
+  }
+
+  //1 the final shapes that will be passed to position guide
+  const shapesPos: IOptionsShape[] = [
+    {
+      make_multiple: [
         {
-          type: ['radius'],
+          type: 'shapes',
           options: {
-            type: ['alternate'],
-            value: [0.4],
+            number: shapesPosNum,
+            value: {
+              type: ['polygon'],
+              sides: [4],
+              svg_attributes: svgAttributes,
+              ratios: ratios,
+            },
           },
         },
       ],
-    ],
-  }
-  //1 the final array of shapes that will be passed to position guide
-  const shapesPos = builder_shapes(shapesPosNum, shapesPosOpts)
+    },
+  ]
 
-  // shapes property
+  // the main shapes property
   const shapes: IOptionsShape[] = [
     {
       type: 'polygon',
@@ -258,41 +257,50 @@ export const presetAdvanced2 = () => {
 
   const shapesPosNum = 20
 
-  const fill: string[] = []
-  const ratiosSize: number[] = []
+  const svgAttributes: TOptionsShapeMakeMulti['svg_attributes'] = []
+  const ratios: TOptionsShapeMakeMulti['ratios'] = []
   for (let i = 0; i < shapesPosNum; i++) {
-    fill.push(`hsl(${(360 / shapesPosNum) * i}, 100%, 40%)`)
-    ratiosSize.push(i % 2 === 0 ? 0.2 : 0.3)
+    svgAttributes.push({
+      'stroke-width': '0',
+      fill: `hsl(${(360 / shapesPosNum) * i}, 100%, 40%)`,
+    })
+
+    ratios.push([
+      {
+        type: 'size',
+        options: {
+          value: i % 2 === 0 ? 0.2 : 0.3,
+        },
+      },
+      // this is turning a polygon with 8 sides into a 4 pointed star
+      {
+        type: 'radius',
+        options: {
+          type: 'alternate',
+          value: 0.4,
+        },
+      },
+    ])
   }
 
-  const shapesPosOpts = {
-    type: ['polygon'],
-    sides: [8],
-    svg_attributes: {
-      'stroke-width': ['0'],
-      fill: fill,
-    },
-    ratios: [
-      [
+  const shapesPos: IOptionsShape[] = [
+    {
+      make_multiple: [
         {
-          type: ['size'],
+          type: 'shapes',
           options: {
-            value: ratiosSize,
-          },
-        },
-        // this is turning a polygon with 8 sides into a 4 pointed star
-        {
-          type: ['radius'],
-          options: {
-            type: ['alternate'],
-            value: [0.4],
+            number: shapesPosNum,
+            value: {
+              type: ['polygon'],
+              sides: [8],
+              svg_attributes: svgAttributes,
+              ratios: ratios,
+            },
           },
         },
       ],
-    ],
-  }
-
-  const shapesPos = builder_shapes(shapesPosNum, shapesPosOpts)
+    },
+  ]
 
   const shapes: IOptionsShape[] = [
     {
@@ -327,7 +335,6 @@ export const presetAdvanced2 = () => {
     },
   ]
 
-  // options
   const options: IOptions = {
     element__svg_container: {
       css_properties: {
@@ -348,25 +355,38 @@ export const presetAdvanced3 = () => {
 
   const shapesNum = 10
 
-  const shapesPos: IOptionsShape[] = []
-  for (let i = 0; i < shapesNum; i++) {
-    shapesPos.push({
-      type: 'polygon',
-      sides: 4,
-      svg_attributes: {
-        'stroke-width': '0.2',
-        stroke: color_gray_2,
-      },
-      ratios: [
+  const shapesPos: IOptionsShape[] = [
+    {
+      make_multiple: [
         {
-          type: 'size',
+          type: 'shapes',
           options: {
-            value: 0.5,
+            number: shapesNum,
+            value: {
+              type: ['polygon'],
+              sides: [4],
+              svg_attributes: [
+                {
+                  'stroke-width': '0.2',
+                  stroke: color_gray_2,
+                },
+              ],
+              ratios: [
+                [
+                  {
+                    type: 'size',
+                    options: {
+                      value: 0.5,
+                    },
+                  },
+                ],
+              ],
+            },
           },
         },
       ],
-    })
-  }
+    },
+  ]
 
   const shapes: IOptionsShape[] = [
     {
@@ -400,7 +420,6 @@ export const presetAdvanced3 = () => {
     },
   ]
 
-  // options
   const options: IOptions = {
     element__svg_container: {
       css_properties: {
@@ -421,42 +440,54 @@ export const presetAdvanced4 = () => {
    * An advanced example demonstrating the use of pattern
    */
 
-  // the number of shapes that are going to be positioned on the position guide (all used as a pattern tile)
+  // the number of shapes that are going to be positioned on the position guide
   const shapesPatternPosNum = 4
 
-  const fill: string[] = []
+  const svgAttributes: TOptionsShapeMakeMulti['svg_attributes'] = []
+  const ratios: TOptionsShapeMakeMulti['ratios'] = []
   for (let i = 0; i < shapesPatternPosNum; i++) {
-    fill.push(`hsl(${(60 / shapesPatternPosNum) * i}, 100%, 40%)`)
+    svgAttributes.push({
+      'stroke-width': '0',
+      fill: `hsl(${(60 / shapesPatternPosNum) * i}, 100%, 40%)`,
+    })
+
+    ratios.push([
+      {
+        type: 'size',
+        options: {
+          value: 0.6,
+        },
+      },
+      // this is turning a polygon with 14 sides into a 7 pointed star (or leaf)
+      {
+        type: 'radius',
+        options: {
+          type: 'alternate',
+          value: 0.4,
+        },
+      },
+    ])
   }
 
-  const shapesPatternPosOpts = {
-    type: ['polygon'],
-    sides: [14],
-    svg_attributes: {
-      'stroke-width': ['0'],
-      fill: fill,
-    },
-    ratios: [
-      [
+  // shapes property for the position guide
+  const shapesPatternPos: IOptionsShape[] = [
+    {
+      make_multiple: [
         {
-          type: ['size'],
+          type: 'shapes',
           options: {
-            value: [0.6],
-          },
-        },
-        // this is turning a polygon with 14 sides into a 7 pointed star (or leaf)
-        {
-          type: ['radius'],
-          options: {
-            type: ['alternate'],
-            value: [0.4],
+            number: shapesPatternPosNum,
+            value: {
+              type: ['polygon'],
+              sides: [14],
+              svg_attributes: svgAttributes,
+              ratios: ratios,
+            },
           },
         },
       ],
-    ],
-  }
-
-  const shapesPatternPos = builder_shapes(shapesPatternPosNum, shapesPatternPosOpts)
+    },
+  ]
 
   // shapes property for the pattern guide
   const shapesPattern: IOptionsShape[] = [
@@ -477,7 +508,6 @@ export const presetAdvanced4 = () => {
     },
   ]
 
-  // shapes
   const shapes: IOptionsShape[] = [
     {
       type: 'triangle',
@@ -492,7 +522,7 @@ export const presetAdvanced4 = () => {
             shapes: shapesPattern,
             ratios: {
               /* 
-                  Removing the gaps is what makes the shapes on the four courners of a tile overlap and
+                  Removing the gaps is what makes the shapes on the four corners of a tile overlap and
                   create the leaves with two colors, try commenting this part to see the actual tiles.
               */
               gap: {
@@ -506,7 +536,6 @@ export const presetAdvanced4 = () => {
     },
   ]
 
-  // options
   const options: IOptions = {
     element__svg_container: {
       css_properties: {
@@ -527,46 +556,98 @@ export const presetAdvanced5 = () => {
    * An advanced example demonstrating the use of animations and filters
    */
 
-  const shapesNum = 3
-
-  const shapesOpts = {
-    type: ['square'],
-    sides: [5],
-    svg_attributes: {
-      'stroke-width': ['0', '0.2', '1'],
-      stroke: ['hsl(160, 50%, 40%)'],
-      fill: ['hsl(0, 100%, 40%)', 'transparent', 'transparent'],
-    },
-    ratios: [
-      [
+  const shapes: IOptionsShape[] = [
+    {
+      make_multiple: [
         {
-          type: ['size'],
+          type: 'shapes',
           options: {
-            value: ['0.2', '0.7', '0.6'],
+            number: 3,
+            value: {
+              type: ['circle', 'square', 'square'],
+              sides: [undefined, 5, 5],
+              svg_attributes: [
+                {
+                  'stroke-width': '0',
+                  stroke: 'hsl(160, 50%, 40%)',
+                  fill: 'hsl(0, 100%, 40%)',
+                },
+                {
+                  'stroke-width': '0.2',
+                  stroke: 'hsl(160, 50%, 40%)',
+                  fill: 'transparent',
+                },
+                {
+                  'stroke-width': '1',
+                  stroke: 'hsl(160, 50%, 40%)',
+                  fill: 'transparent',
+                },
+              ],
+              ratios: [
+                [
+                  {
+                    type: 'size',
+                    options: {
+                      value: 0.2,
+                    },
+                  },
+                ],
+                [
+                  {
+                    type: 'size',
+                    options: {
+                      value: 0.7,
+                    },
+                  },
+                ],
+                [
+                  {
+                    type: 'size',
+                    options: {
+                      value: 0.6,
+                    },
+                  },
+                ],
+              ],
+              animations: [
+                undefined,
+                [
+                  {
+                    preset: rotate(),
+                    // you can further customize animations
+                    css_properties: {
+                      'animation-direction': 'normal',
+                      'animation-duration': '40s',
+                    },
+                  },
+                ],
+                [
+                  {
+                    preset: rotate(),
+                    // you can further customize animations
+                    css_properties: {
+                      'animation-direction': 'alternate-reverse',
+                      'animation-duration': '40s',
+                    },
+                  },
+                ],
+              ],
+              effects: [
+                [
+                  {
+                    preset: glow(),
+                  },
+                ],
+                undefined,
+                undefined,
+              ],
+            },
           },
         },
       ],
-    ],
-    animations: [
-      [
-        {
-          preset: [rotate()],
-          // you can further customize animations
-          css_properties: {
-            'animation-direction': ['alternate', 'alternate-reverse'],
-            'animation-duration': ['40s'],
-          },
-        },
-      ],
-    ],
-  }
+    },
+  ]
 
-  const shapes: IOptionsShape[] = builder_shapes(shapesNum, shapesOpts)
-  shapes[0].type = 'circle'
-  shapes[0].effects = [{ preset: glow() }]
-  shapes[0].animations = undefined
-
-  // options
   const options: IOptions = {
     element__svg_container: {
       css_properties: {

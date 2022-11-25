@@ -18,7 +18,7 @@ export const addListenerDebounce = (
   }
 
   const eventHandler = (e: TEvents) => eventHandlerInner(e, lastCallback)
-  element.addEventListener(eventName, (eventHandler as EventListener))
+  element.addEventListener(eventName, eventHandler as EventListener)
   return eventHandler
 }
 

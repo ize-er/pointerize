@@ -11,6 +11,7 @@ node_modules
 dist
 dist__site
 dist-ssr
+docs
 *.local
 
 # Editor directories and files

@@ -31,7 +31,7 @@ const createShape = (
     elId = `-_${elContainerNth[0]}__shape_${nth}th_${shape.type}`
   }
 
-  const el = document.createElementNS('http://www.w3.org/2000/svg', shape.type)
+  const el = document.createElementNS('http://www.w3.org/2000/svg', shape.type as string)
   el.id = elId
   // attributes
   if (attrs !== undefined) {
@@ -72,19 +72,6 @@ const createShape = (
             const elInfoUpdated = guideOptions.preset.data
 
             // give `id` attribute to the root pattern element
-            if (elInfoUpdated.svg_attributes !== undefined) {
-              elInfoUpdated.svg_attributes.id = attrId
-            } else {
-              elInfoUpdated.svg_attributes = { id: attrId }
-            }
-
-            elPattern = createSvgElementsDeep(elInfoUpdated) as SVGPatternElement
-          } else if (guideOptions.custom !== undefined) {
-            // custom pattern
-            attrId = `-_${elContainerNth[0]}__pattern_custom_${nth}th`
-
-            // give `id` attribute to the root pattern element
-            const elInfoUpdated = guideOptions.custom
             if (elInfoUpdated.svg_attributes !== undefined) {
               elInfoUpdated.svg_attributes.id = attrId
             } else {

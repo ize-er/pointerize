@@ -12,11 +12,18 @@ export default defineConfig({
     },
     rollupOptions: {
       input: {
-        tokens: resolve(__dirname, 'lib/brand/tokens.ts'),
+        tokens: resolve(__dirname, 'brand/tokens.ts'),
         presets: resolve(__dirname, 'lib/presets/full.ts'),
       },
       output: {
         dir: 'dist__site',
+        banner: `/**
+  * @license Pointerize
+  * Copyright (c) 2022-present Abolfazl Faturechi
+  * 
+  * This source code is licensed under the MIT license found in the
+  * LICENSE file at https://github.com/ize-er/pointerize.
+  */`,
       },
     },
   },

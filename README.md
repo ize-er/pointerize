@@ -1,6 +1,6 @@
 <div id="top"></div>
 
-<div style="text-align:center;">
+<div style="text-align:center" align="center">
 
   <h1>Pointerize</h1>
 
@@ -21,9 +21,8 @@
 - [Handy Tips](#handy-tips)
   - [Potential Conflicts](#potential-conflicts)
   - [Simplify Options Creation](#simplify-options-creation)
-- [Known Issues](#known-issues)
 - [Naming and Coding Style](#naming-and-coding-style)
-- [There Is More](#there-is-more)
+- [Tasks](#tasks)
 - [Development](#development)
   - [Start a Dev Server](#start-a-dev-server)
   - [Run Unit Tests](#run-unit-tests)
@@ -116,24 +115,20 @@ And then
 const options = { ... }
 const pointerize = new Pointerize(options)
 
-pointerize.start() // starts
+pointerize.start()
 
 
 // more methods that you can use
-pointerize.hide() /* makes it invisible (if it's used as a custom pointer,
-                     show the default pointer if it's not already visible) */
-pointerize.show() /* makes it visible (if it's used as a custom pointer,
-                     removes the default pointer if necessary) */
-pointerize.stop() /* removes elements and event listeners (if there are any )
-                     (if it's used as a custom pointer, show the default pointer
-                     if it's not already visible) */
+pointerize.hide()
+pointerize.show()
+pointerize.stop()
 
 // properties you have access to on the instance
-console.log('ID of current instance (on container)', pointerize.id)
-console.log('The element chosen as root', pointerize.element__root)
-console.log('The SVG element', pointerize.element__svg)
-console.log('The SVG container element (div)', pointerize.element__svg_container)
-console.log('The final merged and updated options used for creating this instance', pointerize.options__merged)
+console.log(pointerize.id)
+console.log(pointerize.element__root)
+console.log(pointerize.element__svg)
+console.log(pointerize.element__svg_container)
+console.log(pointerize.options__merged)
 
 // Also note that you can create as many instances as you'd like
 ```
@@ -142,8 +137,7 @@ console.log('The final merged and updated options used for creating this instanc
 
 ## Let Your Imagination Loose
 
-Discover what you can do with Pointerize by visiting the [website](https://ize-er.github.io/pointerize/) and
-tinkering around with the presets in `presets/full.ts`. The possibilities are _limitless_
+What can be created by Pointerize? The possibilities are _limitless_. Visit the [website](https://ize-er.github.io/pointerize/) to create something, see the presets and read the API docs. presets' code can be found in `presets` folder.
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
@@ -155,16 +149,6 @@ tinkering around with the presets in `presets/full.ts`. The possibilities are _l
   There will be improvements in this regard.
 - Only use string values for properties of `svg_attributes` and `css_properties`.
 - For custom images use shape `type` of `image` and set `href` attribute.
-- It's best not to rely on features that are not documented yet.
-- Similar structure is used for Array items in: `ratios`, `guides`, `interactions` and it's like:
-  ```js
-  {
-    type: ...,
-    options: {
-      ...
-    }
-  }
-  ```
 
 ### Potential Conflicts
 
@@ -187,12 +171,6 @@ cumbersome to type out you can simplify the process by using Javascript. See the
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
-## Known Issues
-
-None
-
-<p style="text-align:right;"><a href="#top">back to top</a></p>
-
 ## Naming and Coding Style
 
 I am using the principles of a naming/coding methodology/convention that I am working on and that I may publish in the future.
@@ -212,9 +190,12 @@ It is helpful to know:
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
-## There Is More
+## Tasks
 
-There's more to Poinerize than meets the eye. I will publish the full API docs in due time.
+- [x] Add functionality to create multiple shapes (commit 4f669a23d09)
+- [x] Add API docs (https://github.com/ize-er/pointerize/pull/2)
+- [ ] Separate presets from the core lib and turn some shape types into presets ([branch](https://github.com/ize-er/pointerize/tree/separate_presets))
+- [ ] Create a plugin system and use it for animations, effects, interactions
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 

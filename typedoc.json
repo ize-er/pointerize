@@ -1,0 +1,12 @@
+{
+  "navigationLinks": {
+    "Home": "https://ize-er.github.io/pointerize/"
+  },
+  "includeVersion": true,
+  "exclude": ["./node_modules/**/*"],
+  "entryPointStrategy": "expand",
+  "out": "docs",
+  "entryPoints": ["lib/pointerize.ts"],
+  "tsconfig": "tsconfig.json",
+  "theme": "hierarchy"
+}
