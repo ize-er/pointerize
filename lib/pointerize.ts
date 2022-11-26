@@ -10,7 +10,7 @@ export default class Pointerize implements IPointerize {
   options__merged: IOptionsMerged
   element__svg: SVGSVGElement | null
   element__svg_container: HTMLDivElement | null
-  id: string | undefined
+  id: string
   #options__interactions: {
     // info related to `options`' `interactions` property and related elements. stored here because it's used in multiple places
     pointer: IOptionsInteractions | undefined
@@ -33,7 +33,27 @@ export default class Pointerize implements IPointerize {
    */
   constructor(options: IOptions) {
     this.element__svg = null
-    this.options__merged = processOptions(options)
+    // The ID specific to this instance
+    let nth
+    const elsPointerize = Array.from(document.querySelectorAll('[id*=-_pointerize__container]'))
+    if (elsPointerize.length === 0) {
+      // if there are no other instances, this one becomes 0
+      nth = 0
+    } else {
+      // find the last element's `nth` and this one becomes `n+1`
+      let nthLargest = -1
+      for (const el of elsPointerize) {
+        const id = +(el.getAttribute('id')?.match(/(?<number>\d+)th$/)?.groups?.number as string)
+        if (id > nthLargest) {
+          nthLargest = id
+        }
+      }
+      nth = nthLargest + 1
+    }
+    const attrId = `-_pointerize__container_${nth}th`
+    this.id = attrId
+
+    this.options__merged = processOptions(nth, options)
     // container
     this.element__svg_container = null
 
@@ -62,27 +82,7 @@ export default class Pointerize implements IPointerize {
     //3 container
     const container = document.createElement('div')
     this.element__svg_container = container
-
-    //4 add the id specific to this instance
-    let nth
-    const elsPointerize = Array.from(document.querySelectorAll('[id*=-_pointerize__container]'))
-    if (elsPointerize.length === 0) {
-      // if there are no other instances, this one becomes 0
-      nth = '0'
-    } else {
-      // find the last element's `nth` and this one becomes `n+1`
-      let nthLargest = -1
-      for (const el of elsPointerize) {
-        const id = +(el.getAttribute('id')?.match(/(?<number>\d+)th$/)?.groups?.number as string)
-        if (id > nthLargest) {
-          nthLargest = id
-        }
-      }
-      nth = nthLargest + 1
-    }
-    const attrId = `-_pointerize__container_${nth}th`
-    container.id = attrId
-    this.id = attrId
+    container.id = this.id
 
     //4 add the general glass
     container.classList.add('-_pointerize__container')
@@ -122,7 +122,8 @@ export default class Pointerize implements IPointerize {
 
     // shapes
     if (Array.isArray(this.options__merged.shapes)) {
-      createShapes(this.options__merged.shapes, svg, this.options__merged.size.inner, svg)
+      const instanceNth = Number((this.id.match(/(?<number>\d)th/)?.groups?.number as string))
+      createShapes(instanceNth, this.options__merged.shapes, svg, this.options__merged.size.inner, svg)
     }
 
     // mount

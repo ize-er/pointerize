@@ -113,18 +113,16 @@ export interface IOptionsMerged extends Omit<IOptions, 'size' | 'shapes' | 'css_
 
 export interface IOptionsShape {
   /**
-   * `.make_multiple` is used to specify the shapes less verbosely. All the normal shape properties are
-   * wrapped in arrays and applied one by one to the shapes.
-   * If an array only has one member, that value is used for all shapes.
-   * If a shape doesn't need a property but other shapes do, the property should be `undefined`.
-   * */
-  make_multiple?: {
-    type: 'shapes'
-    options: {
-      number: number
-      value: TOptionsShapeMakeMulti
-    }
-  }[]
+   * It is used to minimize boilerplate for multiple shapes and to improve performance.
+   * 
+   * Elements are grouped inside a `g` element.
+   * When animations, effects or svg_atttributes have member, they are applied
+   * only to the `g` element.
+   */
+  make_multiple?: IMakeMultiple[]
+  /**
+   * The shape's type
+   */
   type?:
     | 'ellipse'
     | 'rect'
@@ -139,6 +137,7 @@ export interface IOptionsShape {
     | 'star'
     | 'image'
     | 'use'
+    | 'g'
   /**
    * Number of a polygon's sides
    */
@@ -196,6 +195,11 @@ export interface IOptionsShape {
    * Added when processing the options.
    */
   size?: number
+  /**
+   * Used when this element has children (e.g. `g` element)
+   */
+  shapes?: IOptionsShapeMerged[]
+  // [key: string]: IOptionsShape[keyof IOptionsShape]
 }
 
 export interface IOptionsShapeMerged extends Omit<IOptionsShape, 'size' | 'ratio'> {
@@ -207,8 +211,24 @@ export interface IOptionsShapeMerged extends Omit<IOptionsShape, 'size' | 'ratio
       value: number
     }
   }[]
+  // [key: string]: IOptionsShapeMerged[keyof IOptionsShapeMerged]
 }
 
+interface IMakeMultiple {
+  type: 'shapes'
+  options: {
+    /**
+     * The number of shapes to be made.
+     */
+    number: number
+    /**
+     * All the normal shape properties are wrapped in arrays and applied one by one to the shapes.
+     * If an array only has one member, that value is used for all shapes (it is applied to the `g` element containing all the shapes).
+     * If a shape doesn't need a property but other shapes do, the property should be `undefined`.
+     */
+    value: TOptionsShapeMakeMulti
+  }
+}
 export interface IOptionsShapeRatio {
   /**
    * `radius`: Determines polygons' radii ratio, rectangles `width` and `height` ratio, ellipses' `rx` and `ry` ratio.
@@ -328,7 +348,7 @@ export interface IOptionsShapeAnimation extends Omit<ICssAnimation, 'css_propert
 }
 
 export interface IPresetAnimation {
-  type: 'rotate',
+  type: 'rotate'
   data: ICssAnimation
 }
 
@@ -379,7 +399,7 @@ export interface IStartCriteria {
 
 // effects
 
-export default interface IOptionsShapeEffect {
+export interface IOptionsShapeEffect {
   /**
    * A preset that can be used instead of specifying the options.
    */
@@ -390,7 +410,7 @@ export default interface IOptionsShapeEffect {
   custom?: IElement
 }
 
-export default interface IEffectsOptions {
+export interface IEffectsOptions {
   preset?: IPresetEffect
   custom?: IElement
 }
@@ -442,15 +462,10 @@ export interface IElement {
   element_children?: IElement[]
 }
 
-type TPutPropsInArray<Type> = {
-  [Property in keyof Type]: Type[Property][]
-}
-
 export type TOptionsShapeMakeMulti = TPutPropsInArray<IOptionsShape>
 
 // defaults
-
-export interface IDefaultsOptionsShape extends Omit<IOptionsShape, 'size' | 'ratios' | 'guides'> {
+export interface IDefaultsOptionsShape extends Omit<RemoveIndexSig<IOptionsShape>, 'size' | 'ratios' | 'guides' | 'make_multiple'> {
   ratios: {
     size: {
       options: {
@@ -485,4 +500,14 @@ export interface IDefaultsSvgEls {
   filter: Record<string, string>
   pattern: Record<string, string>
   svg: Record<string, string>
+}
+
+// utility
+
+type RemoveIndexSig<T> = {
+  [ K in keyof T as string extends K ? never : K ] : T[K]
+}
+
+type TPutPropsInArray<T> = {
+  [Property in keyof T]: T[Property][]
 }

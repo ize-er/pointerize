@@ -4,35 +4,45 @@ import applyAnimations from './apply_animations'
 import { createSvgElementsDeep } from '../../../utils'
 import { UnspecifiedProperty } from '../../../errors'
 import createShapes from '..'
-import processShapes from '../../../process_options/process_shapes'
+import processShapes from '../../../process_options/process_shapes/process_shapes'
 import makeDefaults from '../../../make_defaults'
 import { makeRadialPoints } from '../../utils'
 
 const createShape = (
+  instanceNth: number,
   shape: IOptionsShapeMerged,
   nth: number,
-  elementRoot: SVGSVGElement | SVGPatternElement,
+  elementRoot: SVGSVGElement | SVGPatternElement | SVGGElement,
   sizeInner: number,
   elementSvg: SVGSVGElement,
   guidesInfo?: {
     // informtion that is needed when this shape is used for a guide shape
     parentId?: string
+    position?: [number, number] | [number, number][]
+  },
+  groupInfo?: {
+    // informtion that is needed when this shape is in a group
+    parentNth?: number
     position?: [number, number]
   }
 ): void => {
+
   const attrs = shape.svg_attributes
   const effects = shape.effects
-  const elContainerNth = elementSvg.parentElement?.id.match(/\dth/) as RegExpMatchArray
 
   let elId
   if (guidesInfo?.parentId !== undefined) {
-    elId = `${guidesInfo.parentId}__shape_${nth}th_${shape.type}`
+    elId = `-_${instanceNth}th-_guide_${guidesInfo.parentId}__shape_${nth}th_${shape.type}`
+  }
+  else if (groupInfo?.parentNth !== undefined) {
+    elId = `-_${instanceNth}th-_group_${groupInfo.parentNth}__shape_${nth}th_${shape.type}`
   } else {
-    elId = `-_${elContainerNth[0]}__shape_${nth}th_${shape.type}`
+    elId = `-_${instanceNth}th__shape_${nth}th_${shape.type}`
   }
 
   const el = document.createElementNS('http://www.w3.org/2000/svg', shape.type as string)
   el.id = elId
+  
   // attributes
   if (attrs !== undefined) {
     for (const attr of Object.entries(attrs)) {
@@ -41,14 +51,17 @@ const createShape = (
       }
     }
   }
+  // append children elements if they exist
+  if (groupInfo !== undefined && shape.shapes !== undefined) {
+    createShapes(instanceNth, shape.shapes, el as SVGGElement, sizeInner, elementSvg, {positionPoints: guidesInfo?.position as [number, number][]}, {svgAttributes: shape.svg_attributes, parentNth: nth})
+  }
   // animations
-  applyAnimations(el, shape, elementSvg, guidesInfo?.position && { position: guidesInfo?.position })
+  applyAnimations(el, shape, elementSvg, guidesInfo?.position && { position: guidesInfo?.position as [number, number]})
   // effects
   if (effects !== undefined) {
-    const { filterEls, filterIds } = applyEffects(effects, nth, elContainerNth[0])
+    const { filterEls, filterIds } = applyEffects(effects)
     for (const filterEl of filterEls) {
-      // append each filter element to svg
-      elementRoot.insertAdjacentElement('afterbegin', filterEl)
+      elementSvg.insertAdjacentElement('afterbegin', filterEl)
     }
     const filter = filterIds.map(id => `url(#${id})`).join(' ') // create the final filter attribute string by combining all ids
     el.setAttribute('filter', filter)
@@ -68,10 +81,10 @@ const createShape = (
           if (guideOptions.preset !== undefined) {
 
             // presets
-            attrId = `-_${elContainerNth[0]}__pattern_${guideOptions.preset.type}_${nth}th`
+            attrId = `-_${instanceNth}th__${nth}th__pattern_${guideOptions.preset.type}`
             const elInfoUpdated = guideOptions.preset.data
 
-            // give `id` attribute to the root pattern element
+            // set `id` attribute on the root `pattern` element
             if (elInfoUpdated.svg_attributes !== undefined) {
               elInfoUpdated.svg_attributes.id = attrId
             } else {
@@ -95,7 +108,7 @@ const createShape = (
             elPattern = document.createElementNS('http://www.w3.org/2000/svg', 'pattern')
 
             // set `id` attribute on the root `pattern` element
-            attrId = `-_${elContainerNth[0]}__pattern_custom_${nth}th`
+            attrId = `-_${instanceNth}th__${nth}th__pattern_custom`
             const attrsPattern = defaultsSvgElsAttrs.pattern
             attrsPattern.id = attrId
             for (const attr of Object.entries(attrsPattern)) {
@@ -121,7 +134,7 @@ const createShape = (
             //0 pattern shapes
             //1 processShapes
             const { defaultsOpts } = makeDefaults()
-            const patternShapesUpdate = processShapes(defaultsOpts.size.inner, guideOptions.shapes, ratioTiles)
+            const patternShapesUpdate = processShapes(instanceNth, defaultsOpts.size.inner, guideOptions.shapes, ratioTiles)
 
             /*1 
               When there's stroke on pattern guide element:
@@ -138,8 +151,8 @@ const createShape = (
 
             //1 create pattern shapes
             // this ID is passed to shapes to differentiate them from normal shapes
-            const parentIdPattern = `-_${elContainerNth[0]}__shape_${nth}th__pat`
-            createShapes(patternShapesUpdate, elPattern, sizeInner, elementSvg, {
+            const parentIdPattern = `-_${instanceNth}th__${nth}th__shape__pat`
+            createShapes(instanceNth, patternShapesUpdate, elPattern, sizeInner, elementSvg, {
               sizeInnerCustom: sizeInnerWithGap,
               parentId: parentIdPattern,
             })
@@ -187,12 +200,12 @@ const createShape = (
             }
 
             // processShapes
-            const shapes = processShapes(sizeInner, guideOptions.shapes)
+            const shapes = processShapes(instanceNth, sizeInner, guideOptions.shapes)
 
             // create shapes
             // this ID is passed to shapes to differentiate them from normal shapes
-            const parentIdPosition = `-_${elContainerNth[0]}__shape_${nth}th__pos`
-            createShapes(shapes, elementRoot, sizeInner, elementSvg, { positionPoints, parentId: parentIdPosition })
+            const parentIdPosition = `-_${instanceNth}th__${nth}th__shape__pos`
+            createShapes(instanceNth, shapes, elementRoot, sizeInner, elementSvg, { positionPoints, parentId: parentIdPosition })
           } else {
             throw new UnspecifiedProperty('position guide options', ['shapes'])
           }
@@ -200,7 +213,7 @@ const createShape = (
       }
     }
   }
-
+  
   elementRoot.appendChild(el)
 }
 

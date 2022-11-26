@@ -1,8 +1,8 @@
 import makeDefaults from '../make_defaults'
 import type { IOptionsMerged, IOptions, IOptionsInteractions, IStartCriteria } from '../types'
-import processShapes from './process_shapes'
+import processShapes from './process_shapes/process_shapes'
 
-const processOptions = (opts: IOptions): IOptionsMerged => {
+const processOptions = (instanceNth: number, opts: IOptions): IOptionsMerged => {
   /* 
     first, for the nested properties, find the merged value by checking the values and making the necessary changes
     and merging user's options with default options
@@ -126,7 +126,7 @@ const processOptions = (opts: IOptions): IOptionsMerged => {
   //0 shapes
   let shapes
   if (Array.isArray(opts.shapes) && opts.shapes.length) {
-    shapes = processShapes(size.inner, opts.shapes, 1, respectReducedMotion)
+    shapes = processShapes(instanceNth, size.inner, opts.shapes, 1, respectReducedMotion)
   }
 
   // merge them all

@@ -1,50 +1,28 @@
-import type { IOptionsShape, IOptionsShapeRatio, IOptionsShapeGuide, IOptionsShapeMerged } from '../types'
-import makeDefaults from '../make_defaults'
+import type { IOptionsShape, IOptionsShapeRatio, IOptionsShapeGuide, IOptionsShapeMerged } from '../../types'
+import makeDefaults from '../../make_defaults'
+import { makeMultiple } from './make_multiple'
 
 /**
- *
+ * @param instanceNth
+ * @param sizeInner
  * @param shapes
  * @param ratioTile - if the shapes are for a pattern, certain shape properties are multiplied by this
  * @param respectReducedMotion - if true, animations are removed
  * @returns the merged shapes
  */
 const processShapes = (
+  instanceNth: number,
   sizeInner: number,
   shapes: IOptionsShape[],
   ratioTile = 1,
   respectReducedMotion = false
 ): IOptionsShapeMerged[] => {
-  // If a shape object has `make_multiple`, make and add it's shapes and remove the object
-  let indexMultiShape = -1
-  for (const s of shapes) {
-    indexMultiShape++
+  
+  makeMultiple(shapes, instanceNth, sizeInner)
 
-    if (s.make_multiple !== undefined) {
-      for (const m of s.make_multiple) {
-        for (let i = 0; i < m.options.number; i++) {
-          const shapeMulti: { [s: string]: unknown } = {}
-          for (const [k, v] of Object.entries(m.options.value)) {
-            if (v.length === 1) {
-              shapeMulti[k] = JSON.parse(JSON.stringify(v[0]))
-            } else {
-              if (v[i] !== undefined) {
-                shapeMulti[k] = v[i]
-              }
-            }
-          }
-          shapes.splice(indexMultiShape, 0, shapeMulti)
-          indexMultiShape++
-        }
-      }
-      // remove object related to `make_multiple` from shapes
-      shapes.splice(indexMultiShape, 1)
-    }
-  }
-
-  //
   const shapesUpdated: IOptionsShapeMerged[] = []
-
   for (const s of shapes) {
+
     let ratioRadiusIndex = -1
     let ratioRadius: IOptionsShapeRatio | undefined
     let ratioRadiusOptions
@@ -140,7 +118,7 @@ const processShapes = (
       }
     }
 
-    //0 multiply by ratioTile (if it's a pattern, this needs to be done)
+    //0 multiply size by ratioTile (if it's a pattern, this needs to be done)
     if (ratioTile) {
       size *= ratioTile
     }

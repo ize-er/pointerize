@@ -1,52 +1,44 @@
-import type { IOptionsShapeMerged } from '../../../types'
+import type { IOptionsShapeEffect } from '../../../types'
 import { createSvgElementsDeep } from '../../../utils'
 import { UnspecifiedProperty } from '../../../errors'
 
+/**
+ * creates filter and filter primitive elements
+ * @param effects 
+ * @returns filter elements and ids
+ */
 export default function applyEffects(
-  effects: IOptionsShapeMerged['effects'],
-  nth: number,
-  elementContainerNth: string
+  effects: IOptionsShapeEffect[]
 ): { filterEls: SVGFilterElement[]; filterIds: string[] } {
+
   const filterIds = []
   const filterEls: SVGFilterElement[] = []
   if (effects !== undefined) {
-    let index = -1
     for (const ef of effects) {
-      index++
-      let elFilter: SVGFilterElement
+      let elFilter: SVGFilterElement | undefined
       let attrId
-      if (ef.preset !== undefined) {
-        // presets
-        attrId = `-_${elementContainerNth}__filter_${ef.preset.type}${nth}th_${index}th`
+      if (ef.preset !== undefined) { // presets
+        
+        attrId = ef.preset.data.svg_attributes?.id as string
         filterIds.push(attrId)
 
-        // give `id` attribute to the root filter element
-        const elInfoUpdated = ef.preset.data
-        if (elInfoUpdated.svg_attributes !== undefined) {
-          elInfoUpdated.svg_attributes.id = attrId
-        } else {
-          elInfoUpdated.svg_attributes = { id: attrId }
+        if (ef.preset.data.element_children !== undefined) {
+          elFilter = createSvgElementsDeep(ef.preset.data) as SVGFilterElement
         }
-
-        elFilter = createSvgElementsDeep(elInfoUpdated) as SVGFilterElement
-      } else if (ef.custom !== undefined) {
-        // custom effect
-        attrId = `-_${elementContainerNth}__filter_custom_${nth}th_${index}th`
+      } else if (ef.custom !== undefined) {// custom effect
+        
+        attrId = ef.custom.svg_attributes?.id as string
         filterIds.push(attrId)
 
-        // give `id` attribute to the root filter element
-        const elInfoUpdated = ef.custom
-        if (elInfoUpdated.svg_attributes !== undefined) {
-          elInfoUpdated.svg_attributes.id = attrId
-        } else {
-          elInfoUpdated.svg_attributes = { id: attrId }
+        if (ef.custom.element_children !== undefined) {
+          elFilter = createSvgElementsDeep(ef.custom) as SVGFilterElement
         }
-
-        elFilter = createSvgElementsDeep(elInfoUpdated) as SVGFilterElement
       } else {
         throw new UnspecifiedProperty('effect', ['preset', 'custom'])
       }
-      filterEls.push(elFilter)
+      if (elFilter !== undefined) {
+        filterEls.push(elFilter)
+      }
     }
   }
   return { filterEls, filterIds }

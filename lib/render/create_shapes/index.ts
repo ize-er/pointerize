@@ -4,38 +4,45 @@ import makeDefaults from '../../make_defaults'
 import createShape from './create_shape'
 
 /**
- *
+ * @param instanceNth
  * @param shapesMerged
  * @param elementRoot
  * @param sizeInner
  * @param elementSvg
  * @param guidesInfo informtion that is needed when these shapes are used for a guide shape
+ * @param groupInfo informtion that is needed when these shapes are used for as a group (`g` element)
  */
 const createShapes = (
+  instanceNth: number,
   shapesMerged: IOptionsShapeMerged[],
-  elementRoot: SVGSVGElement | SVGPatternElement,
+  elementRoot: SVGSVGElement | SVGPatternElement | SVGGElement,
   sizeInner: number,
   elementSvg: SVGSVGElement,
   guidesInfo?: {
     sizeInnerCustom?: { width: number; height: number } | undefined
     positionPoints?: [number, number][] | undefined
     parentId?: string
+  },
+  groupInfo?: {
+    svgAttributes: IOptionsShapeMerged['svg_attributes'],
+    parentNth: number
   }
 ) => {
+  
   const { defaultsSvgElsAttrs, defaultsShape } = makeDefaults(sizeInner)
 
   // arguments for each shape to be used with createShape function. the results for each shape will be put in here.
-  const createShapeArgs: [IOptionsShapeMerged, number, [number, number]][] = []
-
+  const createShapeArgs: [IOptionsShapeMerged, number, [number, number] | [number, number][]][] = []
+  
+  const sizeInnerUpdated = guidesInfo?.sizeInnerCustom || { width: sizeInner, height: sizeInner }
+  const posPointsUpdated = guidesInfo?.positionPoints
   let nth = -1
   for (const s of shapesMerged) {
     nth++
-    let newShape: IOptionsShapeMerged
+    let newShape: IOptionsShapeMerged | undefined = undefined
     const size = s.size
 
     // find element's position
-    const sizeInnerUpdated = guidesInfo?.sizeInnerCustom || { width: sizeInner, height: sizeInner }
-    const posPointsUpdated = guidesInfo?.positionPoints
     const positions = makePosition(size, sizeInnerUpdated, posPointsUpdated, nth)
     const positionPolygon = positions.positionPolygon
     const positionRect = positions.positionRect
@@ -293,6 +300,22 @@ const createShapes = (
 
         break
       }
+      case 'g': {
+
+            newShape = {
+              ...s,
+              type: 'g'
+            }
+
+            createShapeArgs.push([
+              {
+                ...newShape,
+              },
+              nth,
+              guidesInfo?.positionPoints as [number, number][],
+            ])
+        break
+      }
       default: {
         newShape = {
           ...s,
@@ -312,13 +335,24 @@ const createShapes = (
         ])
       }
     }
+
+    // if the shape is inside `g` remove those attributes that `g` has. (because they should be inherited)
+    if (groupInfo !== undefined && newShape !== undefined && groupInfo.svgAttributes !== undefined) {
+      const elGAttrs = Object.keys(groupInfo.svgAttributes)
+      for (const attr of elGAttrs) {
+        delete newShape.svg_attributes?.[attr]
+      }
+    }
+
   }
 
   // create svg elements and append to root element
   for (const args of createShapeArgs) {
-    createShape(args[0], args[1], elementRoot, sizeInner, elementSvg, {
+    createShape(instanceNth, args[0], args[1], elementRoot, sizeInner, elementSvg, {
       parentId: guidesInfo?.parentId,
       position: args[2],
+    }, {
+      parentNth: groupInfo?.parentNth 
     })
   }
 }

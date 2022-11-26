@@ -125,15 +125,17 @@ export const updateAnimation = (
       })
     }
   } else if (preset !== undefined) {
-    for (const keyframe of preset.data.keyframes) {
-      index++
-      // add preset's keyframes
-      keyframes.push({
-        ...keyframe,
-        css_properties: {
-          ...keyframe.css_properties,
-        },
-      })
+    if (animation.keyframes !== undefined) {
+      for (const keyframe of preset.data.keyframes) {
+        index++
+        // add preset's keyframes
+        keyframes.push({
+          ...keyframe,
+          css_properties: {
+            ...keyframe.css_properties,
+          },
+        })
+      }
     }
   }
 
@@ -146,7 +148,7 @@ export const updateAnimation = (
       ...(transformOrigin && { 'transform-origin': transformOrigin }),
       ...animation.css_properties,
     },
-    keyframes: keyframes,
+    ...(keyframes.length && {keyframes}),
   }
   return animationUpdated
 }

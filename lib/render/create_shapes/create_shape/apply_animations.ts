@@ -10,6 +10,7 @@ export default function applyAnimations(
   }
 ): void {
   if (shape.animations !== undefined) {
+    
     const animationsUpdated = []
     let styleDeclarations = ''
 
@@ -24,21 +25,19 @@ export default function applyAnimations(
         for (const prop of Object.entries(animationUpdated.css_properties)) {
           if (/^animation/.test(prop[0])) {
             if (prop[0] in animationsMerged) {
-              // if the property exists add to it with comma
               animationsMerged[prop[0]] += `,${prop[1]}`
             } else {
-              // add proeprty
               animationsMerged[prop[0]] = prop[1]
             }
           } else {
-            // if it's not an animation-related property, just add it
+            // not animation-related property
             animationsMerged[prop[0]] = prop[1]
           }
         }
       }
     }
 
-    // assign animation properties to shape
+    // add selector and animation properties
     const elContainerId = elementSvg.parentElement?.id
     styleDeclarations += `#${elContainerId} #${el.id}{`
     for (const prop of Object.entries(animationsMerged)) {
@@ -46,7 +45,7 @@ export default function applyAnimations(
     }
     styleDeclarations += '}'
 
-    // keyframes
+    // add keyframes
     for (const animationObj of animationsUpdated) {
       if (animationObj !== null && animationObj.css_properties !== undefined) {
         if (animationObj?.keyframes !== undefined) {
@@ -66,13 +65,14 @@ export default function applyAnimations(
       }
     }
 
-    // create the `style` element if it doesn't exist and append to svg. add the animations
+    // create the `style` element if it doesn't exist and append to svg.
     let elementStyle = elementSvg.querySelector(':scope > style')
     if (elementStyle === null) {
       elementStyle = document.createElement('style')
       elementSvg.insertAdjacentElement('afterbegin', elementStyle)
     }
-
+    
+    //
     elementStyle.textContent += styleDeclarations
   }
 }
