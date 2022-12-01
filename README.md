@@ -20,7 +20,7 @@
 - [Let Your Imagination Loose](#let-your-imagination-loose)
 - [Handy Tips](#handy-tips)
   - [Potential Conflicts](#potential-conflicts)
-  - [Simplify Options Creation](#simplify-options-creation)
+  - [Reduce Boilerplate and Improve Performance](#reduce-boilerplate-and-improve-performance)
 - [Naming and Coding Style](#naming-and-coding-style)
 - [Tasks](#tasks)
 - [Development](#development)
@@ -145,8 +145,6 @@ What can be created by Pointerize? The possibilities are _limitless_. Visit the 
 
 - A shape's size (specified in `ratios`) is calculated taking the `stroke-width` attribute into account
   so that the stroke doesn't increase the actual size (kind of like CSS `box-sizing: border-box`).
-- When using a large number of shapes, animations, effects, etc. keep a wary eye on performance.
-  There will be improvements in this regard.
 - Only use string values for properties of `svg_attributes` and `css_properties`.
 - For custom images use shape `type` of `image` and set `href` attribute.
 
@@ -164,10 +162,9 @@ What can be created by Pointerize? The possibilities are _limitless_. Visit the 
 - Only use pixel values (e.g. `"2"`) for `stroke-width` in `svg_attributes`. (this may change)
 - CSS styles overwrite SVG attribute styling.
 
-### Simplify Options Creation
+### Reduce Boilerplate and Improve Performance
 
-When there is a large number of shapes you want to specify or for any other option that would be
-cumbersome to type out you can simplify the process by using Javascript. See the advanced presets for examples.
+When creating a large number of shapes, or when using the same `animations`/`effects`/`svg_attributes` properties for multiple shapes, make use of `make_multiple`. It groups the shapes inside `g` and applies their identical properties only to `g`. See the advanced presets for examples.
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
@@ -192,7 +189,7 @@ It is helpful to know:
 
 ## Tasks
 
-- [x] Add functionality to create multiple shapes (commit 4f669a23d09)
+- [x] Add functionality to create multiple shapes (`make_multiple`)
 - [x] Add API docs (https://github.com/ize-er/pointerize/pull/2)
 - [ ] Separate presets from the core lib and turn some shape types into presets ([branch](https://github.com/ize-er/pointerize/tree/separate_presets))
 - [ ] Create a plugin system and use it for animations, effects, interactions

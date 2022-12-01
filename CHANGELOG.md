@@ -1,3 +1,15 @@
+## [Unreleased]
+
+### Changed
+
+- Id attributes wording
+
+### Added
+
+- Shapes property for when shape type is `g`
+- `make_multiple` groups shapes inside `g` element:
+  - If `animations`, `effects`, `svg_attributes` have one member, they are only applied to `g`.
+
 ## [2.1.0] - 2022-11-23
 
 ### Fixed
