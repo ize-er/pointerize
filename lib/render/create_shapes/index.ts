@@ -230,33 +230,6 @@ const createShapes = (
         }
         break
       }
-      case 'star': {
-        // polygon with 10 sides (decagon)
-
-        const sides = 10
-        const sizeStar = size / 2
-        const points = makeRadialPoints(sizeStar, ratioRadius, sides, positionPolygon, 'string') as string
-        if (points !== null) {
-          newShape = {
-            ...s,
-            type: 'polygon',
-            svg_attributes: {
-              ...defaultsSvgElsAttrs['polygon'],
-              points: points,
-              ...s.svg_attributes,
-            },
-          }
-
-          createShapeArgs.push([
-            {
-              ...newShape,
-            },
-            nth,
-            positionPolygon,
-          ])
-        }
-        break
-      }
       case 'image': {
         let x
         let y

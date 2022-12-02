@@ -119,21 +119,21 @@ const makeDefaults = (size = 32) => {
       ...defaultsSvgAttrs.attrsFill,
     },
     path: {
-      d: `M ${sizeInner / 2}, ${strokeWidthHalf}
-          C ${sizeInner / 2}, ${strokeWidthHalf + sizeInner / 4}
-          ${sizeInner - strokeWidthHalf - sizeInner / 4}, ${sizeInner / 2}
-          ${sizeInner - strokeWidthHalf}, ${sizeInner / 2}
-          ${sizeInner - strokeWidthHalf - sizeInner / 4}, ${sizeInner / 2}
-          ${sizeInner / 2},${sizeInner - strokeWidthHalf - sizeInner / 4}
-          ${sizeInner / 2},${sizeInner - strokeWidthHalf}
-          ${sizeInner / 2},${sizeInner - strokeWidthHalf - sizeInner / 4}
-          ${0 + strokeWidthHalf + sizeInner / 4}, ${sizeInner / 2}
-          ${0 + strokeWidthHalf}, ${sizeInner / 2}
-          ${0 + strokeWidthHalf + sizeInner / 4}, ${sizeInner / 2}
-          ${sizeInner / 2}, ${strokeWidthHalf + sizeInner / 4}
-          ${sizeInner / 2}, ${strokeWidthHalf}
-          Z
-          `,
+      d:  `M ${sizeInner / 2} ${strokeWidthHalf} `+
+          `C ${sizeInner / 2} ${strokeWidthHalf + sizeInner / 4}, `+
+          `${sizeInner - strokeWidthHalf - sizeInner / 4} ${sizeInner / 2}, `+
+          `${sizeInner - strokeWidthHalf} ${sizeInner / 2}, `+
+          `${sizeInner - strokeWidthHalf - sizeInner / 4} ${sizeInner / 2}, `+
+          `${sizeInner / 2} ${sizeInner - strokeWidthHalf - sizeInner / 4}, `+
+          `${sizeInner / 2} ${sizeInner - strokeWidthHalf}, `+
+          `${sizeInner / 2} ${sizeInner - strokeWidthHalf - sizeInner / 4}, `+
+          `${0 + strokeWidthHalf + sizeInner / 4} ${sizeInner / 2}, `+
+          `${0 + strokeWidthHalf} ${sizeInner / 2}, `+
+          `${0 + strokeWidthHalf + sizeInner / 4} ${sizeInner / 2}, `+
+          `${sizeInner / 2} ${strokeWidthHalf + sizeInner / 4}, `+
+          `${sizeInner / 2} ${strokeWidthHalf} `+
+          `Z`
+           ,
       ...defaultsSvgAttrs.attrsStroke,
       ...defaultsSvgAttrs.attrsFill,
       fill: 'none',

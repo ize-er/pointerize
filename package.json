@@ -30,6 +30,10 @@
     "./presets/patterns.js": {
       "import": "./dist/presets/patterns.js",
       "require": "./dist/presets/patterns.js"
+    },
+    "./presets/shapes.js": {
+      "import": "./dist/presets/shapes.js",
+      "require": "./dist/presets/shapes.js"
     }
   },
   "types": "./dist/pointerize.d.ts",

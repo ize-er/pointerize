@@ -19,13 +19,13 @@
 - [Quickstart](#quickstart)
 - [Let Your Imagination Loose](#let-your-imagination-loose)
 - [Handy Tips](#handy-tips)
-  - [Potential Conflicts](#potential-conflicts)
   - [Reduce Boilerplate and Improve Performance](#reduce-boilerplate-and-improve-performance)
-- [Naming and Coding Style](#naming-and-coding-style)
+  - [Potential Conflicts](#potential-conflicts)
 - [Tasks](#tasks)
 - [Development](#development)
   - [Start a Dev Server](#start-a-dev-server)
   - [Run Unit Tests](#run-unit-tests)
+- [Naming and Coding Style](#naming-and-coding-style)
 - [License](#license)
 - [Versioning](#versioning)
 - [Contact](#contact)
@@ -148,6 +148,10 @@ What can be created by Pointerize? The possibilities are _limitless_. Visit the 
 - Only use string values for properties of `svg_attributes` and `css_properties`.
 - For custom images use shape `type` of `image` and set `href` attribute.
 
+### Reduce Boilerplate and Improve Performance
+
+When creating a large number of shapes, or when using the same `animations`/`effects`/`svg_attributes` properties for multiple shapes, make use of `make_multiple`. It groups the shapes inside `g` and applies their identical properties only to `g`. See the advanced presets for examples.
+
 ### Potential Conflicts
 
 - Pattern:
@@ -162,37 +166,24 @@ What can be created by Pointerize? The possibilities are _limitless_. Visit the 
 - Only use pixel values (e.g. `"2"`) for `stroke-width` in `svg_attributes`. (this may change)
 - CSS styles overwrite SVG attribute styling.
 
-### Reduce Boilerplate and Improve Performance
-
-When creating a large number of shapes, or when using the same `animations`/`effects`/`svg_attributes` properties for multiple shapes, make use of `make_multiple`. It groups the shapes inside `g` and applies their identical properties only to `g`. See the advanced presets for examples.
-
-<p style="text-align:right;"><a href="#top">back to top</a></p>
-
-## Naming and Coding Style
-
-I am using the principles of a naming/coding methodology/convention that I am working on and that I may publish in the future.
-You may see it in:
-
-- The way things are named (CSS class names, id attributes, API options and Javascript code).
-- The way comments are written.
-
-It is helpful to know:
-
-- Zero-based numbering is used (numbers start from `0`).
-- `<number>th` represents a variation of something: `0th` is the first variation.
-- Using numbers at the beginning of comments is a way of sectioning and grouping the related comments and code together.
-  for example, `//0 comment here` is the first depth. same-number comments are in the same depth and they are the children of the
-  smaller number that came before (just like a tree structure). It helps us identify the relation between code snippets
-  that are in the same scope.
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
 ## Tasks
 
+### version 2
+
 - [x] Add functionality to create multiple shapes (`make_multiple`)
 - [x] Add API docs (https://github.com/ize-er/pointerize/pull/2)
+
+### version 3
+
 - [ ] Separate presets from the core lib and turn some shape types into presets ([branch](https://github.com/ize-er/pointerize/tree/separate_presets))
-- [ ] Create a plugin system and use it for animations, effects, interactions
+
+### version 4
+
+- [ ] Remove `preset` and `custom` properties (see [CHANGELOG.md](https://github.com/ize-er/pointerize/blob/separate_presets/CHANGELOG.md))
+- [ ] Create a plugin system and use it for animations, effects, interactions (see [CHANGELOG.md](https://github.com/ize-er/pointerize/blob/separate_presets/CHANGELOG.md))
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 
@@ -216,6 +207,25 @@ npm run dev
 ```bash
 npm run test
 ```
+
+<p style="text-align:right;"><a href="#top">back to top</a></p>
+
+## Naming and Coding Style
+
+I am using the principles of a naming/coding methodology/convention that I am working on and that I may publish in the future.
+You may see it in:
+
+- The way things are named (CSS class names, id attributes, API options and Javascript code).
+- The way comments are written.
+
+It is helpful to know:
+
+- Zero-based numbering is used (numbers start from `0`).
+- `<number>th` represents a variation of something: `0th` is the first variation.
+- Using numbers at the beginning of comments is a way of sectioning and grouping the related comments and code together.
+  for example, `//0 comment here` is the first depth. same-number comments are in the same depth and they are the children of the
+  smaller number that came before (just like a tree structure). It helps us identify the relation between code snippets
+  that are in the same scope.
 
 <p style="text-align:right;"><a href="#top">back to top</a></p>
 

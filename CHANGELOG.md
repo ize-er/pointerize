@@ -9,6 +9,68 @@
 - Shapes property for when shape type is `g`
 - `make_multiple` groups shapes inside `g` element:
   - If `animations`, `effects`, `svg_attributes` have one member, they are only applied to `g`.
+- New shape presets:  
+  `pentagon`, `hexagon`, `heptagon`, `octagon`, `nonagon`, `decagon`, `cross`, `heart`
+
+### Removed
+
+- Presets are now separated from the core library. Also, the shape type `star` is a preset. The function is invoked and any options for the shape are passed to the function (it returns a shape object):
+
+```js
+import { star } from '@ize-er/pointerize/presets/shapes.js'
+
+const options = {
+    shapes: [
+      star({
+        .
+        .
+        .
+        animations: [
+          {
+            preset: rotate()
+          }
+        ],
+        effects: [
+          {
+            preset: glow()
+          }
+        ]
+      }),
+      {
+        type: 'square'
+      }
+    ]
+  }
+```
+
+### Deprecated
+
+- To make the core library lighter and our options cleaner:
+  - `preset` property will be removed and instead the preset functions are called in place of an object and accept all the object's properties as an argument:
+
+  ```js
+    import { rotate } from '@ize-er/pointerize/presets/animations.js'
+    import { glow } from '@ize-er/pointerize/presets/effects.js'
+    import { star } from '@ize-er/pointerize/presets/shapes.js'
+
+    const options = {
+      shapes: [
+        star({
+          .
+          .
+          .
+          animations: [
+            rotate()
+          ],
+          effects: [
+            glow()
+          ]
+        })
+      ]
+    }
+  ```
+
+  - `custom` property will be removed and instead its properties are used directly. 
 
 ## [2.1.0] - 2022-11-23
 

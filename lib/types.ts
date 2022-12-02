@@ -86,7 +86,6 @@ export interface IOptions {
   /**
    * The shapes that will be created.
    */
-  // TODO?: circle, rectangle, square, triangle, cross, crescent, heart, star, rhombus, pentagon, hexagon, heptagon, octagon, nonagon, random
   shapes?: IOptionsShape[]
   /**
    * Preferences in user's system.
@@ -134,7 +133,6 @@ export interface IOptionsShape {
     | 'rectangle'
     | 'triangle'
     | 'square'
-    | 'star'
     | 'image'
     | 'use'
     | 'g'

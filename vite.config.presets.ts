@@ -15,6 +15,7 @@ export default defineConfig({
         animations: resolve(__dirname, 'lib/presets/animations'),
         effects: resolve(__dirname, 'lib/presets/effects'),
         patterns: resolve(__dirname, 'lib/presets/patterns'),
+        shapes: resolve(__dirname, 'lib/presets/shapes'),
         defaults: resolve(__dirname, 'lib/make_defaults'),
       },
       output: {
@@ -26,7 +27,7 @@ export default defineConfig({
   * This source code is licensed under the MIT license found in the
   * LICENSE file at https://github.com/ize-er/pointerize.
   */`,
-      dir: 'dist/presets'
+        dir: 'dist/presets'
       },
     }
   }
