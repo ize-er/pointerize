@@ -55,6 +55,27 @@ const processShapes = (
     const strokeWidth = s.svg_attributes?.['stroke-width'] ?? defaultsSvgAttrsTemp.attrsStroke['stroke-width']
     size -= +strokeWidth
 
+    //0 effects
+    if (Array.isArray(s.effects) && s.effects.length) {
+      let attrId
+      let indexEf = -1
+      for (const ef of s.effects) {// set the ID if it's not already set by `make_multiple`
+        indexEf++
+        if (ef.preset !== undefined) {
+          attrId = `-_${instanceNth}th__filter_${ef.preset.type}_${indexEf}th`
+          if (ef.preset.data.svg_attributes !== undefined && ef.preset.data.svg_attributes.id === undefined) {
+            ef.preset.data.svg_attributes.id = attrId
+          }
+        }
+        else if (ef.custom !== undefined) {
+          attrId = `-_${instanceNth}th__filter_custom_${indexEf}th`
+          if (ef.custom.svg_attributes !== undefined && ef.custom.svg_attributes.id === undefined) {
+            ef.custom.svg_attributes.id = attrId
+          }
+        }
+      }
+    }
+
     //0 ratios
     let ratios: IOptionsShapeRatio[] = []
     if (Array.isArray(s.ratios) && s.ratios.length) {

@@ -64,21 +64,21 @@ export function makeMultiple(shapes: IOptionsShape[], instanceNth: number, sizeI
             } else {
               if (k === 'effects') {
                 let attrId
-                let indexEf = -1
+                let indexGroup = -1
                 for (const effects of v as IOptionsShape['effects'][]) {
-                  indexEf++
-                  let indexEfShape = -1
+                  indexGroup++
+                  let indexEf = -1
                   if (effects !== undefined) {
                     for (const ef of effects) {
-                      indexEfShape++
+                      indexEf++
                       if (ef.preset !== undefined) {
-                        attrId = `-_${instanceNth}th__filter_${ef.preset.type}_${indexEf}_${indexEfShape}th`
+                        attrId = `-_${instanceNth}th-_group_${indexGroup}__filter_${ef.preset.type}_${indexEf}th`
                         if (ef.preset.data.svg_attributes !== undefined) {
                           ef.preset.data.svg_attributes.id = attrId
                         }
                       }
                       else if (ef.custom !== undefined) {
-                        attrId = `-_${instanceNth}th__filter_custom_${indexEf}_${indexEfShape}th`
+                        attrId = `-_${instanceNth}th-_group_${indexGroup}__filter_custom_${indexEf}th`
                         if (ef.custom.svg_attributes !== undefined) {
                           ef.custom.svg_attributes.id = attrId
                         }
