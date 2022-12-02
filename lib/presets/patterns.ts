@@ -1,11 +1,12 @@
 
 
 import makeDefaults from '../make_defaults'
+import type { IPresetPattern } from '../types'
 
 const { defaultsSvgElsAttrs } = makeDefaults()
 
 export const circle = () => {
-  return {
+  const preset: IPresetPattern = {
     type: 'circle',
     data: {
       element: 'pattern',
@@ -25,4 +26,5 @@ export const circle = () => {
       ],
     }
   }
+  return preset
 }

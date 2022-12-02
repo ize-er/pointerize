@@ -424,6 +424,12 @@ export interface IPresetEffect {
   data: IElementPresetEffects
 }
 
+//patterns
+export interface IPresetPattern {
+  type: 'circle'
+  data: IElement
+}
+
 //0 events
 //1 debounced addEventListener using requestAnimationFrame
 export interface IEventHandler {
