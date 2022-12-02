@@ -1,6 +1,9 @@
 import Pointerize from '../lib/pointerize'
 import { jest } from '@jest/globals'
 import type { IOptions } from '../lib/types'
+import { rotate } from '../lib/presets/animations'
+import { glow } from '../lib/presets/effects'
+import { circle } from '../lib/presets/patterns'
 
 //TODO: instance 1 and 2 need more refactoring and tests
 // matchMedia doesn't exist in jsdom so we define it with jest
@@ -96,7 +99,7 @@ describe('Pointerize options', () => {
           {
             type: 'pattern',
             options: {
-              preset: 'circle',
+              preset: circle(),
               area: 'fill',
               ratios: {
                 tile: 0.1,
@@ -123,7 +126,7 @@ describe('Pointerize options', () => {
         },
         animations: [
           {
-            preset: 'rotate',
+            preset: rotate(),
             css_properties: {
               'animation-direction': 'reverse',
             },
@@ -131,7 +134,7 @@ describe('Pointerize options', () => {
         ],
         effects: [
           {
-            preset: 'glow',
+            preset: glow(),
           },
         ],
       },
@@ -153,14 +156,9 @@ describe('Pointerize options', () => {
         ],
         animations: [
           {
-            preset: 'rotate',
+            preset: rotate(),
           },
-        ],
-        effects: [
-          {
-            preset: 'glow',
-          },
-        ],
+        ]
       },
       {
         type: 'rectangle',
@@ -210,6 +208,13 @@ describe('Pointerize options', () => {
                     },
                   ],
                 ],
+                effects: [
+                  [
+                    {
+                      preset: glow()
+                    }
+                  ]
+                ]
               },
             },
           },
@@ -231,6 +236,7 @@ describe('Pointerize options', () => {
     })
 
     test('svg container element', () => {
+      expect(pointerize.id).toBe('-_pointerize__container_1th')
       expect(pointerize.element__svg_container?.style.getPropertyValue('width')).toBe('333px')
       expect(pointerize.element__svg_container?.style.getPropertyValue('left')).toBe('10px')
       expect(pointerize.element__svg_container?.style.getPropertyValue('top')).toBe('100px')
@@ -253,16 +259,16 @@ describe('Pointerize options', () => {
       //0 the existence of elements and in right order
       expect(document.querySelector('#-_pointerize__container_1th > svg > circle')).not.toBe(null)
       expect(document.querySelector('#-_pointerize__container_1th > svg > path')).not.toBe(null)
-      //1 `make_multiple`
-      expect(document.querySelector('#-_pointerize__container_1th > svg > *:last-child')?.tagName).toBe('rect')
-      // svg attributes
+      //1 group
+      expect(document.querySelector('#-_pointerize__container_1th > svg > *:last-child')?.tagName).toBe('g')
+      expect(document.querySelector('#-_pointerize__container_1th > svg > g > *:last-child')?.tagName).toBe('rect')
+      //0 svg attributes
       expect(document.querySelector('#-_pointerize__container_1th > svg > circle')?.getAttribute('stroke')).toBe('red')
       //0 ratios
-      //1 `make_multiple`
-      expect(document.querySelector('#-_pointerize__container_1th > svg > *:last-child')?.getAttribute('width')).toBe(
+      expect(document.querySelector('#-_pointerize__container_1th > svg > g > *:last-child')?.getAttribute('width')).toBe(
         String(32 / 2 - 32 / 20)
       )
-      // animations
+      //0 animations
       expect(
         document
           .querySelector('#-_pointerize__container_1th > svg > style')
@@ -273,12 +279,14 @@ describe('Pointerize options', () => {
           .querySelector('#-_pointerize__container_1th > svg > style')
           ?.textContent?.match(/#shape_1th_ellipse\{[^{]*?animation-name:rotate[^}]*?\}/)
       )
-      // effects
-      expect(document.querySelectorAll('#-_pointerize__container_1th > svg > filter')[0].getAttribute('id')).toBe(
-        '-_1th__filter_glow_1th_0th'
-      )
+      //0 effects
+      //1 for single shape
       expect(document.querySelectorAll('#-_pointerize__container_1th > svg > filter')[1].getAttribute('id')).toBe(
-        '-_1th__filter_glow_0th_0th'
+        '-_1th__filter_glow_0th'
+      )
+      //1 for group
+      expect(document.querySelectorAll('#-_pointerize__container_1th > svg > filter')[0].getAttribute('id')).toBe(
+        '-_1th__filter_glow_nth_0th'
       )
     })
   })
