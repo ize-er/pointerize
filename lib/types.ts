@@ -138,8 +138,18 @@ export interface IOptionsShape {
     | 'g'
   /**
    * Number of a polygon's sides
+   * @remarks
+   * polygon-related option
    */
   sides?: number
+  /**
+   * `Schläfli` symbol used to make the polygon
+   * @example 
+   * `{10/4}` or its equivalent `2{5/2}`
+   * @remarks
+   * polygon-related option
+   */
+  schlafli?: string
   /**
    * Ratios are used as a simple way of doing calculations that could have been very complex otherwise.
    */
@@ -197,7 +207,6 @@ export interface IOptionsShape {
    * Used when this element has children (e.g. `g` element)
    */
   shapes?: IOptionsShapeMerged[]
-  // [key: string]: IOptionsShape[keyof IOptionsShape]
 }
 
 export interface IOptionsShapeMerged extends Omit<IOptionsShape, 'size' | 'ratio'> {
@@ -209,7 +218,6 @@ export interface IOptionsShapeMerged extends Omit<IOptionsShape, 'size' | 'ratio
       value: number
     }
   }[]
-  // [key: string]: IOptionsShapeMerged[keyof IOptionsShapeMerged]
 }
 
 interface IMakeMultiple {

@@ -42,8 +42,13 @@ const createShape = (
 
   const el = document.createElementNS('http://www.w3.org/2000/svg', shape.type as string)
   el.id = elId
-  
-  // attributes
+
+  //0 attributes
+  //1 transform-origin attribute
+  if (guidesInfo?.position !== undefined) {
+    el.setAttribute('transform-origin', `${guidesInfo.position[0]}px ${guidesInfo.position[1]}px`)
+  }
+  //1 other attributes
   if (attrs !== undefined) {
     for (const attr of Object.entries(attrs)) {
       if (attr[1] !== undefined) {
@@ -51,12 +56,15 @@ const createShape = (
       }
     }
   }
+
   // append children elements if they exist
   if (groupInfo !== undefined && shape.shapes !== undefined) {
     createShapes(instanceNth, shape.shapes, el as SVGGElement, sizeInner, elementSvg, {positionPoints: guidesInfo?.position as [number, number][]}, {svgAttributes: shape.svg_attributes, parentNth: nth})
   }
+
   // animations
-  applyAnimations(el, shape, elementSvg, guidesInfo?.position && { position: guidesInfo?.position as [number, number]})
+  applyAnimations(el, shape, elementSvg)
+  
   // effects
   if (effects !== undefined) {
     const { filterEls, filterIds } = applyEffects(effects)
@@ -66,6 +74,8 @@ const createShape = (
     const filter = filterIds.map(id => `url(#${id})`).join(' ') // create the final filter attribute string by combining all ids
     el.setAttribute('filter', filter)
   }
+
+  // guides
   if (shape.guides !== undefined) {
     for (const guide of shape.guides) {
       const guideOptions = guide.options

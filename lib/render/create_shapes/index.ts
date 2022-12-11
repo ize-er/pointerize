@@ -2,6 +2,7 @@ import type { IDefaultsSvgEls, IOptionsShapeMerged } from '../../types'
 import { makeRadialPoints, makePosition } from '../utils'
 import makeDefaults from '../../make_defaults'
 import createShape from './create_shape'
+import { convertToString } from '../../utils'
 
 /**
  * @param instanceNth
@@ -196,18 +197,133 @@ const createShapes = (
       case 'polygon': {
         /*
             3 sides: triangle
-            4 sides: square
-            5 sides: pentagon
-            6 sides: hexagon
-            7 sides: heptagon
-            8 sides: octagon
-            9 sides: nonagon
-            10 sides: decagon
+            4 sides: square / tetragram
+            5 sides: pentagon / pentagram
+            6 sides: hexagon / hexagram
+            7 sides: heptagon / heptagram
+            8 sides: octagon / octagram
+            9 sides: nonagon / nonagram (nona/ennea)
+            10 sides: decagon / decagram
             ...
           */
         const sides = s.sides
-        if (sides !== undefined) {
-          const points = makeRadialPoints(size, ratioRadius, sides, positionPolygon, 'string') as string
+        let points
+        if (s.schlafli !== undefined) {
+          /* 
+            If there is a greatest common divisor the shape is a regular compound polygon (there are multiple polygons)
+            If not the points are reordered
+          */
+          const findGcd = (a: number, b: number): number => {
+            if (b) {
+              return findGcd(b, a % b);
+            } else {
+              return Math.abs(a);
+            }
+          }
+
+          const match = s.schlafli.match(/(?<out>\d+)?\{(?<in0th>\d+)\/(?<in1th>\d+)?\}/)
+          const sides = Number(match?.groups?.in0th)
+          const step = Number(match?.groups?.in1th)
+          const gdc = findGcd(sides, step)
+
+          if (gdc !== 1) {
+            console.log('there is schlafli gdc')
+
+            const shapesGrouped: IOptionsShapeMerged[] = []
+            const sidesSinglePolygon = sides/gdc
+            const rotationDegree = 360/sides
+            for (let i = 0; i < gdc; i++) {
+              shapesGrouped.push({
+                size: s.size,
+                ratios: s.ratios,
+                svg_attributes: {
+                  transform: `rotate(${i*rotationDegree})`
+                },
+                type: 'polygon',
+                sides: sidesSinglePolygon
+              })
+            }
+
+            newShape = {
+              ...s,
+              type: 'g',
+              shapes: shapesGrouped
+            }
+            delete newShape.schlafli
+            console.log('shape', newShape)
+
+            createShapeArgs.push([
+              {
+                ...newShape,
+              },
+              nth,
+              guidesInfo?.positionPoints as [number, number][],
+            ])
+          }
+          else {
+            points = makeRadialPoints(size, ratioRadius, sides, positionPolygon, 'array') as [number, number][]
+            /* 
+             * If there is schlafli rearrange the points.
+             * This is only for regular polygrams not regular compound polygons.
+             * Tested: {5/2}, {7/2}, {7/3}, {9/2}, {9/4}, {10/3}, {8/3}
+            */
+            const reorder = (radialPoints: [number, number][], step: number, isNested?: boolean) => {
+              let secondPart: [number, number][] = []
+              const firstPart = radialPoints.filter((point, ind) => {
+                let condition
+                if (isNested) {
+                  condition = (ind+1)%(step as number) === 0
+                }
+                else {
+                  condition = ind%(step as number) === 0
+                }
+                if (!condition) {
+                  secondPart.push(point)
+                }
+                return condition
+              })
+              console.log('radialpoints, firstPart, second half, step',radialPoints, firstPart, secondPart, step)
+              if (secondPart.length > step) {
+                secondPart = reorder(secondPart, step - 1, true)
+              }
+
+              if (radialPoints.length%step === 1) {// for {8/3}
+                radialPoints = [...secondPart, ...firstPart]
+              }
+              else {
+                radialPoints = [...firstPart, ...secondPart]
+              }
+              
+              return radialPoints
+            }
+            points = convertToString(reorder(points, step))
+            
+            if (points !== null) {
+              newShape = {
+                ...s,
+                type: 'polygon',
+                svg_attributes: {
+                  ...defaultsSvgElsAttrs['polygon'],
+                  points: points,
+                  ...s.svg_attributes,
+                },
+              }
+  
+              createShapeArgs.push([
+                {
+                  ...newShape,
+                },
+                nth,
+                positionPolygon,
+              ])
+            }
+            console.log('final', points)
+          }
+        }
+        else if (sides !== undefined) {
+
+          points = makeRadialPoints(size, ratioRadius, sides as number, positionPolygon, 'string') as string
+          
           if (points !== null) {
             newShape = {
               ...s,

@@ -1,4 +1,5 @@
 import type { IOptionsShapeAnimation } from '../types'
+import { convertToString } from '../utils';
 
 // finds shape's position
 export const makePosition = (
@@ -38,10 +39,7 @@ export const makeRadialPoints = (
   position: [number, number],
   returnType: 'string' | 'array' = 'string'
 ): [number, number][] | string | null => {
-  // this might be used to convert array into string
-  const convertToString = (arr: [number, number][]): string => {
-    return arr.map(i => i.join(',')).join(' ')
-  }
+  
   if (radiusRatio !== undefined) {
     const radialPoints: [number, number][] = []
     let radius = size / 2
@@ -77,6 +75,7 @@ export const makeRadialPoints = (
     }
     // the last point is the same as first one so remove it
     radialPoints.pop()
+
     if (returnType === 'string') {
       return convertToString(radialPoints)
     } else {
@@ -93,14 +92,9 @@ export const makeRadialPoints = (
 */
 export const updateAnimation = (
   animation: IOptionsShapeAnimation,
-  guidesInfo?: { position?: [number, number] }
 ): IOptionsShapeAnimation | null => {
+
   //0 add the animation attrs we calculated and then the user's over them
-  //1 transform origin
-  let transformOrigin
-  if (guidesInfo?.position !== undefined) {
-    transformOrigin = `${guidesInfo.position[0]}px ${guidesInfo.position[1]}px`
-  }
   const preset = animation.preset
 
   //1 keyframes
@@ -145,7 +139,6 @@ export const updateAnimation = (
     ...animation,
     css_properties: {
       ...(preset && preset.data.css_properties),
-      ...(transformOrigin && { 'transform-origin': transformOrigin }),
       ...animation.css_properties,
     },
     ...(keyframes.length && {keyframes}),

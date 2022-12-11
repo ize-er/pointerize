@@ -4,10 +4,7 @@ import { updateAnimation } from '../../utils'
 export default function applyAnimations(
   el: SVGElement,
   shape: IOptionsShape,
-  elementSvg: SVGSVGElement,
-  guidesInfo?: {
-    position: [number, number]
-  }
+  elementSvg: SVGSVGElement
 ): void {
   if (shape.animations !== undefined) {
     
@@ -18,7 +15,7 @@ export default function applyAnimations(
     const animationsMerged: Record<string, string> = {}
     for (const animationObj of shape.animations) {
       // update them
-      const animationUpdated = updateAnimation(animationObj, guidesInfo)
+      const animationUpdated = updateAnimation(animationObj)
       animationsUpdated.push(animationUpdated)
 
       if (animationUpdated !== null && animationUpdated.css_properties !== undefined) {

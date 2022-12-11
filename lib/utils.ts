@@ -51,3 +51,8 @@ export const createSvgElementsDeep = function (elementRootInfo: IElement): SVGEl
 
   return el
 }
+
+// convert array into string
+export const convertToString = (arr: [number, number][]): string => {
+  return arr.map(i => i.join(',')).join(' ')
+}
